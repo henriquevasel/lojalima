@@ -1,0 +1,784 @@
+/* =========================
+   TIPOGRAFIA PADRÃO (igual home)
+========================= */
+.page{
+  width: 100%;
+  padding: 28px 0 90px;
+  color: #e8eef6;
+}
+
+.header{
+  width: min(1120px, 92%);
+  margin: 0 auto 18px;
+}
+
+.badge{
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34,197,94,.14);
+  border: 1px solid rgba(34,197,94,.22);
+  font-size: 12px;
+  letter-spacing: .08em; /* mais premium */
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #e8eef6;
+}
+
+.pageTitle{
+  margin: 10px 0 6px;
+  font-size: clamp(22px, 2.6vw, 34px);
+  color: #e8eef6;
+  font-weight: 950;
+  letter-spacing: -0.5px;
+}
+
+.pageSubtitle{
+  margin: 0;
+  color: rgba(232,238,246,.76);
+  line-height: 1.6;
+}
+
+/* =========================
+   VÍDEO BANNER TOPO
+========================= */
+.videoHero{
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: #000;
+}
+@media (max-width: 900px){
+  .videoHero{ height: 360px; }
+}
+
+.video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoOverlay{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 400px at 18% 35%, rgba(34,197,94,.20), transparent 55%),
+    linear-gradient(90deg, rgba(0,0,0,.82), rgba(0,0,0,.22) 55%, rgba(0,0,0,.68)),
+    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55));
+}
+
+.videoContent{
+  position: relative;
+  z-index: 2;
+  max-width: 1120px;
+  width: min(1120px, 92%);
+  margin: 0 auto;
+  padding: 90px 0 0;
+  color: #e8eef6;
+}
+@media (max-width: 900px){
+  .videoContent{ padding: 74px 0 0; }
+}
+
+.kicker{
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34,197,94,.14);
+  border: 1px solid rgba(34,197,94,.22);
+  font-size: 12px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+/* ✅ tipografia do HERO (mais bonita) */
+.videoTitle{
+  font-size: clamp(28px, 3.3vw, 46px);
+  line-height: 1.08;
+  margin: 0;
+  font-weight: 950;
+  letter-spacing: -0.7px;
+  text-transform: uppercase;
+}
+.videoSub{
+  margin-top: 10px;
+  color: rgba(232,238,246,.86);
+  max-width: 62ch;
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.videoActions{
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   BOTÕES (padronizados)
+========================= */
+.btnPrimary{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 22px;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #00a651, #22c55e);
+  color: #06110b;
+  font-weight: 950;
+  letter-spacing: .04em;
+  text-decoration: none;
+  border: none;
+
+  box-shadow:
+    0 10px 24px rgba(0,166,81,.35),
+    inset 0 1px 0 rgba(255,255,255,.25);
+
+  transition: transform .18s ease, filter .18s ease;
+}
+.btnPrimary:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.btnGhost{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: rgba(232,238,246,.92);
+  font-weight: 900;
+  letter-spacing: .02em;
+  text-decoration: none;
+  transition: transform .18s ease, background .18s ease;
+}
+.btnGhost:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.06);
+}
+
+/* =========================
+   NOSSAS SOLUÇÕES
+========================= */
+.solutionsSection{
+  position: relative;
+  width: 100%;
+  padding: 10px 24px 0;
+  overflow-x: clip;
+}
+
+.containerWide{
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  color: #e8eef6;
+}
+
+.solutionsHead{
+  margin-bottom: 18px;
+}
+
+/* ✅ escala padronizada */
+.h2{
+  font-size: clamp(22px, 2.4vw, 34px);
+  margin: 0 0 8px;
+  font-weight: 950;
+  letter-spacing: -0.4px;
+}
+.p{
+  margin: 0;
+  color: rgba(232,238,246,.76);
+  max-width: 80ch;
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+/* ===== tabs segmentos ===== */
+.segmentTabs{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+@media (max-width: 900px){
+  .segmentTabs{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.segmentTab{
+  border: none;
+  color: rgba(232,238,246,.86);
+  padding: 16px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: .02em;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.02);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.segmentTab:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.14);
+}
+
+.active{
+  border-color: rgba(34,197,94,.35);
+  background: rgba(34,197,94,.08);
+  color: rgba(232,238,246,.96);
+  box-shadow: 0 0 0 2px rgba(34,197,94,.08) inset;
+}
+
+.segmentLine{
+  height: 1px;
+  background: rgba(255,255,255,.08);
+  margin: 14px 0 18px;
+}
+
+/* ===== corpo ===== */
+.segmentBody{
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px){
+  .segmentBody{ grid-template-columns: 1fr; }
+}
+
+.segmentLeft{
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 18px;
+  background: rgba(255,255,255,.02);
+  padding: 14px;
+}
+
+.segSubtitle{
+  margin: 0 0 10px;
+  color: rgba(232,238,246,.72);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.subTabs{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 12px;
+}
+
+.subTab{
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(232,238,246,.86);
+  padding: 10px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: .18s;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+
+.subTab:hover{
+  border-color: rgba(255,255,255,.22);
+}
+
+.activeSub{
+  border-color: rgba(34,197,94,.38);
+  background: rgba(34,197,94,.10);
+  color: rgba(232,238,246,.96);
+}
+
+.subTitle{
+  font-size: clamp(20px, 2.1vw, 28px);
+  margin: 0 0 8px;
+  font-weight: 950;
+  letter-spacing: -0.4px;
+}
+.subDesc{
+  margin: 0 0 14px;
+  color: rgba(232,238,246,.76);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.subActions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== caixa exemplo direita ===== */
+.segmentRight{
+  position: relative;
+}
+
+.exampleBox{
+  position: relative;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,.02);
+  padding: 14px;
+  min-height: 360px;
+}
+
+.exampleMedia{
+  position: relative;
+  height: 400px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  overflow: hidden;
+  background: rgba(0,0,0,.25);
+  display: grid;
+  place-items: center;
+}
+
+.exampleImg{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.examplePlaceholder{
+  color: rgba(232,238,246,.85);
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: .02em;
+  padding: 18px;
+  font-size: 14px;
+}
+.exampleHint{
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* =========================================================
+   Seções padrão (Diferenciais / FAQ)
+========================================================= */
+.section{
+  width: min(1120px, 92%);
+  margin: 34px auto 0;
+}
+
+.sectionHead{
+  margin-bottom: 14px;
+}
+
+.sectionTitle{
+  color: #e8eef6;
+  margin: 0 0 6px;
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 950;
+  letter-spacing: -0.4px;
+}
+
+.sectionSub{
+  margin: 0;
+  color: rgba(232,238,246,.72);
+  line-height: 1.6;
+}
+
+/* Diferenciais com imagem do lado */
+.twoCol{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 900px){
+  .twoCol{
+    grid-template-columns: 1fr;
+  }
+}
+
+.cardStack{
+  display: grid;
+  gap: 10px;
+}
+
+.simpleCard{
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(255,255,255,.03);
+}
+.simpleCard strong{
+  font-weight: 950;
+  letter-spacing: -.2px;
+}
+.simpleCard p{
+  opacity: .8;
+  margin: 6px 0 0;
+  line-height: 1.6;
+}
+
+.mediaCard{
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,.02);
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+}
+
+.mediaImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* CTA bar */
+.ctaBar{
+  width: min(1120px, 92%);
+  margin: 30px auto 0;
+  border-radius: 18px;
+  border: 1px solid rgba(34,197,94,.22);
+  background:
+    radial-gradient(900px 400px at 20% 30%, rgba(34,197,94,.20), transparent 55%),
+    rgba(255,255,255,.02);
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+@media (max-width: 900px){
+  .ctaBar{
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.ctaText{
+  display: grid;
+  gap: 6px;
+}
+
+.ctaTitle{
+  margin: 0;
+  color: #e8eef6;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 950;
+  letter-spacing: -0.4px;
+}
+
+.ctaSub{
+  margin: 0;
+  color: rgba(232,238,246,.76);
+  line-height: 1.6;
+}
+
+.ctaActions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+@media (max-width: 900px){
+  .ctaActions{
+    justify-content: flex-start;
+  }
+}
+
+/* FAQ */
+.faqList{
+  display: grid;
+  gap: 10px;
+}
+
+.faqItem{
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 14px;
+  background: rgba(255,255,255,.02);
+  overflow: hidden;
+}
+
+.faqQ{
+  cursor: pointer;
+  padding: 12px 14px;
+  font-weight: 900;
+  color: rgba(232,238,246,.92);
+  list-style: none;
+  letter-spacing: -.1px;
+}
+.faqQ::-webkit-details-marker{
+  display: none;
+}
+
+.faqA{
+  padding: 0 14px 14px;
+  color: rgba(232,238,246,.74);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* ===== BOTÃO FIXO ===== */
+.floatingProposalBtn{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 2147483647;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 12px 16px;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #00a651, #22c55e);
+  color: #06110b;
+
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: .02em;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.14);
+
+  box-shadow: 0 10px 22px rgba(0,166,81,.40);
+
+  transition: transform .18s ease, filter .18s ease;
+}
+
+.floatingProposalBtn:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+@media (max-width: 520px){
+  .floatingProposalBtn{
+    right: 14px;
+    bottom: 14px;
+    padding: 11px 14px;
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   MOBILE FIXES — PROJETOS 
+========================= */
+@media (max-width: 520px){
+  .videoHero{ height: 520px; }
+  .videoContent{ padding: 64px 0 0; }
+  .videoTitle{ font-size: 28px; line-height: 1.12; }
+  .videoSub{ font-size: 13px; }
+
+  .videoActions{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .btnPrimary,
+  .btnGhost{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 999px;
+  }
+}
+
+@media (max-width: 820px){
+  .containerWide{ width: min(1200px, 92%); }
+
+  .segmentTabs{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .segmentTab{
+    padding: 14px 10px;
+    font-size: 14px;
+  }
+
+  .segmentBody{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .subTabs{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .subTabs::-webkit-scrollbar{ height: 6px; }
+  .subTabs::-webkit-scrollbar-thumb{
+    background: rgba(255,255,255,.12);
+    border-radius: 999px;
+  }
+
+  .subTab{
+    white-space: nowrap;
+    flex: 0 0 auto;
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .subTitle{ font-size: 22px; }
+
+  .subActions{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .subActions .btnGhost,
+  .subActions .btnPrimary{
+    width: 100%;
+    justify-content: center;
+  }
+
+  .exampleBox{
+    min-height: 260px;
+    padding: 12px;
+  }
+
+  .exampleMedia{ height: 220px; }
+
+  .floatingCta{
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 420px){
+  .segmentTab{ font-size: 13px; }
+  .subTitle{ font-size: 20px; }
+  .exampleMedia{ height: 200px; }
+}
+
+/* =========================================
+   MOBILE – SOLUÇÕES 
+========================================= */
+@media (max-width: 520px){
+  .solutionsSection{
+    background: rgba(0, 166, 81, 0.07) !important;
+    padding: 18px 0 26px !important;
+    margin-bottom: 22px !important;
+    border-radius: 22px !important;
+  }
+
+  .containerWide{ background: transparent !important; }
+
+  .segmentBody{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  .segmentLeft{
+    padding: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .subContent{
+    display: none !important;
+  }
+
+  .subTabs{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .subTab{
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 12px !important;
+    padding: 10px 8px !important;
+  }
+
+  .segmentRight{ width: 100% !important; }
+
+  .exampleBox{
+    padding: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    border-radius: 18px !important;
+  }
+
+  .exampleMedia{
+    height: 200px !important;
+    width: 100% !important;
+  }
+
+  .floatingCta{ display: none !important; }
+}
+
+/* =========================================
+   MOBILE – BOTÕES EMBAIXO DA IMAGEM 
+========================================= */
+.mobileActions{
+  display: none;
+}
+
+@media (max-width: 520px){
+  .subActions{ display: none !important; }
+
+  .mobileActions{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .mobileActions a{
+    padding: 10px 8px;
+    font-size: 13px;
+    border-radius: 12px;
+    min-height: 40px;
+  }
+
+  .mobileActions .btnPrimary{
+    box-shadow: 0 0 10px rgba(34,197,94,.25);
+  }
+}
+
+@media (max-width:520px){
+
+  .exampleMedia{
+    height:260px !important;
+    padding:8px;
+  }
+
+  .exampleImg{
+    object-fit:cover !important;
+    border-radius:12px;
+  }
+
+}

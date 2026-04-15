@@ -1,0 +1,205 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model cartitem {
+  id             Int             @id @default(autoincrement())
+  userId         String
+  productId      Int
+  variantId      Int?
+  qty            Int             @default(1)
+  createdAt      DateTime        @default(now())
+  product        product         @relation(fields: [productId], references: [id], onDelete: Cascade, map: "CartItem_productId_fkey")
+  user           user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "CartItem_userId_fkey")
+  productvariant productvariant? @relation(fields: [variantId], references: [id], onDelete: Cascade, map: "CartItem_variantId_fkey")
+
+  @@index([productId], map: "CartItem_productId_fkey")
+  @@index([userId], map: "CartItem_userId_idx")
+  @@index([variantId], map: "CartItem_variantId_fkey")
+}
+
+model category {
+  id              Int               @id @default(autoincrement())
+  name            String
+  slug            String            @unique(map: "Category_slug_key")
+  active          Boolean           @default(true)
+  sortOrder       Int               @default(0)
+  parentId        Int?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  category        category?         @relation("categoryTocategory", fields: [parentId], references: [id], map: "Category_parentId_fkey")
+  other_category  category[]        @relation("categoryTocategory")
+  productcategory productcategory[]
+
+  @@index([active, sortOrder], map: "Category_active_sortOrder_idx")
+  @@index([parentId], map: "Category_parentId_idx")
+}
+
+model order {
+  id        String           @id @default(cuid())
+  createdAt     DateTime     @default(now())
+  status        order_status @default(pending)
+  customerEmail String
+  customerObs   String?      @db.Text
+  customerWhats String
+  customerName  String
+  totalCents    Int
+  userId        String
+  customerCpf   String
+  shippingCents Int          @default(0)
+  user          user         @relation(fields: [userId], references: [id], map: "Order_userId_fkey")
+  orderitem     orderitem[]
+  payment       payment?
+
+  @@index([status], map: "Order_status_idx")
+  @@index([userId], map: "Order_userId_idx")
+}
+
+model orderitem {
+  id             Int             @id @default(autoincrement())
+  orderId        String
+  slug           String
+  qty            Int
+  imageUrl       String?
+  name           String
+  priceCents     Int
+  productId      Int?
+  variantId      Int?
+  order          order           @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "OrderItem_orderId_fkey")
+  product        product?        @relation(fields: [productId], references: [id], map: "OrderItem_productId_fkey")
+  productvariant productvariant? @relation(fields: [variantId], references: [id], map: "OrderItem_variantId_fkey")
+
+  @@index([orderId], map: "OrderItem_orderId_idx")
+  @@index([productId], map: "OrderItem_productId_fkey")
+  @@index([variantId], map: "OrderItem_variantId_fkey")
+}
+
+model payment {
+  id        String     @id @default(cuid())
+  orderId     String         @unique(map: "Payment_orderId_key")
+  provider    String
+  status      payment_status @default(pending)
+  amountCents Int
+  externalId  String?
+  createdAt   DateTime       @default(now())
+  order       order          @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "Payment_orderId_fkey")
+}
+
+model product {
+  id              Int               @id @default(autoincrement())
+  name            String
+  slug            String            @unique(map: "Product_slug_key")
+  description     String?           @db.Text
+  priceCents      Int
+  active          Boolean           @default(true)
+  featured        Boolean           @default(false)
+  brand           String?
+  sku             String?           @unique(map: "Product_sku_key")
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  highlight       Boolean           @default(false)
+  priority        Int               @default(0)
+  cartitem        cartitem[]
+  orderitem       orderitem[]
+  productcategory productcategory[]
+  productimage    productimage[]
+  productvariant  productvariant[]
+  stock           stock?
+
+  @@index([active, featured], map: "Product_active_featured_idx")
+  @@index([name], map: "Product_name_idx")
+}
+
+model productcategory {
+  productId  Int
+  categoryId Int
+  createdAt  DateTime @default(now())
+  category   category @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "ProductCategory_categoryId_fkey")
+  product    product  @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductCategory_productId_fkey")
+
+  @@id([productId, categoryId])
+  @@index([categoryId], map: "ProductCategory_categoryId_idx")
+}
+
+model productimage {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  url       String
+  alt       String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  product   product  @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductImage_productId_fkey")
+
+  @@index([productId, sortOrder], map: "ProductImage_productId_sortOrder_idx")
+}
+
+model productvariant {
+  id         Int         @id @default(autoincrement())
+  productId  Int
+  name       String
+  sku        String?     @unique(map: "ProductVariant_sku_key")
+  priceCents Int?
+  active     Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  cartitem   cartitem[]
+  orderitem  orderitem[]
+  product    product     @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductVariant_productId_fkey")
+  stock      stock?
+
+  @@index([productId, active], map: "ProductVariant_productId_active_idx")
+}
+
+model stock {
+  id             Int             @id @default(autoincrement())
+  productId      Int?            @unique(map: "Stock_productId_key")
+  variantId      Int?            @unique(map: "Stock_variantId_key")
+  quantity       Int             @default(0)
+  updatedAt      DateTime        @updatedAt
+  product        product?        @relation(fields: [productId], references: [id], onDelete: Cascade, map: "Stock_productId_fkey")
+  productvariant productvariant? @relation(fields: [variantId], references: [id], onDelete: Cascade, map: "Stock_variantId_fkey")
+
+  @@index([quantity], map: "Stock_quantity_idx")
+}
+
+model user {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique(map: "User_email_key")
+  password  String
+  role      user_role @default(CLIENT)
+  createdAt DateTime @default(now())
+
+  // 🔥 ADICIONA ISSO
+  emailVerified      Boolean   @default(false)
+  emailVerifyToken   String?
+  emailVerifyExpires DateTime?
+
+  cartitem cartitem[]
+  order    order[]
+}
+
+enum order_status {
+  pending
+  paid
+  canceled
+  shipped
+  completed
+}
+
+enum payment_status {
+  pending
+  approved
+  rejected
+  canceled
+}
+
+enum user_role {
+  ADMIN
+  CLIENT
+}

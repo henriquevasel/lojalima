@@ -1,0 +1,283 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import s from "@/app/styles/form.module.css";
+
+export default function CheckoutPage(){
+
+  const router = useRouter();
+
+  const [nome,setNome]=useState("");
+  const [whats,setWhats]=useState("");
+  const [email,setEmail]=useState("");
+  const [cpf,setCpf] = useState("");
+  const [obs,setObs]=useState("");
+  const [frete, setFrete] = useState<number | null>(null);
+
+  useEffect(() => {
+
+    async function checkCart() {
+
+      const res = await fetch("/api/cart", {
+        credentials: "include"
+      });
+
+      const data = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        alert("Seu carrinho está vazio");
+        router.push("/carrinho");
+      }
+
+    }
+
+    checkCart();
+
+  }, []);
+
+  // 🔥 PEGAR FRETE DO LOCALSTORAGE
+  useEffect(() => {
+    const saved =
+     sessionStorage.getItem("freteCents") ||
+      localStorage.getItem("frete");
+    if (saved) {
+      setFrete(Number(saved));
+    } else {
+    setFrete(null);
+  }
+  
+  }, []);
+
+  // 🔥 AUTO PREENCHER COM USUÁRIO
+// 🔥 AUTO PREENCHER COM USUÁRIO (CORRETO)
+useEffect(() => {
+
+  async function loadUser() {
+    try {
+      const res = await fetch("/api/me", {
+        credentials: "include"
+      });
+
+      if (!res.ok) return;
+
+      const user = await res.json();
+
+      setNome(user.name || "");
+      setEmail(user.email || "");
+
+      // se depois quiser salvar telefone/cpf no banco:
+      // setWhats(user.whatsapp || "");
+      // setCpf(user.cpf || "");
+
+    } catch (error) {
+      console.log("Erro ao carregar usuário");
+    }
+  }
+
+  loadUser();
+
+}, []);
+
+
+
+  // Máscara CPF
+  function formatarCPF(valor:string){
+
+    valor = valor.replace(/\D/g,"");
+
+    valor = valor.replace(/(\d{3})(\d)/,"$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/,"$1.$2");
+    valor = valor.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
+
+    return valor;
+
+  }
+
+  // Validação CPF
+  function validarCPF(cpf:string){
+
+    cpf = cpf.replace(/\D/g,"");
+
+    if(cpf.length !== 11){
+      return false;
+    }
+
+    if(/^(\d)\1+$/.test(cpf)){
+      return false;
+    }
+
+    let soma = 0;
+    let resto;
+
+    for(let i=1;i<=9;i++){
+      soma += parseInt(cpf.substring(i-1,i))*(11-i);
+    }
+
+    resto = (soma*10)%11;
+
+    if(resto === 10 || resto === 11){
+      resto = 0;
+    }
+
+    if(resto !== parseInt(cpf.substring(9,10))){
+      return false;
+    }
+
+    soma = 0;
+
+    for(let i=1;i<=10;i++){
+      soma += parseInt(cpf.substring(i-1,i))*(12-i);
+    }
+
+    resto = (soma*10)%11;
+
+    if(resto === 10 || resto === 11){
+      resto = 0;
+    }
+
+    if(resto !== parseInt(cpf.substring(10,11))){
+      return false;
+    }
+
+    return true;
+
+  }
+
+  function validarEmail(email:string){
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  function validarTelefone(numero:string){
+    const limpo = numero.replace(/\D/g,"");
+    return limpo.length >= 10 && limpo.length <= 11;
+  }
+
+  function continuar(){
+     console.log("clicou");
+    if(!nome || !whats){
+      alert("Preencha nome e WhatsApp");
+      return;
+    }
+
+ 
+
+    if(!validarTelefone(whats)){
+      alert("Telefone inválido");
+      return;
+    }
+
+    if(email && !validarEmail(email)){
+      alert("Email inválido");
+      return;
+    }
+
+    if(!cpf){
+      alert("Informe o CPF");
+      return;
+    }
+
+    const cpfLimpo = cpf.replace(/\D/g,"");
+
+if(cpfLimpo.length !== 11){
+  alert("CPF incompleto");
+  return;
+}
+
+if(!validarCPF(cpf)){
+  alert("CPF inválido");
+  return;
+}
+
+    sessionStorage.setItem(
+      "checkout_customer",
+      JSON.stringify({
+        nome,
+        whats,
+        email,
+        cpf,
+        obs,
+        freteCents: frete ? Number(frete) : 0
+      })
+    );
+
+    router.push("/checkout/pagamento");
+
+  }
+
+  return(
+
+    <div className={s.page}>
+      <div className={s.container}>
+
+        <h1 className={s.title}>
+          Checkout
+        </h1>
+
+        <div className={s.card}>
+
+          <input
+            placeholder="Nome"
+            value={nome}
+            onChange={(e)=>setNome(e.target.value)}
+            className={s.input}
+          />
+
+          <input
+            placeholder="WhatsApp"
+            value={whats}
+            onChange={(e)=>setWhats(e.target.value)}
+            className={s.input}
+          />
+
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            className={s.input}
+          />
+
+          <input
+            placeholder="CPF"
+            value={cpf}
+            onChange={(e)=>
+              setCpf(
+                formatarCPF(e.target.value)
+              )
+            }
+            className={s.input}
+            maxLength={14}
+          />
+
+          <textarea
+            placeholder="Observações"
+            value={obs}
+            onChange={(e)=>setObs(e.target.value)}
+            className={s.textarea}
+          />
+
+          {/* 🔥 MOSTRAR FRETE */}
+          {frete && frete > 0 && (
+            <p style={{ marginTop: 10 }}>
+              Frete: R$ {(frete / 100).toFixed(2)}
+            </p>
+          )}
+
+          <button
+          
+            onClick={continuar}
+            className={s.button}
+            
+          >
+            Continuar para pagamento
+            
+          </button>
+          
+        </div>
+      </div>
+    </div>
+
+  );
+
+}

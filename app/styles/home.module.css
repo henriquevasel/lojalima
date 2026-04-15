@@ -1,0 +1,653 @@
+.page {
+  --bg: #ffffff;
+  --text: #111827;
+  --text-2: #374151;
+  --text-3: #6b7280;
+
+  background:
+    radial-gradient(600px 200px at 20% 0%, rgba(34,197,94,0.10), transparent 60%),
+    radial-gradient(500px 200px at 80% 10%, rgba(34,197,94,0.08), transparent 60%),
+    #ffffff;
+
+  color: var(--text);
+  min-height: 100vh;
+}
+/* ===== Banner topo FULL WIDTH (Home) ===== */
+.bannerTop {
+  height: 240px;
+  background-image: url("/produtos/bannerHome.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+  .bannerTop {
+    height: 130px;
+  }
+}
+
+.shopScope {
+  --bg: #ffffff;
+  --text: #111827;
+  --text-2: #374151;
+  --text-3: #6b7280;
+
+  --surface: #ffffff;
+  --surface-2: #f9fafb;
+
+  --border: #e5e7eb;
+  --border-2: #d1d5db;
+
+  --card: #ffffff;
+
+  background: #ffffff;
+}
+
+.shopScope .badge {
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid var(--border);
+}
+/* ===== Helpers ===== */
+.green {
+  color: #22c55e;
+}
+
+.container {
+  /* você pode REMOVER essa classe do TSX depois e usar só "container" global,
+     mas mantive aqui pra não quebrar nada agora */
+  width: min(1200px, 92%);
+  margin: 0 auto;
+}
+
+.section {
+  padding: 64px 0;
+  position: relative;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0,0,0,0.08),
+    transparent
+  );
+}
+.sectionAlt {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sectionHead {
+  max-width: 920px;
+  margin-bottom: 18px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  color: #022c22;
+
+  box-shadow:
+    0 0 0 1px rgba(34,197,94,0.4),
+    0 10px 30px rgba(34,197,94,0.35),
+    0 0 18px rgba(34,197,94,0.25);
+
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.01);
+
+  box-shadow:
+    0 0 0 1px rgba(34,197,94,0.6),
+    0 16px 40px rgba(34,197,94,0.45),
+    0 0 28px rgba(34,197,94,0.35);
+}
+
+.btn-outline {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #111827;
+}
+
+.btn-outline:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 80px 0 50px;
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heroGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.heroTitle {
+ margin: 10px 0 10px;
+ line-height: 1.1;
+ font-weight: 800;
+letter-spacing: -0.02em;
+}
+
+.heroText {
+  margin-top: 10px;
+}
+
+.heroActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* highlights */
+.miniRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.miniTitle {
+  font-weight: 700;
+  color: #111827;
+}
+
+.miniDesc {
+  color: #6b7280;
+}
+
+@media (max-width: 720px) {
+  .miniRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mini {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff, #f9fafb);
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition: 0.2s;
+}
+
+.mini:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.miniTitle {
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.miniDesc {
+  opacity: 0.78;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* hero right */
+.heroRight {
+  display: grid;
+  gap: 12px;
+}
+
+.heroMedia {
+  position: relative;
+  height: 320px;
+
+  border-radius: 20px;
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.heroImg {
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 260px at 50% 0%, rgba(0, 0, 0, 0.25), transparent 60%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.40));
+  pointer-events: none;
+}
+
+.heroPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* card lateral */
+.heroSideCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 16px;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.sideTitle {
+  font-weight: 900;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.sideDesc {
+  opacity: 0.82;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+/* ===== CARDS HOME (soluções) ===== */
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1100px) {
+  .grid4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .grid4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.05),
+    0 10px 25px rgba(0,0,0,0.08);
+
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(34,197,94,0.25);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.12),
+    0 0 15px rgba(34,197,94,0.15);
+}
+
+.thumb {
+  position: relative;
+  height: 200px;
+  display: grid;
+  place-items: center;
+  background: #f9fafb;
+}
+
+.thumbImg {
+  object-fit: cover;
+}
+
+
+
+.thumbPlaceholder {
+  position: relative;
+  z-index: 2;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.28);
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+.cardBody {
+  padding: 16px 16px 18px;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 10px;
+}
+
+.cardCta {
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+/* ===== Split / media ===== */
+.split {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+@media (max-width: 980px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.list {
+  margin-top: 12px;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  opacity: 0.88;
+}
+
+.actionsRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.mediaBox {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  background: #ffffff;
+border: 1px solid #e5e7eb;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.mediaImgWrap {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mediaImg {
+  object-fit: cover;
+}
+
+@media (max-width: 980px) {
+  .mediaImgWrap {
+    height: 260px;
+  }
+}
+
+/* ===== MAPA ===== */
+.mapWrap {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+@media (max-width: 980px) {
+  .mapWrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mapBox {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  background: #ffffff;
+border: 1px solid #e5e7eb;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+}
+
+.mapImgWrap {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mapImg {
+  object-fit: contain;
+  padding: 1px;
+}
+
+@media (max-width: 980px) {
+  .mapImgWrap {
+    height: 260px;
+  }
+}
+
+.mapInfo {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* ===== CTA final ===== */
+.cta {
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  border-radius: 22px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.14), rgba(255, 255, 255, 0.02));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ctaActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   PRODUTO CARD (NOVO PADRÃO CLARO)
+========================= */
+
+.productCard {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  transition: 0.2s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  border-color: var(--border-2);
+}
+
+/* imagem */
+.productImage {
+  width: 100%;
+  height: 180px;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.productImage img {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* badge */
+.productBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #22c55e;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* conteúdo */
+.productBody {
+  padding: 14px;
+}
+
+.productTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.productDesc {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+/* preço */
+.productPrice {
+  font-size: 18px;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+/* parcelamento */
+.productInstallment {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+/* =========================
+   BANNER HOME – TELAS MAIORES
+========================= */
+
+@media (min-width: 1400px){
+
+  .bannerTop{
+    height: 440px;
+  }
+
+}
+
+@media (min-width: 1700px){
+
+  .bannerTop{
+    height: 500px;
+  }
+
+}
+
+@media (min-width: 2000px){
+
+  .bannerTop{
+    height: 560px;
+  }
+
+}
+.sectionBox{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.04);
+}
+.whatsBox{
+  background: linear-gradient(135deg, rgba(57,255,20,.12), rgba(22,163,74,.12));
+  border: 1px solid rgba(57,255,20,.3);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+
+
+/* melhora contraste geral */
+.h1, .h2 {
+  color: #111827;
+}
+
+.p {
+  color: #374151;
+}
+
+.small {
+  color: #6b7280;
+}

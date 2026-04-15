@@ -1,0 +1,32 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
+import { Toaster } from "react-hot-toast";
+
+export const metadata: Metadata = {
+  title: "Lima & Lima",
+  description: "Revenda Intelbras",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body>
+        <Header />
+
+        <main className="main">{children}</main>
+
+        <Footer />
+
+        {/* 🔥 FALTAVA ISSO */}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
