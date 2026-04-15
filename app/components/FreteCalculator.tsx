@@ -45,6 +45,9 @@ export default function FreteCalculator() {
       localStorage.setItem("cep", cep);
       localStorage.setItem("cidade", data.localidade);
       localStorage.setItem("uf", data.uf);
+      localStorage.setItem("cep", cepLimpo);
+      localStorage.setItem("logradouro", data.logradouro || "");
+      localStorage.setItem("bairro", data.bairro || "");
       
     } catch {
       alert("Erro ao calcular frete");

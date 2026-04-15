@@ -91,10 +91,10 @@ export default function MeusPedidos() {
               </span>
 
               <span>
-                {order.items?.length || 0} itens
+                {order.orderitem?.length || 0} itens
               </span>
 
-              <div style={{ textAlign: "right" }}>
+            <div style={{ textAlign: "right" }}>
   {order.shippingCents > 0 && (
     <div style={{ fontSize: 12, opacity: 0.7 }}>
       Frete: {(order.shippingCents / 100).toLocaleString("pt-BR", {
@@ -112,6 +112,21 @@ export default function MeusPedidos() {
   </div>
 </div>
             </div>
+
+
+            <div style={{
+  marginTop: 12,
+  padding: 12,
+  borderRadius: 10,
+  background: "#f9fafb",
+  border: "1px solid #eee",
+  fontSize: 13
+}}>
+  <strong>📍 Entrega</strong><br />
+  {order.street || "-"}, {order.neighborhood || "-"}<br />
+  {order.city || "-"} - {order.state || "-"}<br />
+  CEP: {order.cep || "-"}
+</div>
 
             {/* TIMELINE */}
             <div className={s.timeline}>
@@ -147,7 +162,7 @@ export default function MeusPedidos() {
 
             {/* ITENS */}
             <div className={s.items}>
-              {(order.items || []).map((item: any) => (
+              {(order.orderitem || []).map((item: any) => (
                 <div key={item.id} className={s.item}>
                   <div className={s.product}>
                     <b>{item.name}</b>

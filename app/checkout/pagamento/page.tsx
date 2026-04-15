@@ -61,6 +61,11 @@ async function finalizar(){
     return;
   }
 
+  if (!customer.endereco) {
+  toast.error("Endereço não informado");
+  return;
+}
+
 
   setLoading(true);
 
@@ -79,7 +84,8 @@ async function finalizar(){
         customerCpf:customer.cpf,
         customerObs:customer.obs || "",
         paymentMethod:payment,
-        freteCents: customer.freteCents || 0
+        freteCents: customer.freteCents || 0,
+        endereco: customer.endereco // 🔥 ESSA LINHA É A SOLUÇÃO
       })
     });
 

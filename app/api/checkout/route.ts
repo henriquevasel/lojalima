@@ -7,6 +7,7 @@ import { Preference } from "mercadopago";
 import { cookies } from "next/headers";
 import { getUserId } from "@/app/lib/getUserId";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
+import { sendOrderEmail } from "@/app/lib/email";
 
 export async function POST(req: Request) {
 
@@ -29,14 +30,17 @@ const userId = await getUserId();
     const body = await req.json();
 
     const {
-      customerName,
-      customerEmail,
-      customerWhats,
-      customerCpf,
-      customerObs,
-      paymentMethod,
-      freteCents
+        customerName,
+        customerEmail,
+        customerWhats,
+        customerCpf,
+        customerObs,
+        paymentMethod,
+        freteCents,
+        endereco
     } = body;
+
+    
 
     if (!freteCents || freteCents <= 0) {
     return NextResponse.json(
@@ -44,6 +48,13 @@ const userId = await getUserId();
         { status: 400 }
       );
     }
+
+    if (!endereco || !endereco.cep) {
+  return NextResponse.json(
+    { error: "Endereço não informado" },
+    { status: 400 }
+  );
+}
 
     if (!customerName || !customerWhats || !customerCpf) {
       return NextResponse.json(
@@ -111,16 +122,24 @@ totalCents += price * item.qty;
     const result = await prisma.$transaction(async (tx) => {
 
       const order = await tx.order.create({
-        data: {
-          userId,
-          status: "pending",
-          totalCents,
-          shippingCents: freteCents || 0,
-          customerName,
-          customerEmail: customerEmail || "",
-          customerWhats,
-          customerCpf,
-          customerObs: customerObs || "",
+     data: {
+  userId,
+  status: "pending",
+  totalCents,
+  shippingCents: freteCents || 0,
+
+  customerName,
+  customerEmail: customerEmail || "",
+  customerWhats,
+  customerCpf,
+  customerObs: customerObs || "",
+
+  // 🔥 ENDEREÇO (aqui embaixo, organizado)
+  cep: endereco?.cep || "",
+  city: endereco?.cidade || "",
+  state: endereco?.uf || "",
+  street: endereco?.logradouro || "",
+  neighborhood: endereco?.bairro || "",
 
           orderitem: {
             create: cartItems.map(item => ({
@@ -153,6 +172,13 @@ totalCents += price * item.qty;
       return { order, payment };
 
     });
+
+    const fullOrder = await prisma.order.findUnique({
+  where: { id: result.order.id },
+  include: { orderitem: true }
+});
+
+await sendOrderEmail(fullOrder);
 
 
     // ================= MERCADO PAGO =================

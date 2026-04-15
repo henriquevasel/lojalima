@@ -56,6 +56,14 @@ model order {
   orderitem     orderitem[]
   payment       payment?
 
+  cep           String?
+  street        String?
+  neighborhood  String?
+  city          String?
+  state         String?
+
+ 
+
   @@index([status], map: "Order_status_idx")
   @@index([userId], map: "Order_userId_idx")
 }

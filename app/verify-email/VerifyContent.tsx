@@ -13,13 +13,7 @@ export default function VerifyContent() {
     if (!token) return;
 
     async function verify() {
-      const res = await fetch(`/api/auth/verify-email?token=${token}`);
-
-      if (res.ok) {
-        router.push("/login?verified=true");
-      } else {
-        router.push("/login?error=invalid_token");
-      }
+      window.location.href = `/api/verify-email?token=${token}`;
     }
 
     verify();

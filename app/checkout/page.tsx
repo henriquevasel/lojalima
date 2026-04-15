@@ -15,10 +15,12 @@ export default function CheckoutPage(){
   const [obs,setObs]=useState("");
   const [frete, setFrete] = useState<number | null>(null);
 
+  // 🔥 NOVO
+  const [endereco, setEndereco] = useState<any>(null);
+
   useEffect(() => {
 
     async function checkCart() {
-
       const res = await fetch("/api/cart", {
         credentials: "include"
       });
@@ -29,83 +31,82 @@ export default function CheckoutPage(){
         alert("Seu carrinho está vazio");
         router.push("/carrinho");
       }
-
     }
 
     checkCart();
 
   }, []);
 
-  // 🔥 PEGAR FRETE DO LOCALSTORAGE
+  // 🔥 FRETE
   useEffect(() => {
     const saved =
      sessionStorage.getItem("freteCents") ||
       localStorage.getItem("frete");
+
     if (saved) {
       setFrete(Number(saved));
     } else {
-    setFrete(null);
-  }
-  
+      setFrete(null);
+    }
   }, []);
 
-  // 🔥 AUTO PREENCHER COM USUÁRIO
-// 🔥 AUTO PREENCHER COM USUÁRIO (CORRETO)
-useEffect(() => {
+  // 🔥 NOVO: PEGAR ENDEREÇO
+  useEffect(() => {
+    const cep = localStorage.getItem("cep");
+    const cidade = localStorage.getItem("cidade");
+    const uf = localStorage.getItem("uf");
+    const logradouro = localStorage.getItem("logradouro");
+    const bairro = localStorage.getItem("bairro");
 
-  async function loadUser() {
-    try {
-      const res = await fetch("/api/me", {
-        credentials: "include"
+    if (cep && cidade && uf) {
+      setEndereco({
+        cep,
+        cidade,
+        uf,
+        logradouro,
+        bairro
       });
-
-      if (!res.ok) return;
-
-      const user = await res.json();
-
-      setNome(user.name || "");
-      setEmail(user.email || "");
-
-      // se depois quiser salvar telefone/cpf no banco:
-      // setWhats(user.whatsapp || "");
-      // setCpf(user.cpf || "");
-
-    } catch (error) {
-      console.log("Erro ao carregar usuário");
     }
-  }
+  }, []);
 
-  loadUser();
+  // 🔥 AUTO USER
+  useEffect(() => {
 
-}, []);
+    async function loadUser() {
+      try {
+        const res = await fetch("/api/me", {
+          credentials: "include"
+        });
 
+        if (!res.ok) return;
 
+        const user = await res.json();
 
-  // Máscara CPF
+        setNome(user.name || "");
+        setEmail(user.email || "");
+
+      } catch {
+        console.log("Erro ao carregar usuário");
+      }
+    }
+
+    loadUser();
+
+  }, []);
+
   function formatarCPF(valor:string){
-
     valor = valor.replace(/\D/g,"");
-
     valor = valor.replace(/(\d{3})(\d)/,"$1.$2");
     valor = valor.replace(/(\d{3})(\d)/,"$1.$2");
     valor = valor.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
-
     return valor;
-
   }
 
-  // Validação CPF
   function validarCPF(cpf:string){
-
     cpf = cpf.replace(/\D/g,"");
 
-    if(cpf.length !== 11){
-      return false;
-    }
-
-    if(/^(\d)\1+$/.test(cpf)){
-      return false;
-    }
+    if(cpf.length !== 11) return false;
+    if(/^(\d)\1+$/.test(cpf)) return false;
 
     let soma = 0;
     let resto;
@@ -115,14 +116,8 @@ useEffect(() => {
     }
 
     resto = (soma*10)%11;
-
-    if(resto === 10 || resto === 11){
-      resto = 0;
-    }
-
-    if(resto !== parseInt(cpf.substring(9,10))){
-      return false;
-    }
+    if(resto === 10 || resto === 11) resto = 0;
+    if(resto !== parseInt(cpf.substring(9,10))) return false;
 
     soma = 0;
 
@@ -131,17 +126,9 @@ useEffect(() => {
     }
 
     resto = (soma*10)%11;
+    if(resto === 10 || resto === 11) resto = 0;
 
-    if(resto === 10 || resto === 11){
-      resto = 0;
-    }
-
-    if(resto !== parseInt(cpf.substring(10,11))){
-      return false;
-    }
-
-    return true;
-
+    return resto === parseInt(cpf.substring(10,11));
   }
 
   function validarEmail(email:string){
@@ -154,14 +141,19 @@ useEffect(() => {
     return limpo.length >= 10 && limpo.length <= 11;
   }
 
+
   function continuar(){
-     console.log("clicou");
+
+    
+  if (!endereco) {
+  alert("Calcule o frete antes de continuar");
+  return;
+}
+
     if(!nome || !whats){
       alert("Preencha nome e WhatsApp");
       return;
     }
-
- 
 
     if(!validarTelefone(whats)){
       alert("Telefone inválido");
@@ -180,15 +172,22 @@ useEffect(() => {
 
     const cpfLimpo = cpf.replace(/\D/g,"");
 
-if(cpfLimpo.length !== 11){
-  alert("CPF incompleto");
-  return;
-}
+    if(cpfLimpo.length !== 11){
+      alert("CPF incompleto");
+      return;
+    }
 
-if(!validarCPF(cpf)){
-  alert("CPF inválido");
-  return;
-}
+    if(!validarCPF(cpf)){
+      alert("CPF inválido");
+      return;
+    }
+
+    // 🔥 NOVO: PEGAR ENDEREÇO
+    const cep = localStorage.getItem("cep");
+    const cidade = localStorage.getItem("cidade");
+    const uf = localStorage.getItem("uf");
+    const logradouro = localStorage.getItem("logradouro");
+    const bairro = localStorage.getItem("bairro");
 
     sessionStorage.setItem(
       "checkout_customer",
@@ -198,12 +197,18 @@ if(!validarCPF(cpf)){
         email,
         cpf,
         obs,
-        freteCents: frete ? Number(frete) : 0
+        freteCents: frete ? Number(frete) : 0,
+        endereco: {
+          cep,
+          cidade,
+          uf,
+          logradouro,
+          bairro
+        }
       })
     );
 
     router.push("/checkout/pagamento");
-
   }
 
   return(
@@ -242,9 +247,7 @@ if(!validarCPF(cpf)){
             placeholder="CPF"
             value={cpf}
             onChange={(e)=>
-              setCpf(
-                formatarCPF(e.target.value)
-              )
+              setCpf(formatarCPF(e.target.value))
             }
             className={s.input}
             maxLength={14}
@@ -257,27 +260,34 @@ if(!validarCPF(cpf)){
             className={s.textarea}
           />
 
-          {/* 🔥 MOSTRAR FRETE */}
+          {/* 🔥 FRETE */}
           {frete && frete > 0 && (
             <p style={{ marginTop: 10 }}>
               Frete: R$ {(frete / 100).toFixed(2)}
             </p>
           )}
 
+          {/* 🔥 NOVO: ENDEREÇO */}
+          {endereco && (
+            <div style={{ marginTop: 10, fontSize: 13 }}>
+              <strong>Entrega em:</strong><br />
+              {endereco.logradouro}<br />
+              {endereco.bairro}<br />
+              {endereco.cidade} - {endereco.uf}<br />
+              CEP: {endereco.cep}
+            </div>
+          )}
+
           <button
-          
             onClick={continuar}
             className={s.button}
-            
           >
             Continuar para pagamento
-            
           </button>
-          
+
         </div>
       </div>
     </div>
 
   );
-
 }
