@@ -132,16 +132,33 @@ export default function FaleConoscoPage() {
               </a>
             </div>
 
-            <div className={s.mapBox}>
-              <Image
-                src="/produtos/mapa.png"
-                alt="Mapa de regiões atendidas"
-                fill
-                sizes="(max-width: 900px) 92vw, 420px"
-                className={s.mapImg}
-                priority
-              />
-            </div>
+           <div className={s.mapSection}>
+  <div className={s.mapBox}>
+    <Image
+      src="/produtos/MAPA.jpeg"
+      alt="Mapa de regiões atendidas"
+      fill
+      sizes="(max-width: 900px) 92vw, 420px"
+      className={s.mapImg}
+      priority
+    />
+  </div>
+
+  <div className={s.mapInfo}>
+    <h3 className={s.mapTitle}>Onde atendemos</h3>
+    <p className={s.mapDesc}>
+      Atuamos em diversas regiões do Brasil. Confira abaixo onde já temos operação ativa.
+    </p>
+
+    <div className={s.pills}>
+      <span className="badge">Minas Gerais</span>
+      <span className="badge">Rio de Janeiro</span>
+      <span className="badge">Paraná</span>
+      <span className="badge">Santa Catarina</span>
+      <span className="badge">Rio Grande do Sul</span>
+    </div>
+  </div>
+</div>
           </div>
         }
         sections={[

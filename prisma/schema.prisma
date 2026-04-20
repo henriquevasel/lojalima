@@ -58,6 +58,7 @@ model order {
 
   cep           String?
   street        String?
+  number        String?
   neighborhood  String?
   city          String?
   state         String?

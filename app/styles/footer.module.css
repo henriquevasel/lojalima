@@ -177,3 +177,81 @@
   .grid{ grid-template-columns: 1fr; }
   .top{ flex-direction: column; }
 }
+
+@media (min-width: 1400px){
+
+  .container{
+    width: min(1400px, 90%); /* 🔥 abre mais */
+  }
+
+  .top{
+    gap: 28px; /* mais respiro */
+  }
+
+  .brandTitle{
+    font-size: 28px;
+  }
+
+  .brandSub{
+    font-size: 15px;
+  }
+
+  .grid{
+    gap: 28px; /* colunas mais afastadas */
+  }
+
+  .socialBtn{
+    width: 44px;
+    height: 44px;
+  }
+
+}
+
+@media (min-width: 1600px){
+
+  .container{
+    width: min(1600px, 88%);
+  }
+
+  .top{
+    gap: 40px;
+  }
+
+  .brandTitle{
+    font-size: 30px;
+  }
+
+  .grid{
+    gap: 36px;
+  }
+
+  .col{
+    gap: 12px;
+  }
+
+  .icon{
+    width: 36px;
+    height: 36px;
+  }
+
+}
+
+@media (min-width: 1800px){
+
+  .container{
+    width: min(1800px, 85%);
+  }
+
+  .grid{
+    gap: 48px; /* 🔥 bem espaçado, fica premium */
+  }
+
+  .brandTitle{
+    font-size: 32px;
+  }
+
+  .brandSub{
+    font-size: 16px;
+  }
+
+}

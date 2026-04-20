@@ -8,12 +8,12 @@ export default function QuemSomosPage() {
       {/* ===== BANNER TOPO (SEM TEXTO EM CIMA) ===== */}
       <section className={s.banner}>
         <Image
-          src="/produtos/5954bc74-7976-4511-9a5d-c4399cfbe7cd.jfif"
+          src="/produtos/bannerQuemSomos.jpeg"
           alt="Empresa e atendimento"
           fill
           priority
           className={s.bannerImg}
-          sizes="100vw"
+          sizes="100vw" 
         />
         <div className={s.bannerOverlay} />
       </section>
@@ -111,7 +111,7 @@ export default function QuemSomosPage() {
             <article className={s.pillarCard}>
               <div className={s.pillarThumb}>
                 <Image
-                  src="/produtos/bannervisao1.jfif"
+                  src="/produtos/missao.png"
                   alt="Missão"
                   fill
                   className={s.pillarImg}
@@ -132,7 +132,7 @@ export default function QuemSomosPage() {
             <article className={s.pillarCard}>
               <div className={s.pillarThumb}>
                 <Image
-                  src="/produtos/bannervisao2.jfif"
+                  src="/produtos/visao.png"
                   alt="Visão"
                   fill
                   className={s.pillarImg}
@@ -153,7 +153,7 @@ export default function QuemSomosPage() {
             <article className={s.pillarCard}>
               <div className={s.pillarThumb}>
                 <Image
-                  src="/produtos/bannervisao3.jfif"
+                  src="/produtos/valores.png"
                   alt="Valores"
                   fill
                   className={s.pillarImg}

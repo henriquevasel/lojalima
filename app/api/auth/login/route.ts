@@ -7,6 +7,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { email, password } = body;
+
     const JWT_SECRET = process.env.JWT_SECRET;
 
     if (!JWT_SECRET) {
@@ -33,6 +34,17 @@ export async function POST(req: Request) {
       );
     }
 
+    // 🔥 ================= BLOQUEIO EMAIL (ANTES DA SENHA) =================
+    if (!user.emailVerified) {
+      return NextResponse.json(
+        { 
+          error: "Verifique seu email antes de entrar",
+          code: "EMAIL_NOT_VERIFIED"
+        },
+        { status: 403 }
+      );
+    }
+
     // ================= SENHA =================
     const senhaValida = await bcrypt.compare(
       password,
@@ -45,17 +57,6 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-
-    // 🔥 ================= BLOQUEIO EMAIL =================
-   if (!user.emailVerified) {
-  return NextResponse.json(
-    { 
-      error: "Verifique seu email antes de entrar",
-      code: "EMAIL_NOT_VERIFIED"
-    },
-    { status: 403 }
-  );
-}
 
     // ================= TOKEN =================
     const token = jwt.sign(
@@ -91,7 +92,7 @@ export async function POST(req: Request) {
     return response;
 
   } catch (error) {
-    console.log(error);
+    console.error("💥 ERRO LOGIN:", error);
 
     return NextResponse.json(
       { error: "Erro ao fazer login" },

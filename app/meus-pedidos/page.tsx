@@ -120,12 +120,14 @@ export default function MeusPedidos() {
   borderRadius: 10,
   background: "#f9fafb",
   border: "1px solid #eee",
-  fontSize: 13
+  fontSize: 13,
+  color: "#111"
 }}>
-  <strong>📍 Entrega</strong><br />
-  {order.street || "-"}, {order.neighborhood || "-"}<br />
-  {order.city || "-"} - {order.state || "-"}<br />
-  CEP: {order.cep || "-"}
+ <strong>📍 Entrega</strong><br />
+{order.street || "-"}, {order.number || "-"}<br />
+{order.neighborhood || "-"}<br />
+{order.city || "-"} - {order.state || "-"}<br />
+CEP: {order.cep || "-"}
 </div>
 
             {/* TIMELINE */}

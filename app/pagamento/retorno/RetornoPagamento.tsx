@@ -26,10 +26,9 @@ export default function RetornoPagamento() {
 
     async function checkStatus() {
       try {
+        
+const res = await fetch(`/api/order-status?orderId=${orderId}`);
 
-        const res = await fetch(`/api/orders/${orderId}`, {
-          credentials: "include"
-        });
 
         if (res.status === 401) {
           router.push("/login");

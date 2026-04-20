@@ -106,9 +106,33 @@ img {
 ========================= */
 .container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 24px;
+}
+
+/* começa pequeno */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .container {
+    max-width: 1800px;
+  }
 }
 
 .section {
@@ -624,7 +648,7 @@ img {
 
 
 .search-page {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 40px auto;
   padding: 20px;
 

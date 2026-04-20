@@ -13,7 +13,7 @@
   width: 100vw;
   height: 380px;
 
-  background-image: url("/produtos/bannernormal1.png"); /* coloque sua imagem */
+  background-image: url("/produtos/bannerInstalacao.png"); /* coloque sua imagem */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -300,4 +300,93 @@
   font-size: 12px;
   letter-spacing: .10em;
   text-transform: uppercase;
+}
+
+@media (min-width: 1400px){
+
+  .shell{
+    width: min(1400px, 90%);
+  }
+
+  .split{
+    gap: 24px;
+  }
+
+  .sectionBody{
+    gap: 18px;
+  }
+
+  .h1{
+    font-size: 46px;
+  }
+
+  .h2{
+    font-size: 28px;
+  }
+
+  .cta{
+    padding: 22px;
+    gap: 18px;
+  }
+
+}
+
+@media (min-width: 1600px){
+
+  .shell{
+    width: min(1600px, 88%);
+  }
+
+  .split{
+    gap: 32px;
+  }
+
+  .section{
+    border-radius: 20px;
+  }
+
+  .h1{
+    font-size: 50px;
+  }
+
+  .h2{
+    font-size: 30px;
+  }
+
+  .p{
+    font-size: 15px;
+  }
+
+  .mediaWrap{
+    min-height: 280px;
+  }
+
+}
+
+@media (min-width: 1800px){
+
+  .shell{
+    width: min(1800px, 85%);
+  }
+
+  .split{
+    gap: 40px;
+  }
+
+  .h1{
+    font-size: 54px;
+  }
+
+  .h2{
+    font-size: 32px;
+  }
+
+  .ctaTitle{
+    font-size: 28px;
+  }
+
+  .mediaWrap{
+    min-height: 320px;
+  }
+
 }

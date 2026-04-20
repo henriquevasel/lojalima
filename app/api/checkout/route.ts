@@ -37,7 +37,9 @@ const userId = await getUserId();
         customerObs,
         paymentMethod,
         freteCents,
-        endereco
+        endereco,
+        numero
+        
     } = body;
 
     
@@ -140,6 +142,7 @@ totalCents += price * item.qty;
   state: endereco?.uf || "",
   street: endereco?.logradouro || "",
   neighborhood: endereco?.bairro || "",
+  number: numero || "",
 
           orderitem: {
             create: cartItems.map(item => ({
@@ -178,7 +181,7 @@ totalCents += price * item.qty;
   include: { orderitem: true }
 });
 
-await sendOrderEmail(fullOrder);
+
 
 
     // ================= MERCADO PAGO =================

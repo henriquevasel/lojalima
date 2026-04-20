@@ -57,6 +57,7 @@ export default function CheckoutPage(){
     const uf = localStorage.getItem("uf");
     const logradouro = localStorage.getItem("logradouro");
     const bairro = localStorage.getItem("bairro");
+    
 
     if (cep && cidade && uf) {
       setEndereco({
@@ -188,6 +189,7 @@ export default function CheckoutPage(){
     const uf = localStorage.getItem("uf");
     const logradouro = localStorage.getItem("logradouro");
     const bairro = localStorage.getItem("bairro");
+    const numero = localStorage.getItem("numero");
 
     sessionStorage.setItem(
       "checkout_customer",
@@ -204,7 +206,8 @@ export default function CheckoutPage(){
           uf,
           logradouro,
           bairro
-        }
+        },
+        numero: numero || "",
       })
     );
 
@@ -260,23 +263,9 @@ export default function CheckoutPage(){
             className={s.textarea}
           />
 
-          {/* 🔥 FRETE */}
-          {frete && frete > 0 && (
-            <p style={{ marginTop: 10 }}>
-              Frete: R$ {(frete / 100).toFixed(2)}
-            </p>
-          )}
+          
 
-          {/* 🔥 NOVO: ENDEREÇO */}
-          {endereco && (
-            <div style={{ marginTop: 10, fontSize: 13 }}>
-              <strong>Entrega em:</strong><br />
-              {endereco.logradouro}<br />
-              {endereco.bairro}<br />
-              {endereco.cidade} - {endereco.uf}<br />
-              CEP: {endereco.cep}
-            </div>
-          )}
+          
 
           <button
             onClick={continuar}

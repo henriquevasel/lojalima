@@ -4,6 +4,7 @@ import client from "@/app/lib/mercadopago";
 import { Payment } from "mercadopago";
 import crypto from "crypto";
 import { payment_status } from "@prisma/client";
+import { sendOrderEmail } from "@/app/lib/email";
 
 const WEBHOOK_SECRET = process.env.MP_WEBHOOK_SECRET as string;
 
@@ -29,29 +30,37 @@ export async function POST(req: Request) {
 
     const rawBody = await req.text();
 
-    // 🔐 (opcional) validação de assinatura
+    // 🔐 (opcional)
     if (WEBHOOK_SECRET) {
-      const hash = crypto
+      crypto
         .createHmac("sha256", WEBHOOK_SECRET)
         .update(rawBody)
         .digest("hex");
-
-      // ⚠️ você pode validar header aqui depois se quiser
-      // const signature = req.headers.get("x-signature");
     }
 
     const body = JSON.parse(rawBody);
 
-    // 🔒 filtra eventos
-    if (body.type !== "payment") {
-      return NextResponse.json({ ok: true });
-    }
+    // 🔥 RESPONDE IMEDIATO (ESSENCIAL)
+    const response = NextResponse.json({ ok: true });
+
+    // 🔥 PROCESSA DEPOIS (SEM TRAVAR O MP)
+    processWebhook(body);
+
+    return response;
+
+  } catch (error) {
+    console.error("❌ Erro webhook:", error);
+    return NextResponse.json({ ok: true });
+  }
+}
+
+// 🔥 SUA LÓGICA ORIGINAL (MOVIDA PRA CÁ)
+async function processWebhook(body: any) {
+  try {
+    if (body.type !== "payment") return;
 
     const paymentId = body?.data?.id;
-
-    if (!paymentId) {
-      return NextResponse.json({ ok: true });
-    }
+    if (!paymentId) return;
 
     console.log("Webhook recebido:", paymentId);
 
@@ -64,11 +73,7 @@ export async function POST(req: Request) {
     console.log("STATUS DO PAGAMENTO:", payment.status);
 
     const orderId = payment.external_reference;
-
-    if (!orderId) {
-      console.log("❌ Sem external_reference");
-      return NextResponse.json({ ok: true });
-    }
+    if (!orderId) return;
 
     const order = await prisma.order.findUnique({
       where: { id: orderId },
@@ -78,15 +83,12 @@ export async function POST(req: Request) {
       },
     });
 
-    if (!order) {
-      console.log("❌ Pedido não encontrado:", orderId);
-      return NextResponse.json({ ok: true });
-    }
+    if (!order) return;
 
     const status = mapPayment_status(payment.status);
+    let shouldSendEmail = false;
 
     await prisma.$transaction(async (tx) => {
-      // 🔁 sempre sincroniza pagamento
       await tx.payment.updateMany({
         where: { orderId },
         data: {
@@ -95,13 +97,8 @@ export async function POST(req: Request) {
         },
       });
 
-      // 🎯 só executa lógica quando aprovado
       if (status === payment_status.approved) {
-        // 🛑 evita duplicação
-        if (order.status === "paid") {
-          console.log("⚠️ Pedido já estava pago");
-          return;
-        }
+        if (order.status === "paid") return;
 
         console.log("✅ Pagamento aprovado:", paymentId);
 
@@ -110,7 +107,6 @@ export async function POST(req: Request) {
           data: { status: "paid" },
         });
 
-        // 📦 atualizar estoque
         for (const item of order.orderitem) {
           if (item.variantId) {
             await tx.stock.updateMany({
@@ -129,18 +125,19 @@ export async function POST(req: Request) {
           }
         }
 
-        // 🛒 limpar carrinho
         await tx.cartitem.deleteMany({
           where: { userId: order.userId },
         });
+
+        shouldSendEmail = true;
       }
     });
 
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("❌ Erro webhook:", error);
+    if (shouldSendEmail) {
+      await sendOrderEmail(order);
+    }
 
-    // ⚠️ IMPORTANTE: sempre retorna 200 pro Mercado Pago
-    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("❌ Erro async webhook:", err);
   }
 }

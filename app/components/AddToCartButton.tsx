@@ -22,9 +22,22 @@ export default function AddToCartButton({ productId, variantId }: Props) {
     if (!freteSalvo) {
       toast.error("Calcule o frete antes de adicionar");
 
-      // 🔥 scroll até o frete
       document
         .querySelector("#frete")
+        ?.scrollIntoView({ behavior: "smooth" });
+
+      return;
+    }
+
+    // 🔥 PEGA NÚMERO DA CASA
+    const numero = localStorage.getItem("numero");
+
+    // 🔴 2. SEM NÚMERO (ou só espaço)
+    if (!numero || numero.trim() === "") {
+      toast.error("Informe o número da casa");
+
+      document
+        .querySelector("#numero-casa")
         ?.scrollIntoView({ behavior: "smooth" });
 
       return;
@@ -46,7 +59,7 @@ export default function AddToCartButton({ productId, variantId }: Props) {
 
       const data = await res.json();
 
-      // 🔴 2. NÃO LOGADO
+      // 🔴 NÃO LOGADO
       if (res.status === 401) {
         localStorage.setItem(
           "pendingCart",

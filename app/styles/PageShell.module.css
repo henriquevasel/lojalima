@@ -152,3 +152,85 @@
   border: 1px solid rgba(255,255,255,.08);
   background: rgba(255,255,255,.02);
 }
+
+@media (min-width: 1400px){
+
+  .container{
+    width: min(1400px, 90%);
+  }
+
+  .heroGrid{
+    gap: 24px;
+  }
+
+  .sectionGrid{
+    grid-template-columns: 1.1fr .9fr; /* 🔥 imagem ganha espaço */
+    gap: 24px;
+  }
+
+  .mediaImg{
+    height: 300px; /* 🔥 cresce */
+  }
+
+  .grid3{
+    gap: 18px;
+  }
+
+}
+
+@media (min-width: 1600px){
+
+  .container{
+    width: min(1600px, 88%);
+  }
+
+  .heroGrid{
+    gap: 32px;
+  }
+
+  .sectionGrid{
+    grid-template-columns: 1fr 1fr; /* 🔥 equilíbrio perfeito */
+    gap: 32px;
+  }
+
+  .mediaImg{
+    height: 340px;
+  }
+
+  .grid3{
+    gap: 22px;
+  }
+
+  .heroImage{
+    height: 240px;
+  }
+
+}
+
+@media (min-width: 1800px){
+
+  .container{
+    width: min(1800px, 85%);
+  }
+
+  .heroGrid{
+    gap: 40px;
+  }
+
+  .sectionGrid{
+    gap: 40px;
+  }
+
+  .mediaImg{
+    height: 380px;
+  }
+
+  .grid3{
+    gap: 26px;
+  }
+
+  .heroImage{
+    height: 260px;
+  }
+
+}

@@ -77,16 +77,17 @@ async function finalizar(){
         "Content-Type":"application/json"
       },
       credentials:"include",
-      body:JSON.stringify({
-        customerName:customer.nome,
-        customerWhats:customer.whats,
-        customerEmail:customer.email || "",
-        customerCpf:customer.cpf,
-        customerObs:customer.obs || "",
-        paymentMethod:payment,
-        freteCents: customer.freteCents || 0,
-        endereco: customer.endereco // 🔥 ESSA LINHA É A SOLUÇÃO
-      })
+   body:JSON.stringify({
+  customerName: customer.nome,
+  customerWhats: customer.whats,
+  customerEmail: customer.email || "",
+  customerCpf: customer.cpf,
+  customerObs: customer.obs || "",
+  paymentMethod: payment,
+  freteCents: customer.freteCents || 0,
+  endereco: customer.endereco,
+  numero: customer.numero // 🔥 AQUI
+})
     });
 
     const data = await res.json();

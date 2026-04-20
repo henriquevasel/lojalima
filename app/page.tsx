@@ -287,44 +287,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== SEÇÃO DE REGIÕES ATENDIDAS ===== */}
-      <section className={s.section}>
-        <div className={s.container}>
-          <div className={s.mapWrap}>
-
-            <div className={s.mapBox}>
-              <div className={s.mapImgWrap}>
-                <Image
-                  src="/produtos/mapacerto.png"
-                  alt="Mapa das regiões atendidas"
-                  fill
-                  className={s.mapImg}
-                  sizes="(max-width: 980px) 92vw, 520px"
-                  priority={false}
-                />
-              </div>
-            </div>
-
-            <div className={s.mapInfo}>
-              <h2 className="h2">Onde temos serviços</h2>
-              <p className="p">Ajuste essas regiões conforme sua operação.</p>
-
-              <div className={s.pills}>
-                <span className="badge">Minas Gerais</span>
-                <span className="badge">Rio de Janeiro</span>
-                <span className="badge">Paraná</span>
-                <span className="badge">Rio Grande do Sul</span>
-                <span className="badge">Paraguai</span>
-              </div>
-
-              <Link className="btn btn-primary-light" href="/fale-conosco#form-orcamento">
-                Fale Conosco
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </section>
+    
 
       {/* ===== CTA FINAL ===== */}
       <section className={s.section}>

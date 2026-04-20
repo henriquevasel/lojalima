@@ -9,6 +9,9 @@ export default function FreteCalculator() {
   const [endereco, setEndereco] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
+  // 🔥 NOVO
+  const [numero, setNumero] = useState("");
+
   async function calcularFrete() {
     const cepLimpo = cep.replace(/\D/g, "");
 
@@ -20,7 +23,6 @@ export default function FreteCalculator() {
     setLoading(true);
 
     try {
-      // 🔥 BUSCA ENDEREÇO
       const res = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
       const data = await res.json();
 
@@ -31,7 +33,6 @@ export default function FreteCalculator() {
 
       setEndereco(data);
 
-      // 🔥 CALCULA FRETE (INTELIGENTE)
       let valor = 3000;
 
       if (data.uf === "SC") valor = 1000;
@@ -42,19 +43,17 @@ export default function FreteCalculator() {
 
       // 🔥 SALVA
       sessionStorage.setItem("freteCents", String(valor));
-      localStorage.setItem("cep", cep);
+      localStorage.setItem("cep", cepLimpo);
       localStorage.setItem("cidade", data.localidade);
       localStorage.setItem("uf", data.uf);
-      localStorage.setItem("cep", cepLimpo);
       localStorage.setItem("logradouro", data.logradouro || "");
       localStorage.setItem("bairro", data.bairro || "");
-      
+
     } catch {
       alert("Erro ao calcular frete");
     } finally {
       setLoading(false);
     }
-    
   }
 
   return (
@@ -122,9 +121,30 @@ export default function FreteCalculator() {
           fontSize: 13,
           opacity: 0.8
         }}>
+          {endereco.logradouro} <br />
+          {endereco.bairro} <br />
           {endereco.localidade} - {endereco.uf}
         </div>
       )}
+
+    {endereco && (
+  <input
+    placeholder="Número da casa"
+    value={numero}
+    onChange={(e) => {
+      setNumero(e.target.value);
+      localStorage.setItem("numero", e.target.value);
+    }}
+    style={{
+      marginTop: 10,
+      width: "100%",
+      padding: "12px 14px",
+      borderRadius: 10,
+      border: numero ? "1px solid #ddd" : "1px solid red", // 🔥 feedback visual
+      fontSize: 14
+    }}
+  />
+)}
 
       {/* RESULTADO */}
       {frete !== null && endereco && (

@@ -22,7 +22,7 @@ export default function InstalacaoPage() {
             {
               title: "O que instalamos",
               subtitle: "Tudo com padrão profissional e organização — sem gambiarras.",
-              media: { src: "/produtos/bannervisao1.jfif", alt: "Equipe/instalação" },
+              media: { src: "/produtos/OqueIstalamos.png", alt: "Equipe/instalação" },
               children: (
                 <ul className={s.list}>
                   <li>Câmeras e gravadores (DVR/NVR)</li>
