@@ -14,20 +14,117 @@
 }
 /* ===== Banner topo FULL WIDTH (Home) ===== */
 .bannerTop {
-  height: 240px;
-  background-image: url("/produtos/bannerHome.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+  position: relative;
   width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 180px; /* mobile base */
+
+  overflow: hidden;
+  background: #fff;
 }
 
-@media (max-width: 768px) {
+.slide {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-size: contain; /* 🔥 nunca corta */
+  background-repeat: no-repeat;
+  background-position: center;
+
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* celulares maiores */
+@media (min-width: 480px) {
   .bannerTop {
-    height: 130px;
+    height: 220px;
   }
+}
+
+/* tablet */
+@media (min-width: 768px) {
+  .bannerTop {
+    height: 300px;
+  }
+}
+
+/* notebook */
+@media (min-width: 1024px) {
+  .bannerTop {
+    height: 340px;
+  }
+}
+
+/* desktop */
+@media (min-width: 1280px) {
+  .bannerTop {
+    height: 380px;
+  }
+}
+
+/* telas grandes */
+@media (min-width: 1600px) {
+  .bannerTop {
+    height: 420px;
+  }
+}
+
+/* ultra wide */
+@media (min-width: 1920px) {
+  .bannerTop {
+    height: 460px;
+  }
+}
+
+
+
+/* setas */
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* dots */
+.dots {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot,
+.dotActive {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.dotActive {
+  opacity: 1;
 }
 
 .shopScope {
@@ -58,10 +155,27 @@
 }
 
 .container {
-  /* você pode REMOVER essa classe do TSX depois e usar só "container" global,
-     mas mantive aqui pra não quebrar nada agora */
-  width: min(1200px, 92%);
+  width: 92%;
+  max-width: 1200px;
   margin: 0 auto;
+}
+
+@media (min-width: 1400px){
+  .container{
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1600px){
+  .container{
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1800px){
+  .container{
+    max-width: 1800px;
+  }
 }
 
 .section {
@@ -91,7 +205,7 @@
 }
 
 .sectionHead {
-  max-width: 920px;
+  max-width: 1200px;
   margin-bottom: 18px;
 }
 
@@ -286,29 +400,19 @@ letter-spacing: -0.02em;
 /* ===== CARDS HOME (soluções) ===== */
 .grid4 {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 18px;
 }
 
-@media (max-width: 1100px) {
-  .grid4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .grid4 {
-    grid-template-columns: 1fr;
-  }
-}
 
 .card {
-  background: #ffffff;
+  background: #f9fafb;
   border: 1px solid #e5e7eb;
+  border-radius: 18px;
 
   box-shadow:
-    0 2px 6px rgba(0,0,0,0.05),
-    0 10px 25px rgba(0,0,0,0.08);
+  0 6px 18px rgba(0,0,0,0.08),
+  0 24px 50px rgba(0,0,0,0.14);
 
   transition: all 0.2s ease;
 }
@@ -323,11 +427,10 @@ letter-spacing: -0.02em;
 }
 
 .thumb {
-  position: relative;
-  height: 200px;
-  display: grid;
-  place-items: center;
-  background: #f9fafb;
+   position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
 
 .thumbImg {
@@ -364,6 +467,32 @@ letter-spacing: -0.02em;
   margin: 12px 0 10px;
 }
 
+.tags span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+  border-radius: 999px; /* 🔥 deixa totalmente redondo */
+
+  border: 1px solid rgba(34,197,94,0.4);
+  background: rgba(34,197,94,0.08);
+
+  color: #16a34a;
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.tags span:hover {
+  background: rgba(34,197,94,0.15);
+  border-color: #22c55e;
+
+  transform: translateY(-1px);
+}
+
+
 .cardCta {
   font-weight: 900;
   opacity: 0.9;
@@ -380,6 +509,19 @@ letter-spacing: -0.02em;
 @media (max-width: 980px) {
   .split {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1400px){
+  .split{
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+  }
+}
+
+@media (min-width: 1800px){
+  .split{
+    grid-template-columns: 1.3fr 0.7fr;
   }
 }
 
@@ -593,3 +735,5 @@ border: 1px solid #e5e7eb;
 .small {
   color: #6b7280;
 }
+
+

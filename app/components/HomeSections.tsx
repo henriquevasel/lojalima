@@ -9,46 +9,45 @@ export default function HomeSections() {
   return (
     <>
 
-      {/* 🆕 LANÇAMENTOS */}
-      <div className="homeSection">
-        <ProductsCarousel
-          title="🆕 Lançamentos"
-          endpoint="/api/products/new"
-        />
-      </div>
+     <div className="homeSection">
+  <ProductsCarousel
+    title="Lançamentos"
+    endpoint="/api/products/new"
+  />
+</div>
 
-      {/* 🔥 MAIS VENDIDOS */}
-      <div className="homeSection">
-        <ProductsCarousel
-          title="🔥 Mais vendidos"
-          endpoint="/api/products/bestsellers"
-        />
-      </div>
+{/* MAIS VENDIDOS */}
+<div className="homeSection">
+  <ProductsCarousel
+    title="Mais vendidos"
+    endpoint="/api/products/bestsellers"
+  />
+</div>
 
-      {/* 💰 MAIS BARATOS */}
-      <div className="homeSection">
-        <ProductsCarousel
-          title="💰 Mais baratos"
-          endpoint="/api/products?sort=price_asc&limit=10"
-        />
-      </div>
+{/* MELHORES PREÇOS */}
+<div className="homeSection">
+  <ProductsCarousel
+    title="Melhores preços"
+    endpoint="/api/products?sort=price_asc&limit=10"
+  />
+</div>
 
       {/* 📲 BLOCO WHATS */}
       <div className="homeSection alt">
         <WhatsAppSection />
       </div>
 
-      {/* 💎 MAIS CAROS */}
-      <div className="homeSection">
-        <ProductsCarousel
-          title="💎 Produtos premium"
-          endpoint="/api/products?sort=price_desc&limit=10"
-        />
-      </div>
+    {/* PRODUTOS PREMIUM */}
+<div className="homeSection">
+  <ProductsCarousel
+    title="Produtos premium"
+    endpoint="/api/products?sort=price_desc&limit=10"
+  />
+</div>
 
       {/* 🔧 SERVIÇOS */}
       <div className="homeSection alt">
-        <InstallationServices />
+        
       </div>
 
       {/* CTA FINAL */}

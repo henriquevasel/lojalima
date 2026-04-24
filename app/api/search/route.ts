@@ -1,82 +1,63 @@
-  import { NextResponse } from "next/server";
-  import { prisma } from "@/app/lib/prisma";
+import { NextResponse } from "next/server";
+import { prisma } from "@/app/lib/prisma";
+import { productsWithImage } from "@/app/lib/productsWithImage";
 
-  export async function GET(req: Request) {
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
 
-    try {
+    let q = searchParams.get("q") || "";
+    q = q.trim().toLowerCase();
 
-      const { searchParams } = new URL(req.url);
+    if (q.length < 2) {
+      return NextResponse.json([]);
+    }
 
-      let q = searchParams.get("q") || "";
+    const terms = q.split(" ").filter(t => t.length > 1);
 
-      q = q.trim().toLowerCase();
+    const products = await prisma.product.findMany({
+      where: {
+        active: true,
 
-      if (q.length < 2) {
-        return NextResponse.json([]);
-      }
-
-  const terms = q.split(" ").filter(t => t.length > 1);
-
-const products = await prisma.product.findMany({
-  where: {
-    active: true,
-
-    AND: terms.map(term => ({
-      OR: [
-        {
-          name: {
-            contains: term,
-            
-          },
+        sku: {
+          in: productsWithImage
         },
-        {
-          slug: {
-            contains: term,
-            
-          },
-        },
-        {
-          brand: {
-            contains: term,
-            
-          },
-        },
-        {
-          productcategory: {
-            some: {
-              category: {
-                name: {
-                  contains: term,
-                  
+
+        AND: terms.map(term => ({
+          OR: [
+            { name: { contains: term } },
+            { slug: { contains: term } },
+            { brand: { contains: term } },
+            {
+              productcategory: {
+                some: {
+                  category: {
+                    name: { contains: term }
+                  },
                 },
               },
             },
-          },
+          ],
+        })),
+      },
+
+      include: {
+        productimage: {
+          take: 1,
         },
-      ],
-    })),
-  },
+      },
 
-  include: {
-    productimage: {
-      take: 1,
-    },
-  },
+      take: 8,
 
-  take: 8,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-  orderBy: {
-    createdAt: "desc",
-  },
-});
-      return NextResponse.json(products);
+    return NextResponse.json(products);
 
-    } catch (error) {
-
-      console.error("Erro na busca:", error);
-
-      return NextResponse.json([], { status: 500 });
-
-    }
-
+  } catch (error) {
+    console.error("Erro na busca:", error);
+    return NextResponse.json([], { status: 500 });
   }
+}

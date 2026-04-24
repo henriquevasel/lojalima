@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "@/app/components/ProductCard";
+import { productsWithImage } from "@/app/lib/productsWithImage"; // ✅ IMPORT
 
 export default function BuscaClient() {
 
@@ -38,6 +39,10 @@ export default function BuscaClient() {
     load();
   }, [q]);
 
+  // ✅ FILTRO AQUI
+  const filteredProducts = products;
+
+  
   return (
     <div className="search-page">
 
@@ -46,12 +51,12 @@ export default function BuscaClient() {
       {loading && <p>Buscando...</p>}
 
       <div className="products-grid">
-        {products.map((p: any) => (
+        {filteredProducts.map((p: any) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
 
-      {!loading && products.length === 0 && (
+      {!loading && filteredProducts.length === 0 && (
         <p>Nenhum produto encontrado</p>
       )}
 

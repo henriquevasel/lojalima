@@ -80,7 +80,7 @@ async function finalizar(){
    body:JSON.stringify({
   customerName: customer.nome,
   customerWhats: customer.whats,
-  customerEmail: customer.email || "",
+  customerEmail: customer.email,
   customerCpf: customer.cpf,
   customerObs: customer.obs || "",
   paymentMethod: payment,

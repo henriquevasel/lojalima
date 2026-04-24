@@ -11,13 +11,25 @@ FUNÇÃO DE CATEGORIA
 function getCategorySlug(name: string) {
   const n = name.toLowerCase();
 
-  if (n.includes("camera") || n.includes("vhd")) return "cameras";
+  if (
+    n.includes("camera") ||
+    n.includes("vhd") ||
+    n.includes("vhl") ||
+    n.includes("vip") ||
+    n.includes("mhdx") ||
+    n.includes("imhdx") ||
+    n.includes("invd") ||
+    n.includes("invu") ||
+    n.includes("nvd") ||
+    n.includes("nvr")
+  ) return "cameras";
 
   if (
     n.includes("acionador") ||
     n.includes("fechadura") ||
     n.includes("controle de acesso") ||
-    n.includes("portao")
+    n.includes("portao") ||
+    n.includes("alarme")
   ) return "seguranca";
 
   if (
@@ -29,7 +41,10 @@ function getCategorySlug(name: string) {
   if (
     n.includes("nobreak") ||
     n.includes("fonte") ||
-    n.includes("inversor")
+    n.includes("inversor") ||
+    n.includes("bateria") ||
+    n.includes("energia") ||
+    n.includes("power")
   ) return "energia";
 
   if (
@@ -37,12 +52,25 @@ function getCategorySlug(name: string) {
     n.includes("acustica")
   ) return "audio";
 
-  if (
-    n.includes("cabo") ||
-    n.includes("conector")
-  ) return "acessorios";
+  const acessoriosTerms = [
+    "cabo",
+    "conector",
+    "plug",
+    "adaptador",
+    "extensao",
+    "extensão",
+    "patch",
+    "cord",
+    "keystone",
+    "rj45"
+  ];
 
-  return "outros";
+  if (acessoriosTerms.some(term => n.includes(term))) {
+    return "acessorios";
+  }
+
+  // 🔥 ESSENCIAL
+  return "acessorios";
 }
 
 /* =========================

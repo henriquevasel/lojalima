@@ -29,7 +29,12 @@ export default function CategoriesSection() {
 
     <div className={styles.categories}>
 
-      {Array.isArray(categories) && categories.map((cat) => (
+     {Array.isArray(categories) &&
+  categories
+    .filter(cat =>
+      !["promocoes", "mais-vendidos", "lancamentos"].includes(cat.slug)
+    )
+    .map((cat) => (
 
         <Link key={cat.id} href={`/loja?category=${cat.slug}`}>
 
@@ -37,11 +42,11 @@ export default function CategoriesSection() {
 
             <div className={styles.categoryIcon}>
 
-              <Image
+             <Image
                 src={`/produtos/${cat.slug}.png`}
                 alt={cat.name}
-                fill
-                sizes="80px"
+                width={85}
+                height={85}
                 className={styles.categoryImg}
               />
 

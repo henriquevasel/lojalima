@@ -273,5 +273,73 @@
 .pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.pills span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+
+.mapFullSection {
+  padding: 70px 0;
+}
+
+.mapFullGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.mapFullBox {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000; /* fundo pra não ficar vazio */
+}
+
+.mapFullImg {
+  object-fit: contain;
+}
+
+.mapFullInfo {
+  max-width: 480px;
+}
+
+.mapFullInfo h2 {
+  font-size: 32px;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+
+.mapFullInfo p {
+  opacity: 0.75;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+
+
+@media (max-width: 900px) {
+  .mapFullGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mapFullBox {
+    height: 260px;
+  }
+
+  .mapFullInfo {
+    text-align: center;
+    margin: 0 auto;
+  }
 }

@@ -68,7 +68,7 @@ export default function HomeProducts() {
           </div>
 
           <div className="homeSection alt">
-            <InstallationServices />
+            
           </div>
 
           <div className="homeSection highlight">

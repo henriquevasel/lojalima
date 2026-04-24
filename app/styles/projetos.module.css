@@ -42,19 +42,22 @@
 /* =========================
    VÍDEO BANNER TOPO
 ========================= */
-.videoHero{
+.videoHero {
   position: relative;
   width: 100%;
   height: 420px;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  background: #000;
-}
-@media (max-width: 900px){
-  .videoHero{ height: 360px; }
 }
 
-.video{
+.videoHero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1;
+}
+
+.heroImg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -62,26 +65,13 @@
   object-fit: cover;
 }
 
-.videoOverlay{
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(900px 400px at 18% 35%, rgba(34,197,94,.20), transparent 55%),
-    linear-gradient(90deg, rgba(0,0,0,.82), rgba(0,0,0,.22) 55%, rgba(0,0,0,.68)),
-    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55));
-}
-
-.videoContent{
+.heroContent {
   position: relative;
   z-index: 2;
   max-width: 1120px;
-  width: min(1120px, 92%);
   margin: 0 auto;
-  padding: 90px 0 0;
-  color: #e8eef6;
-}
-@media (max-width: 900px){
-  .videoContent{ padding: 74px 0 0; }
+  padding-top: 90px;
+  color: #fff;
 }
 
 .kicker{
@@ -355,7 +345,9 @@
 .exampleImg{
   width: 100%;
   height: 100%;
-  object-fit: contain;
+    object-fit: contain;
+  object-position: center;
+  padding: 12px; /* 🔥 evita colar na borda */
   display: block;
 }
 
@@ -782,3 +774,64 @@
   }
 
 }
+
+@media (min-width: 1400px){
+
+  .header,
+  .section,
+  .ctaBar{
+    width: min(1400px, 90%);
+  }
+
+}
+
+@media (min-width: 1600px){
+
+  .header,
+  .section,
+  .ctaBar{
+    width: min(1600px, 88%);
+  }
+
+}
+
+@media (min-width: 1800px){
+
+  .header,
+  .section,
+  .ctaBar{
+    width: min(1800px, 85%);
+  }
+
+}
+
+@media (min-width: 1600px){
+  .containerWide{
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1800px){
+  .containerWide{
+    max-width: 1800px;
+  }
+}
+
+@media (min-width: 1400px){
+  .exampleMedia{
+    height: 460px;
+  }
+}
+
+@media (min-width: 1600px){
+  .exampleMedia{
+    height: 520px;
+  }
+}
+
+@media (min-width: 1800px){
+  .exampleMedia{
+    height: 580px;
+  }
+}
+

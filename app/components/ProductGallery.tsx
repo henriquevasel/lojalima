@@ -17,18 +17,25 @@ export default function ProductGallery({ images, name }: any) {
       <div
         style={{
           width: "100%",
-          height: 420,
+          aspectRatio: "1 / 1", // 🔥 mantém padrão sempre
           position: "relative",
           borderRadius: 20,
           overflow: "hidden",
-          marginBottom: 12
+          marginBottom: 12,
+          background: "#fff", // 🔥 fundo padrão
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
         }}
       >
         <Image
           src={selected}
           alt={name}
           fill
-          style={{ objectFit: "cover" }}
+          style={{
+            objectFit: "contain", // 🔥 NÃO corta nem estoura
+            padding: "10px" // opcional, dá respiro
+          }}
         />
       </div>
 
@@ -46,7 +53,7 @@ export default function ProductGallery({ images, name }: any) {
         {images?.map((img: any) => (
 
           <div
-            key={img.id}
+            key={img.url}
             onClick={() => setSelected(img.url)}
             style={{
               width: 70,
@@ -55,9 +62,10 @@ export default function ProductGallery({ images, name }: any) {
               borderRadius: 10,
               overflow: "hidden",
               cursor: "pointer",
+              background: "#fff",
               border: selected === img.url
                 ? "2px solid #22c55e"
-                : "1px solid rgba(255,255,255,0.1)"
+                : "1px solid rgba(0,0,0,0.1)"
             }}
           >
 
@@ -65,7 +73,9 @@ export default function ProductGallery({ images, name }: any) {
               src={img.url}
               alt={name}
               fill
-              style={{ objectFit: "cover" }}
+              style={{
+                objectFit: "contain" // 🔥 padrão correto
+              }}
             />
 
           </div>

@@ -80,7 +80,11 @@ export default function CategoriesCarousel() {
           }}
         >
 
-          {categories.map((cat) => (
+          {categories
+  .filter(cat =>
+    !["promocoes", "mais-vendidos", "lancamentos"].includes(cat.slug)
+  )
+  .map((cat) => (
 
             <Link
               key={cat.id}

@@ -1,10 +1,10 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { aplicarMarkupProdutos } from "@/app/lib/product";
+import { productsWithImage } from "@/app/lib/productsWithImage";
 
 export async function GET() {
 
-  // Agrupa vendas por produto
   const sales = await prisma.orderitem.groupBy({
     by: ["productId"],
     _sum: {
@@ -18,25 +18,37 @@ export async function GET() {
     take: 6,
   });
 
-  // Se ainda não houver vendas
-  if (sales.length === 0) {
-    const fallback = await prisma.product.findMany({
-      where: { active: true, featured: true },
-      include: { productimage: true },
-      take: 6,
-    });
+  let products: any[] = [];
 
-    return NextResponse.json(aplicarMarkupProdutos(fallback));
+  if (sales.length > 0) {
+    const productIds = sales.map((s) => s.productId).filter(Boolean);
+
+    products = await prisma.product.findMany({
+      where: {
+        id: { in: productIds as number[] },
+        sku: { in: productsWithImage }
+      },
+      include: { productimage: true },
+    });
   }
 
-  const productIds = sales.map((s) => s.productId).filter(Boolean);
-
-  const products = await prisma.product.findMany({
+  // 🔥 SE NÃO VEIO NADA → FALLBACK
+ if (products.length === 0) {
+  const fallback = await prisma.product.findMany({
     where: {
-      id: { in: productIds as number[] },
+      active: true,
+      sku: { in: productsWithImage }
     },
     include: { productimage: true },
+    take: 20 // 🔥 pega mais produtos
   });
+
+  // 🔥 embaralha
+  const shuffled = fallback.sort(() => 0.5 - Math.random());
+
+  // 🔥 pega só 6
+  products = shuffled.slice(0, 6);
+}
 
   return NextResponse.json(aplicarMarkupProdutos(products));
 }

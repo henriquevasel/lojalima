@@ -112,13 +112,6 @@
     font-size:28px;
   }
 
-  .imageWrap img{
-    width:100%;
-    height:auto;
-    max-height:380px;
-    object-fit:cover;
-  }
-
 }
 
 /* =========================

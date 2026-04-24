@@ -13,7 +13,7 @@
   width: 100vw;
   height: 380px;
 
-  background-image: url("/produtos/bannerInstalacao.png"); /* coloque sua imagem */
+  background-image: url("/produtos/bannerinstalacao.png"); /* coloque sua imagem */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,11 +33,7 @@
 /* ===== AJUSTES DE TIPOGRAFIA/ESPACAMENTO PARA O PAGESHELL ===== */
 /* (sem depender de mudar o PageShell) */
 
-.shell{
-  width: min(1120px, 92%);
-  margin: 0 auto;
-  padding: 26px 0 70px;
-}
+
 
 .badge{
   display:inline-flex;
@@ -265,10 +261,29 @@
 }
 /* ===== Tipografia padronizada sem mexer no PageShell ===== */
 .shell{
-  width: min(1120px, 92%);
+  width: 92%;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 26px 0 70px;
 }
+@media (min-width: 1400px){
+  .shell{
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1600px){
+  .shell{
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1800px){
+  .shell{
+    max-width: 1800px;
+  }
+}
+
 
 /* pega o badge/título/subtítulo do PageShell por “forma” */
 .shell :is(h1, h2, h3){

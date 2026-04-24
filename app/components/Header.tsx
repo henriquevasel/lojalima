@@ -3,7 +3,7 @@
   import Link from "next/link";
   import { usePathname, useRouter } from "next/navigation";
   import { useState, useEffect, useRef } from "react";
-
+import { calcularPrecoVenda } from "@/app/lib/pricing";
   import { FaWhatsapp, FaInstagram } from "react-icons/fa";
   import { HiOutlineLocationMarker } from "react-icons/hi";
   import { FiShoppingCart } from "react-icons/fi";
@@ -11,6 +11,7 @@
   import { FiSearch } from "react-icons/fi";
   import s from "@/app/styles/header.module.css";
   import { ROUTES } from "@/routes/routes";
+  import { productsWithImage } from "@/app/lib/productsWithImage";
 
 
   export default function Header() {
@@ -308,7 +309,7 @@
                     >
 
                       <img
-                        src={item.images?.[0]?.url}
+                        src={item.productimage?.[0]?.url}
                         style={{
                           width: 45,
                           height: 45,
@@ -330,7 +331,7 @@
                           color: "#00c853",
                           marginTop: 4
                         }}>
-                          R$ {(item.priceCents / 100).toFixed(2)}
+                          R$ {(calcularPrecoVenda(item.priceCents) / 100).toFixed(2)}
                         </div>
                       </div>
 

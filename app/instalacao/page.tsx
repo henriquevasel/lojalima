@@ -14,7 +14,7 @@ export default function InstalacaoPage() {
           subtitle="Instalação profissional, organizada e testada."
           crumbs={[{ label: "Início", href: "/" }, { label: "Instalação" }]}
           heroImage={{
-            src: "/produtos/d94d3597-2218-4901-8d1d-b4d1c483edb1.jfif",
+            src: "/produtos/servico.png",
             alt: "Instalação de infraestrutura e segurança",
             priority: true,
           }}
@@ -37,7 +37,7 @@ export default function InstalacaoPage() {
             {
               title: "Como entregamos",
               subtitle: "O objetivo é que você receba tudo funcionando, organizado e fácil de manter.",
-              media: { src: "/produtos/bannervisao2.jfif", alt: "Rack organizado e identificado" },
+              media: { src: "/produtos/comoentregamos.jpeg", alt: "Rack organizado e identificado" },
               children: (
                 <div className={s.cardStack}>
                   <div className={s.cardMini}>

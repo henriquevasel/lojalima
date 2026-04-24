@@ -132,33 +132,7 @@ export default function FaleConoscoPage() {
               </a>
             </div>
 
-           <div className={s.mapSection}>
-  <div className={s.mapBox}>
-    <Image
-      src="/produtos/MAPA.jpeg"
-      alt="Mapa de regiões atendidas"
-      fill
-      sizes="(max-width: 900px) 92vw, 420px"
-      className={s.mapImg}
-      priority
-    />
-  </div>
-
-  <div className={s.mapInfo}>
-    <h3 className={s.mapTitle}>Onde atendemos</h3>
-    <p className={s.mapDesc}>
-      Atuamos em diversas regiões do Brasil. Confira abaixo onde já temos operação ativa.
-    </p>
-
-    <div className={s.pills}>
-      <span className="badge">Minas Gerais</span>
-      <span className="badge">Rio de Janeiro</span>
-      <span className="badge">Paraná</span>
-      <span className="badge">Santa Catarina</span>
-      <span className="badge">Rio Grande do Sul</span>
-    </div>
-  </div>
-</div>
+   
           </div>
         }
         sections={[
@@ -284,9 +258,47 @@ export default function FaleConoscoPage() {
           secondaryHref: "/categoria/sistema-de-seguranca",
         }}
       />
+      <section className={s.mapFullSection}>
+  <div className={s.container}>
+    <div className={s.mapFullGrid}>
+
+      <div className={s.mapFullBox}>
+        <Image
+          src="/produtos/MAPA.jpeg"
+          alt="Mapa de regiões atendidas"
+          fill
+          className={s.mapFullImg}
+        />
+      </div>
+
+      <div className={s.mapFullInfo}>
+        <h2>Onde atendemos</h2>
+        <p>
+          Atuamos em diversas regiões do Brasil, com estrutura para atender
+          projetos com agilidade e qualidade.
+        </p>
+
+        <div className={s.pills}>
+          <span className="badge">Minas Gerais</span>
+          <span className="badge">Rio de Janeiro</span>
+          <span className="badge">Paraná</span>
+          <span className="badge">Santa Catarina</span>
+          <span className="badge">Rio Grande do Sul</span>
+        </div>
+
+        <a href="#form-orcamento" className="btn btn-primary-light">
+          Solicitar atendimento
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
     </main>
   );
 }
+
+
 
 function Field(props: {
   label: string;

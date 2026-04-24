@@ -16,74 +16,55 @@ async function main() {
 
   // ====== Categorias estilo loja grande (Intelbras-like) ======
   // Top-level
-  const seguranca = await prisma.category.create({
-    data: { name: "Segurança", slug: "seguranca", sortOrder: 1 },
-  });
+// ====== Categorias SIMPLES (AJUSTADAS PRO SEU PROJETO) ======
 
-  const redes = await prisma.category.create({
-    data: { name: "Redes", slug: "redes", sortOrder: 2 },
-  });
+const cameras = await prisma.category.create({
+  data: { name: "Câmeras", slug: "cameras", sortOrder: 1 },
+});
 
-  const energia = await prisma.category.create({
-    data: { name: "Energia", slug: "energia", sortOrder: 3 },
-  });
+const seguranca = await prisma.category.create({
+  data: { name: "Segurança", slug: "seguranca", sortOrder: 2 },
+});
 
-  const dataCenter = await prisma.category.create({
-    data: { name: "Data Center", slug: "data-center", sortOrder: 4 },
-  });
+const redes = await prisma.category.create({
+  data: { name: "Redes", slug: "redes", sortOrder: 3 },
+});
 
-  const controleAcesso = await prisma.category.create({
-    data: { name: "Controle de Acesso", slug: "controle-de-acesso", sortOrder: 5 },
-  });
+const energia = await prisma.category.create({
+  data: { name: "Energia", slug: "energia", sortOrder: 4 },
+});
 
-  // Subcategorias Segurança
-  const cftv = await prisma.category.create({
-    data: { name: "CFTV", slug: "cftv", parentId: seguranca.id, sortOrder: 1 },
-  });
+const audio = await prisma.category.create({
+  data: { name: "Áudio e Vídeo", slug: "audio", sortOrder: 5 },
+});
 
-  const camerasIp = await prisma.category.create({
-    data: { name: "Câmeras IP", slug: "cameras-ip", parentId: cftv.id, sortOrder: 1 },
-  });
+const acessorios = await prisma.category.create({
+  data: { name: "Acessórios", slug: "acessorios", sortOrder: 6 },
+});
 
-  const alarmes = await prisma.category.create({
-    data: { name: "Alarmes", slug: "alarmes", parentId: seguranca.id, sortOrder: 2 },
-  });
+const tags: { name: string; slug: string }[] = [
+  { name: "Promoções", slug: "promocoes" },
+  { name: "Mais vendidos", slug: "mais-vendidos" },
+  { name: "Lançamentos", slug: "lancamentos" },
+];
 
-  // Subcategorias Redes
-  const switches = await prisma.category.create({
-    data: { name: "Switches", slug: "switches", parentId: redes.id, sortOrder: 1 },
-  });
+await prisma.category.createMany({
+  data: tags,
+  skipDuplicates: true // 🔥 evita erro se rodar mais de uma vez
+});
 
-  const roteadores = await prisma.category.create({
-    data: { name: "Roteadores", slug: "roteadores", parentId: redes.id, sortOrder: 2 },
-  });
+// pega ids das tags
+const promocoes = await prisma.category.findUnique({
+  where: { slug: "promocoes" }
+});
 
-  // Subcategorias Energia
-  const nobreaks = await prisma.category.create({
-    data: { name: "Nobreaks", slug: "nobreaks", parentId: energia.id, sortOrder: 1 },
-  });
+const maisVendidos = await prisma.category.findUnique({
+  where: { slug: "mais-vendidos" }
+});
 
-  // Subcategorias Data Center
-  const racks = await prisma.category.create({
-    data: { name: "Racks", slug: "racks", parentId: dataCenter.id, sortOrder: 1 },
-  });
-
-  // Subcategorias Controle de Acesso
-  const biometria = await prisma.category.create({
-    data: { name: "Biometria / Facial", slug: "biometria-facial", parentId: controleAcesso.id, sortOrder: 1 },
-  });
-
-  const tags: { name: string; slug: string }[] = [
-    { name: "Promoções", slug: "promocoes" },
-    { name: "Mais vendidos", slug: "mais-vendidos" },
-    { name: "Lançamentos", slug: "lancamentos" },
-  ];
-
-  const tagCats = await prisma.category.createMany({ data: tags });
-  // pega ids das tags
-  const promocoes = await prisma.category.findUnique({ where: { slug: "promocoes" } });
-  const maisVendidos = await prisma.category.findUnique({ where: { slug: "mais-vendidos" } });
-
+const lancamentos = await prisma.category.findUnique({
+  where: { slug: "lancamentos" }
+});
   // ====== Produtos fake pra testar ======
   const cam1 = await prisma.product.create({
     data: {
@@ -144,22 +125,17 @@ async function main() {
   await prisma.stock.create({ data: { variantId: cam1v2.id, quantity: 5 } });
 
   // Liga produto em múltiplas categorias (N:N) — Opção B
-  const links = [
-    // cam1 em Câmeras IP, CFTV, Segurança, Promoções, Mais vendidos
-    { productId: cam1.id, categoryId: camerasIp.id },
-    { productId: cam1.id, categoryId: cftv.id },
-    { productId: cam1.id, categoryId: seguranca.id },
-    ...(promocoes ? [{ productId: cam1.id, categoryId: promocoes.id }] : []),
-    ...(maisVendidos ? [{ productId: cam1.id, categoryId: maisVendidos.id }] : []),
+const links = [
+  // cam1 em câmeras + segurança
+  { productId: cam1.id, categoryId: cameras.id },
+  { productId: cam1.id, categoryId: seguranca.id },
 
-    // sw1 em Switches, Redes
-    { productId: sw1.id, categoryId: switches.id },
-    { productId: sw1.id, categoryId: redes.id },
+  // sw1 em redes
+  { productId: sw1.id, categoryId: redes.id },
 
-    // nb1 em Nobreaks, Energia
-    { productId: nb1.id, categoryId: nobreaks.id },
-    { productId: nb1.id, categoryId: energia.id },
-  ];
+  // nb1 em energia
+  { productId: nb1.id, categoryId: energia.id },
+];
 
   await prisma.productcategory.createMany({ data: links });
 

@@ -134,8 +134,17 @@ async function processWebhook(body: any) {
     });
 
     if (shouldSendEmail) {
-      await sendOrderEmail(order);
-    }
+  const fullOrder = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: {
+      orderitem: true,
+    },
+  });
+
+  if (fullOrder) {
+    await sendOrderEmail(fullOrder);
+  }
+}
 
   } catch (err) {
     console.error("❌ Erro async webhook:", err);

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import React from "react";
+import { productsWithImage } from "@/app/lib/productsWithImage"; // ✅ IMPORT
 
 type Props = {
   title: string;
@@ -57,12 +58,16 @@ export default function ProductGrid({
     setLoading(false);
   }
 
-  // 🔁 quando muda busca/filtro
   useEffect(() => {
     setPage(1);
     setHasMore(true);
     load(1);
   }, [endpoint]);
+
+  // ✅ FILTRO AQUI
+  const filteredProducts = products.filter(p =>
+    productsWithImage.includes(String(p.sku))
+  );
 
   return (
     <section className="gridSection">
@@ -92,8 +97,8 @@ export default function ProductGrid({
           ))
         }
 
-        {/* PRODUTOS */}
-        {products.map((p) => (
+        {/* PRODUTOS FILTRADOS */}
+        {filteredProducts.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
 

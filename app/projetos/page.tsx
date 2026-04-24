@@ -23,8 +23,7 @@ type Segment = {
 
 type FaqItem = { q: string; a: string };
 
-const VIDEO_SRC = "/projetos/banner.mp4";
-const VIDEO_POSTER = "/projetos/banner-poster.jpg";
+const IMAGE_SRC = "/produtos/bannerpro.png";
 const WHATS_NUMBER = "554738423235";
 
 export default function ProjetosPage() {
@@ -247,41 +246,39 @@ Solução: ${activeSub.label}`;
   return (
     <>
       {/* ===== VIDEO BANNER TOPO ===== */}
-      <section className={s.videoHero}>
-        <video
-          className={s.video}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={VIDEO_POSTER}
-        >
-          <source src={VIDEO_SRC} type="video/mp4" />
-        </video>
+     <section className={s.videoHero}>
+  <img
+    src="/produtos/bannerpro.png"
+    alt="Banner"
+    className={s.heroImg}
+  />
 
-        <div className={s.videoOverlay} />
+  <div className={s.heroContent}>
+    <p className={s.kicker}>PROJETOS</p>
 
-        <div className={s.videoContent}>
-          <p className={s.kicker}>PROJETOS</p>
-          <h1 className={s.videoTitle}>
-            SOLUÇÕES EM COMUNICAÇÃO, ENERGIA E SEGURANÇA
-          </h1>
-          <p className={s.videoSub}>
-            Para ambientes residenciais, comerciais, condominiais e industriais.
-          </p>
+    <h1 className={s.videoTitle}>
+      SOLUÇÕES EM COMUNICAÇÃO, ENERGIA E SEGURANÇA
+    </h1>
 
-          <div className={s.videoActions}>
-            <a className={`btn btn-primary ${s.btnPrimary}`} href="/fale-conosco#form-orcamento">
-              Solicitar proposta
-            </a>
+    <p className={s.videoSub}>
+      Para ambientes residenciais, comerciais, condominiais e industriais.
+    </p>
 
-            {/* ⚠️ Seu href estava errado (tinha "/https://") */}
-            <a className={`btn btn-outline ${s.btnGhost}`} href={`https://wa.me/${WHATS_NUMBER}`} target="_blank" rel="noopener noreferrer">
-              Falar no WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
+    <div className={s.videoActions}>
+      <a className={`btn btn-primary ${s.btnPrimary}`} href="/fale-conosco#form-orcamento">
+        Solicitar proposta
+      </a>
+
+      <a
+        className={`btn btn-outline ${s.btnGhost}`}
+        href={`https://wa.me/554738423235`}
+        target="_blank"
+      >
+        Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
 
       {/* ===== CONTEÚDO ===== */}
       <main className={s.page}>
@@ -427,7 +424,7 @@ Solução: ${activeSub.label}`;
 
             <div className={s.mediaCard}>
               <img
-                src="/produtos/projetodife.png"
+                src="/produtos/diferenciais.jpeg"
                 alt="Imagem de apoio"
                 className={s.mediaImg}  
                 onError={(e) => {

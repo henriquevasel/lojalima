@@ -111,8 +111,12 @@ export default function Footer() {
             </Link>*/}
 
             {/* Se você tiver uma página real de políticas, troque o href */}
-            <Link className={s.link} href="">
-              Políticas
+            <Link className={s.link} href="/politica">
+              Política de privacidade
+            </Link>
+
+            <Link className={s.link} href="/termos">
+              Termos de uso
             </Link>
 
             {/* Trabalhe conosco -> Whats */}
@@ -159,15 +163,15 @@ export default function Footer() {
   Presidente Epitácio Pessoa, 723 – Santa Catarina, Jaraguá do Sul – SC, 89251-155
 </div>
           <div className={s.bottomLinks}>
-            <Link className={s.bottomLink} href="">
+            <Link className={s.bottomLink} href="/politica">
               Privacidade
             </Link>
             <span className={s.dot}>•</span>
-            <Link className={s.bottomLink} href="">
+            <Link className={s.bottomLink} href="/termos">
               Termos
             </Link>
             <span className={s.dot}>•</span>
-            <Link className={s.bottomLink} href="">
+            <Link className={s.bottomLink} href="https://wa.me/554738423235">
               Suporte
             </Link>
           </div>

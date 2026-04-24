@@ -75,16 +75,12 @@ export default async function ProdutoPage({ params }: any) {
 
         <div className={s.imageWrap}>
 
-          <ProductGallery
-            images={produto.productimage}
-            name={produto.name}
-            fallback="/produtos/placeholder.jpg"
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-            }}
-          />
+  <ProductGallery
+  images={[1,2,3,4].map(i => ({
+    url: `/produtos/${produto.sku}-${i}.png`
+  }))}
+  name={produto.name}
+/>
 
         </div>
 
@@ -229,9 +225,9 @@ export default async function ProdutoPage({ params }: any) {
   <div className={s.relatedGrid} >
     {relacionados.map((p) => {
 
-      const img =
-  p.productimage?.[0]?.url ||
-  "/produtos/placeholder.jpg";
+    const img = p.sku
+  ? `/produtos/${p.sku}-1.png`
+  : "/produtos/placeholder.jpg";
 
       return (
         <Link

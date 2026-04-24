@@ -1,0 +1,83 @@
+/* FUNDO DA PÁGINA (fora da folha) */
+.pageBg {
+  background: #f3f4f6;
+  padding: 40px 16px;
+}
+
+/* "FOLHA" CENTRAL */
+.paper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 48px 56px;
+  border-radius: 8px;
+
+  /* sombra suave */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  color: #1f2937;
+  line-height: 1.7;
+}
+
+/* TÍTULO PRINCIPAL */
+.paper h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #111827;
+}
+
+/* SUBTÍTULOS */
+.paper h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+/* PARÁGRAFOS */
+.paper p {
+  font-size: 15.5px;
+  margin-bottom: 12px;
+  color: #374151;
+}
+
+/* LISTAS */
+.paper ul {
+  padding-left: 18px;
+  margin-bottom: 16px;
+}
+
+.paper li {
+  margin-bottom: 6px;
+}
+
+/* LINHA DIVISÓRIA */
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 32px 0;
+}
+
+/* TEXTO FINAL */
+.footerNote {
+  margin-top: 40px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .paper {
+    padding: 32px 20px;
+  }
+
+  .paper h1 {
+    font-size: 26px;
+  }
+
+  .paper h2 {
+    font-size: 18px;
+  }
+}

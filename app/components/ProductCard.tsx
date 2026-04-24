@@ -6,13 +6,13 @@ import styles from "@/app/styles/productCard.module.css";
 
 export default function ProductCard({ product }: any) {
 
-  const image =
-  product.productimage?.[0]?.url ||
-  `/products/${product.slug}-1.jpg` ||
-  "/produtos/placeholder.jpg";
+  // imagem baseada no SKU (com fallback seguro)
+  const image = product?.sku
+    ? `/produtos/${product.sku}-1.png`
+    : "/produtos/placeholder.jpg";
 
   const priceNumber = product.priceCents / 100;
-  
+
   const price = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -29,34 +29,27 @@ export default function ProductCard({ product }: any) {
       : "Produto profissional com alto desempenho.";
 
   return (
-
     <Link href={`/produto/${product.slug}`} className={styles.link}>
-
       <div className={styles.card}>
 
         {/* IMAGEM */}
-
         <div className={styles.imageWrapper}>
-
           <Image
-          src={image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, 25vw"
-          className={styles.image}
+            src={image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 25vw"
+            className={styles.image}
           />
 
-         {product.featured && (
-        <div className={styles.badgeFeatured}>
-         Mais vendido
+          {product.featured && (
+            <div className={styles.badgeFeatured}>
+              Mais vendido
+            </div>
+          )}
         </div>
-        )}
-
-        </div>
-        
 
         {/* INFO */}
-
         <div className={styles.info}>
 
           {product.brand && (
@@ -64,7 +57,6 @@ export default function ProductCard({ product }: any) {
               {product.brand}
             </div>
           )}
-          
 
           <div className={styles.name}>
             {product.name}
@@ -85,8 +77,6 @@ export default function ProductCard({ product }: any) {
         </div>
 
       </div>
-
     </Link>
-
   );
 }

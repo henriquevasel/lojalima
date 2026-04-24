@@ -129,7 +129,6 @@ totalCents += price * item.qty;
   status: "pending",
   totalCents,
   shippingCents: freteCents || 0,
-
   customerName,
   customerEmail: customerEmail || "",
   customerWhats,
@@ -212,10 +211,13 @@ const preferenceData = await preference.create({
       }
     ],
 
-    payer: {
-      name: customerName,
-      email: customerEmail || "test@test.com"
-    },
+  payer: {
+  email: customerEmail,
+  identification: {
+    type: "CPF",
+    number: customerCpf.replace(/\D/g, "") // 🔥 IMPORTANTE
+  }
+},
 
     payment_methods:
       paymentMethod === "pix"

@@ -8,6 +8,7 @@ import InstallationServices from "@/app/components/InstallationServices";
 import WhatsAppSection from "@/app/components/WhatsAppSection";
 import WhatsappCTA from "@/app/components/WhatsappCTA";
 import HomeSections from "@/app/components/HomeSections";
+import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
 
 
 // Define o tipo de dados de um card de categoria da home
@@ -83,7 +84,7 @@ export default function HomePage() {
     <main className={s.page}>
 
       {/* Banner superior da página */}
-      <div className={s.bannerTop} />
+      <HomeBannerCarousel />
 
     
 
@@ -101,90 +102,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== HERO (primeira seção principal do site) ===== */}
-      <section className={s.hero}>
-        <div className={s.container}>
-          <div className={s.heroGrid}>
-
-            {/* Lado esquerdo do hero */}
-            <div className={s.heroLeft}>
-
-             
-
-              {/* Título principal da página */}
-              <h1 className={`h1 ${s.heroTitle}`}>
-                <span className={s.green}>Produtos</span> e{" "}
-                <span className={s.green}>Serviços</span> no mesmo lugar
-              </h1>
-
-              {/* Texto de descrição */}
-              <p className={`p ${s.heroText}`}>
-                Equipamentos e soluções completas em segurança eletrônica, redes e infraestrutura.
-                Do projeto à instalação, com acabamento profissional.
-              </p>
-
-              {/* Botões de ação */}
-              <div className={s.heroActions}>
-                
-                {/* Botão para ir para a loja */}
-      
-
-                {/* Botão para orçamento */}
-                <Link className="btn btn-primary" href="/fale-conosco#form-orcamento">
-                  Solicitar orçamento
-                </Link>
-
-                {/* Botão para WhatsApp */}
-                <Link className="btn btn-primary-light" href="https://wa.me/554738423235">
-                  Falar no WhatsApp
-                </Link>
-              </div>
-
-              {/* Destaques rápidos */}
-              <div className={s.miniRow}>
-                {HIGHLIGHTS.map((h) => (
-                  <div key={h.title} className={s.mini}>
-                    <div className={s.miniTitle}>{h.title}</div>
-                    <div className={s.miniDesc}>{h.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Lado direito do hero */}
-            <div className={s.heroRight}>
-
-              {/* Imagem principal do hero */}
-              <div className={s.heroMedia}>
-                <Image
-                  src="/produtos/donoslima.png"
-                  alt="Hero"
-                  fill
-                  className={s.heroImg}
-                  priority
-                />
-
-                {/* Elementos visuais adicionais */}
-                <div className={s.heroPlaceholder} />
-                <div className={s.heroOverlay} />
-              </div>
-
-              {/* Card lateral com CTA */}
-              <div className={s.heroSideCard}>
-                <div className={s.sideTitle}>Precisa de resposta rápida?</div>
-                <div className={s.sideDesc}>
-                 Fale no WhatsApp, informe cidade, ambiente e necessidade, e nossa equipe orienta você imediatamente.
-                </div>
-
-                {/* Botão WhatsApp */}
-                <Link className="btn btn-primary-light" href="https://wa.me/554738423235">
-                  Falar agora
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  
 
       {/* ===== SEÇÃO DE CATEGORIAS / SOLUÇÕES ===== */}
       <section className={s.section}>
@@ -240,52 +158,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== SEÇÃO DE SERVIÇOS ===== */}
-      <section className={s.sectionAlt}>
-        <div className={s.container}>
-          <div className={s.split}>
-
-            <div>
-              <h2 className="h2">Serviço completo (do projeto à instalação)</h2>
-
-              <p className="p">
-                A gente cuida de tudo para sua solução ficar estável, organizada, bonita e fácil de manter.
-              </p>
-
-              <ul className={s.list}>
-                <li>Levantamento e orientação (o que realmente vale a pena para o seu caso)</li>
-                <li>Projeto e dimensionamento (carga, pontos e retenção de imagens)</li>
-                <li>Instalação organizada (rack, identificação e acabamento)</li>
-                <li>Configuração, testes e suporte para futuras expansões</li>
-              </ul>
-
-              <div className={s.actionsRow}>
-                <Link className="btn btn-primary-light" href="/projetos">
-                  Ver Projetos
-                </Link>
-
-                <Link className="btn btn-outline-light" href="/instalacao">
-                  Ver Instalação
-                </Link>
-              </div>
-            </div>
-
-            <div className={s.mediaBox}>
-              <div className={s.mediaImgWrap}>
-                <Image
-                  src="/produtos/srvicocompleto.JPG"
-                  alt="Equipe / instalação"
-                  fill
-                  className={s.mediaImg}
-                  sizes="(max-width: 980px) 92vw, 520px"
-                  priority={false}
-                />
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
+    
 
     
 
