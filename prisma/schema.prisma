@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -41,7 +42,7 @@ model category {
 }
 
 model order {
-  id        String           @id @default(cuid())
+  id            String       @id @default(cuid())
   createdAt     DateTime     @default(now())
   status        order_status @default(pending)
   customerEmail String
@@ -62,8 +63,6 @@ model order {
   neighborhood  String?
   city          String?
   state         String?
-
- 
 
   @@index([status], map: "Order_status_idx")
   @@index([userId], map: "Order_userId_idx")
@@ -89,7 +88,7 @@ model orderitem {
 }
 
 model payment {
-  id        String     @id @default(cuid())
+  id          String         @id @default(cuid())
   orderId     String         @unique(map: "Payment_orderId_key")
   provider    String
   status      payment_status @default(pending)
@@ -148,17 +147,17 @@ model productimage {
 }
 
 model productvariant {
-  id         Int         @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   productId  Int
   name       String
-  sku        String?     @unique(map: "ProductVariant_sku_key")
+  sku        String?    @unique(map: "ProductVariant_sku_key")
   priceCents Int?
-  active     Boolean     @default(true)
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  active     Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   cartitem   cartitem[]
   orderitem  orderitem[]
-  product    product     @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductVariant_productId_fkey")
+  product    product    @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductVariant_productId_fkey")
   stock      stock?
 
   @@index([productId, active], map: "ProductVariant_productId_active_idx")
@@ -177,14 +176,13 @@ model stock {
 }
 
 model user {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  email     String   @unique(map: "User_email_key")
+  email     String    @unique(map: "User_email_key")
   password  String
   role      user_role @default(CLIENT)
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
 
-  // 🔥 ADICIONA ISSO
   emailVerified      Boolean   @default(false)
   emailVerifyToken   String?
   emailVerifyExpires DateTime?
