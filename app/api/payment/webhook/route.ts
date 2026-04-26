@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
-import client from "@/app/lib/mercadopago";
+import { getMercadoPagoClient } from "@/app/lib/mercadopago";
 import { Payment } from "mercadopago";
 import crypto from "crypto";
 import { payment_status } from "@prisma/client";
@@ -57,6 +57,9 @@ export async function POST(req: Request) {
 // 🔥 SUA LÓGICA ORIGINAL (MOVIDA PRA CÁ)
 async function processWebhook(body: any) {
   try {
+    const client = getMercadoPagoClient();
+    if (!client) return;
+
     if (body.type !== "payment") return;
 
     const paymentId = body?.data?.id;
