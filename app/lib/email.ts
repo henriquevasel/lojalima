@@ -1,10 +1,25 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    return null;
+  }
+
+  return new Resend(apiKey);
+}
 
 // ================= EMAIL DE VERIFICAÇÃO =================
 export async function sendVerificationEmail(email: string, link: string) {
   try {
+    const resend = getResendClient();
+
+    if (!resend) {
+      console.warn("RESEND_API_KEY não configurada. Email de verificação não enviado.");
+      return;
+    }
+
     await resend.emails.send({
       from: "Loja Lima & Lima <contato@lojalimaelima.com.br>",
       to: email,
@@ -42,6 +57,13 @@ export async function sendVerificationEmail(email: string, link: string) {
 // ================= EMAIL DE PEDIDO =================
 export async function sendOrderEmail(order: any) {
   try {
+    const resend = getResendClient();
+
+    if (!resend) {
+      console.warn("RESEND_API_KEY não configurada. Email de pedido não enviado.");
+      return;
+    }
+
     const produtosHTML = order.orderitem
       .map(
         (item: any) => `

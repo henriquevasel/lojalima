@@ -1,13 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import s from "@/app/styles/home.module.css";
-import ProductsCarousel from "@/app/components/ProductsCarousel";
-import CategoriesSection from "@/app/components/CategoriesSection";
-import HomeProducts from "@/app/components/HomeProducts";
-import InstallationServices from "@/app/components/InstallationServices";
-import WhatsAppSection from "@/app/components/WhatsAppSection";
-import WhatsappCTA from "@/app/components/WhatsappCTA";
-import HomeSections from "@/app/components/HomeSections";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
 
 
@@ -88,19 +81,8 @@ export default function HomePage() {
 
     
 
-      {/* ===== SEÇÃO DE PRODUTOS (CARROSSEL) ===== */}
-      {/* 🔥 ADICIONADO shopScope AQUI */}
-      <section className={`${s.productsSection} shopScope`}>
-        <div className={s.productsWrapper}>
-
-          <CategoriesSection />
-
-          <HomeSections />
-
-          {/* QUEBRA VISUAL */}
-
-        </div>
-      </section>
+      {/* ===== MODO INSTITUCIONAL (TEMPORÁRIO) ===== */}
+      {/* Oculta blocos dependentes de API para facilitar deploy inicial no Vercel */}
 
   
 

@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
-import { verifyToken } from "@/app/lib/auth";
 import { limparCarrinho } from "@/app/lib/cart";
-import client from "@/app/lib/mercadopago";
+import { getMercadoPagoClient } from "@/app/lib/mercadopago";
 import { Preference } from "mercadopago";
-import { cookies } from "next/headers";
 import { getUserId } from "@/app/lib/getUserId";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
-import { sendOrderEmail } from "@/app/lib/email";
 
 export async function POST(req: Request) {
 
@@ -184,6 +181,15 @@ totalCents += price * item.qty;
 
 
     // ================= MERCADO PAGO =================
+
+    const client = getMercadoPagoClient();
+
+    if (!client) {
+      return NextResponse.json(
+        { error: "Pagamento indisponível no momento" },
+        { status: 503 }
+      );
+    }
 
     const preference = new Preference(client);
 

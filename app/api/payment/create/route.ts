@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import client from "@/app/lib/mercadopago";
+import { getMercadoPagoClient } from "@/app/lib/mercadopago";
 import { Preference } from "mercadopago";
 import { prisma } from "@/app/lib/prisma";
 import { getUserId } from "@/app/lib/auth";
-import { calcularPrecoVenda } from "@/app/lib/pricing";
 
 export async function POST(req: Request) {
   try {
@@ -52,6 +51,15 @@ const total = totalCents / 100;
       return NextResponse.json(
         { error: "Total inválido" },
         { status: 400 }
+      );
+    }
+
+    const client = getMercadoPagoClient();
+
+    if (!client) {
+      return NextResponse.json(
+        { error: "Pagamento indisponível no momento" },
+        { status: 503 }
       );
     }
 
