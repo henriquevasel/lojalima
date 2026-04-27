@@ -188,8 +188,10 @@ model user {
   emailVerified      Boolean   @default(false)
   emailVerifyToken   String?
   emailVerifyExpires DateTime?
+  passwordResetToken   String?
+  passwordResetExpires DateTime?
 
-  cartitem cartitem[]
+  cartitem cartitem[]  
   order    order[]
 }
 

@@ -136,3 +136,41 @@ export async function sendOrderEmail(order: any) {
     console.error("❌ ERRO AO ENVIAR EMAIL DE PEDIDO:", error);
   }
 }
+
+// ================= RESET DE SENHA =================
+export async function sendResetEmail(email: string, link: string) {
+  try {
+    await resend.emails.send({
+      from: "Loja Lima & Lima <contato@lojalimaelima.com.br>",
+      to: email,
+      subject: "Redefinição de senha",
+      html: `
+        <div style="font-family:Arial,sans-serif;text-align:center;padding:20px">
+          <h2>Redefinir senha</h2>
+          <p>Clique no botão abaixo para criar uma nova senha:</p>
+
+          <a href="${link}" 
+            style="
+              display:inline-block;
+              padding:12px 20px;
+              background:#000;
+              color:#fff;
+              border-radius:8px;
+              text-decoration:none;
+            ">
+            Redefinir senha
+          </a>
+
+          <p style="margin-top:20px;font-size:12px;color:#666;">
+            Esse link expira em alguns minutos.<br/>
+            Se não funcionar:<br/> ${link}
+          </p>
+        </div>
+      `,
+    });
+
+    console.log("📧 EMAIL RESET ENVIADO");
+  } catch (error) {
+    console.error("❌ ERRO AO ENVIAR RESET:", error);
+  }
+}
