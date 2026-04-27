@@ -6,8 +6,11 @@ import Footer from "@/app/components/Footer";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "Lima & Lima",
+  title: "Lima e Lima",
   description: "Revenda Intelbras",
+  icons: {
+    icon: "/produtos/favicon.png",
+  },
 };
 
 export default function RootLayout({
