@@ -102,6 +102,13 @@ async function login() {
             Entrar
           </button>
 
+
+          <div style={{ marginTop: 10, textAlign: "right" }}>
+            <a href="/forgot-password" style={{ fontSize: 13, color: "#888" }}>
+              Esqueceu sua senha?
+            </a>
+          </div>
+
           <p className={s.registerText}>
             Não tem conta?{" "}
             <a href="/registro" className={s.registerLink}>
