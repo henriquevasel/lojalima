@@ -51,11 +51,14 @@ export default async function ProdutoPage({ params }: any) {
     id: { not: produto.id },
 
     sku: {
-      in: productsWithImage // 🔥 FILTRO DAS IMAGENS
+      in: productsWithImage
+    },
+
+    productcategory: {
+      some: {
+        categoryId: produto.productcategory?.[0]?.categoryId
+      }
     }
-  },
-  include: {
-    productimage: true,
   },
   take: 4,
 });
