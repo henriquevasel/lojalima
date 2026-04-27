@@ -240,27 +240,29 @@ export default async function ProdutoPage({ params }: any) {
           href={`/produto/${p.slug}`}
           style={{ textDecoration: "none" }}
         >
-          <div className={s.card}>
+          <div className={s.relatedCard}>
 
-            <img
-              src={img}
-              alt={p.name}
-              className={s.cardImage}
-            />
+  <div className={s.relatedImageWrap}>
+    <img
+      src={img}
+      alt={p.name}
+      className={s.relatedImage}
+    />
+  </div>
 
-            <div className={s.cardContent}>
+  <div className={s.relatedContent}>
 
-              <div className={s.cardTitle}>
-                {p.name}
-              </div>
+    <div className={s.relatedTitle}>
+      {p.name}
+    </div>
 
-              <div className={s.cardPrice}>
-                R$ {(calcularPrecoVenda(p.priceCents) / 100).toFixed(2)}
-              </div>
+    <div className={s.relatedPrice}>
+      R$ {(calcularPrecoVenda(p.priceCents) / 100).toFixed(2)}
+    </div>
 
-            </div>
+  </div>
 
-          </div>
+</div>
         </Link>
       );
     })}
