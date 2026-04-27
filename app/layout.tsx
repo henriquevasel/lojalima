@@ -8,9 +8,12 @@ import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
   title: "Lima e Lima",
   description: "Revenda Intelbras",
-  icons: {
-    icon: "/produtos/favicon.png",
-  },
+ icons: {
+  icon: [
+    { url: "/favicon.ico" },
+    { url: "/produtos/favicon.png", type: "image/png" },
+  ],
+}
 };
 
 export default function RootLayout({
