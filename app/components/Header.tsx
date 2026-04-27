@@ -484,7 +484,7 @@ export default function Header() {
                   </Link>
 
                    <Link
-                      href="/register"
+                      href="/registro"
                       style={{
                               display: "block",
                               padding: 8,
