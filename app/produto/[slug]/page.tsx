@@ -6,6 +6,7 @@ import ProductGallery from "@/app/components/ProductGallery";
 import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
+import { productsWithImage } from "@/app/lib/productsWithImage";
 
 export default async function ProdutoPage({ params }: any) {
 
@@ -44,16 +45,20 @@ export default async function ProdutoPage({ params }: any) {
   PRODUTOS RELACIONADOS
   ========================= */
 
-  const relacionados = await prisma.product.findMany({
-    where: {
-      active: true,
-      id: { not: produto.id },
-    },
-    include: {
-      productimage:true,
-    },
-    take: 4,
-  });
+ const relacionados = await prisma.product.findMany({
+  where: {
+    active: true,
+    id: { not: produto.id },
+
+    sku: {
+      in: productsWithImage // 🔥 FILTRO DAS IMAGENS
+    }
+  },
+  include: {
+    productimage: true,
+  },
+  take: 4,
+});
 
   const precoCents = calcularPrecoVenda(produto.priceCents);
   const preco = precoCents / 100;
