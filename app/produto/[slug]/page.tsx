@@ -12,16 +12,17 @@ export default async function ProdutoPage({ params }: any) {
 
   const { slug } = await params;
 
-  const produto = await prisma.product.findUnique({
-    where: { slug },
-    include: {
- productimage:  {
-    orderBy: {
-      sortOrder: "asc"
-    }
+ const produto = await prisma.product.findUnique({
+  where: { slug },
+  include: {
+    productimage: {
+      orderBy: {
+        sortOrder: "asc"
+      }
+    },
+    productcategory: true
   }
-}
-  });
+});
 
   if (!produto) {
     return (
@@ -54,11 +55,13 @@ export default async function ProdutoPage({ params }: any) {
       in: productsWithImage
     },
 
-    productcategory: {
-      some: {
-        categoryId: produto.productcategory?.[0]?.categoryId
-      }
-    }
+    productcategory: produto.productcategory?.length
+      ? {
+          some: {
+            categoryId: produto.productcategory[0].categoryId
+          }
+        }
+      : undefined
   },
   take: 4,
 });
