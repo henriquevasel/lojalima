@@ -50,7 +50,7 @@ const CATEGORY_CARDS: HomeCard[] = [
   },
   {
     title: "Instalação",
-    desc: "Instalação profissional, organizada e testada — sem gambiarras..",
+    desc: "Instalação profissional, organizada,  testada e sem gambiarras.",
     href: "/instalacao",
     tags: ["Profissional", "Teste", "Organizado"],
     image: "/produtos/instalacaoHome.jpg",

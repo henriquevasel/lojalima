@@ -21,7 +21,7 @@ export default function InstalacaoPage() {
           sections={[
             {
               title: "O que instalamos",
-              subtitle: "Tudo com padrão profissional e organização — sem gambiarras.",
+              subtitle: "Tudo organizado, com padrão profissional e sem gambiarras.",
               media: { src: "/produtos/OqueIstalamos.png", alt: "Equipe/instalação" },
               children: (
                 <ul className={s.list}>

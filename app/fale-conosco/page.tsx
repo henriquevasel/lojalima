@@ -283,7 +283,10 @@ export default function FaleConoscoPage() {
           <span className="badge">Rio de Janeiro</span>
           <span className="badge">Paraná</span>
           <span className="badge">Santa Catarina</span>
+          <span className="badge">São Paulo</span>
           <span className="badge">Rio Grande do Sul</span>
+          <span className="badge">Tocantins</span>
+          <span className="badge">Espírito santo</span>
         </div>
 
         <a href="#form-orcamento" className="btn btn-primary-light">
