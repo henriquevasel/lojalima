@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import * as xlsx from "xlsx";
 import { prisma } from "@/lib/prisma";
-import path from "path";
-import fs from "fs";
+
+/* =========================
+FORÇA RUNTIME (não roda no build)
+========================= */
+export const dynamic = "force-dynamic";
 
 /* =========================
 FUNÇÃO DE CATEGORIA
 ========================= */
-
 function getCategorySlug(name: string) {
   const n = name.toLowerCase();
 
@@ -53,35 +55,36 @@ function getCategorySlug(name: string) {
   ) return "audio";
 
   const acessoriosTerms = [
-    "cabo",
-    "conector",
-    "plug",
-    "adaptador",
-    "extensao",
-    "extensão",
-    "patch",
-    "cord",
-    "keystone",
-    "rj45"
+    "cabo", "conector", "plug", "adaptador",
+    "extensao", "extensão", "patch",
+    "cord", "keystone", "rj45"
   ];
 
   if (acessoriosTerms.some(term => n.includes(term))) {
     return "acessorios";
   }
 
-  // 🔥 ESSENCIAL
   return "acessorios";
 }
 
 /* =========================
-IMPORTAÇÃO
+IMPORTAÇÃO VIA UPLOAD
 ========================= */
-
-export async function GET() {
+export async function POST(req: Request) {
   try {
-    const filePath = path.join(process.cwd(), "data", "EcommerceGold.xlsx");
-    const fileBuffer = fs.readFileSync(filePath);
-    const workbook = xlsx.read(fileBuffer, { type: "buffer" });
+    const formData = await req.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return NextResponse.json(
+        { error: "Arquivo não enviado" },
+        { status: 400 }
+      );
+    }
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    const workbook = xlsx.read(buffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const data: any[] = xlsx.utils.sheet_to_json(sheet);
 
@@ -89,11 +92,8 @@ export async function GET() {
       if (!item.CODPROD || !item.DESCRPROD) continue;
 
       const name = item.DESCRPROD;
-
-      // ✅ SKU (UMA ÚNICA VEZ)
       const sku = String(item.CODPROD);
 
-      // 🔥 SLUG BASE
       const baseSlug = name
         .toLowerCase()
         .normalize("NFD")
@@ -101,49 +101,40 @@ export async function GET() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-      // 🔥 SLUG FINAL ÚNICO
-      const generatedSlug = `${baseSlug}-${sku}`;
-
-      /* 🔥 categoria */
+      const slug = `${baseSlug}-${sku}`;
       const categorySlug = getCategorySlug(name);
 
       const category = await prisma.category.findUnique({
         where: { slug: categorySlug },
       });
 
-      /* 🔥 preço */
       const price = parseFloat(
         String(item.PRECO || "0").replace(",", ".")
       );
 
       const priceCents = Math.round(price * 100);
 
-      /* 🔥 UPSERT */
       await prisma.product.upsert({
         where: { sku },
 
         update: {
           name,
-          slug: generatedSlug,
+          slug,
           priceCents,
           brand: item.MARCA,
           active: item.FORA_LINHA !== "S",
 
           productcategory: category
-  ? {
-      deleteMany: {},
-      create: [
-        {
-          categoryId: category.id,
-        },
-      ],
-    }
-  : undefined,
+            ? {
+                deleteMany: {},
+                create: [{ categoryId: category.id }],
+              }
+            : undefined,
         },
 
         create: {
           name,
-          slug: generatedSlug,
+          slug,
           description: name,
           priceCents,
           brand: item.MARCA,
@@ -151,19 +142,17 @@ export async function GET() {
           active: true,
 
           productcategory: category
-  ? {
-      create: [
-        {
-          categoryId: category.id,
-        },
-      ],
-    }
-  : undefined,
+            ? {
+                create: [{ categoryId: category.id }],
+              }
+            : undefined,
         },
       });
     }
 
-    return NextResponse.json({ message: "Importação concluída 🚀" });
+    return NextResponse.json({
+      message: "Importação concluída 🚀",
+    });
 
   } catch (error: any) {
     console.error("ERRO REAL:", error);

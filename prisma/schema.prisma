@@ -3,10 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model cartitem {
   id             Int             @id @default(autoincrement())
   userId         String
@@ -14,9 +13,9 @@ model cartitem {
   variantId      Int?
   qty            Int             @default(1)
   createdAt      DateTime        @default(now())
-  product        product         @relation(fields: [productId], references: [id], onDelete: Cascade, map: "CartItem_productId_fkey")
-  user           user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "CartItem_userId_fkey")
-  productvariant productvariant? @relation(fields: [variantId], references: [id], onDelete: Cascade, map: "CartItem_variantId_fkey")
+ product        product @relation(fields: [productId], references: [id], onDelete: Cascade)
+user           user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+productvariant productvariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
 
   @@index([productId], map: "CartItem_productId_fkey")
   @@index([userId], map: "CartItem_userId_idx")
@@ -32,7 +31,7 @@ model category {
   parentId        Int?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  category        category?         @relation("categoryTocategory", fields: [parentId], references: [id], map: "Category_parentId_fkey")
+  category        category?         @relation("categoryTocategory", fields: [parentId], references: [id])
   other_category  category[]        @relation("categoryTocategory")
   productcategory productcategory[]
 
@@ -52,7 +51,7 @@ model order {
   userId        String
   customerCpf   String
   shippingCents Int          @default(0)
-  user          user         @relation(fields: [userId], references: [id], map: "Order_userId_fkey")
+  user          user         @relation(fields: [userId], references: [id])
   orderitem     orderitem[]
   payment       payment?
 
@@ -79,9 +78,9 @@ model orderitem {
   priceCents     Int
   productId      Int?
   variantId      Int?
-  order          order           @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "OrderItem_orderId_fkey")
-  product        product?        @relation(fields: [productId], references: [id], map: "OrderItem_productId_fkey")
-  productvariant productvariant? @relation(fields: [variantId], references: [id], map: "OrderItem_variantId_fkey")
+  order          order           @relation(fields: [orderId], references: [id], onDelete: Cascade )
+  product        product?        @relation(fields: [productId], references: [id] )
+  productvariant productvariant? @relation(fields: [variantId], references: [id] )
 
   @@index([orderId], map: "OrderItem_orderId_idx")
   @@index([productId], map: "OrderItem_productId_fkey")
@@ -96,7 +95,7 @@ model payment {
   amountCents Int
   externalId  String?
   createdAt   DateTime       @default(now())
-  order       order          @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "Payment_orderId_fkey")
+  order       order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 model product {
@@ -128,8 +127,8 @@ model productcategory {
   productId  Int
   categoryId Int
   createdAt  DateTime @default(now())
-  category   category @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "ProductCategory_categoryId_fkey")
-  product    product  @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductCategory_productId_fkey")
+  category   category @relation(fields: [categoryId], references: [id], onDelete: Cascade )
+  product    product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([productId, categoryId])
   @@index([categoryId], map: "ProductCategory_categoryId_idx")
@@ -142,7 +141,7 @@ model productimage {
   alt       String?
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
-  product   product  @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductImage_productId_fkey")
+  product   product  @relation(fields: [productId], references: [id], onDelete: Cascade )
 
   @@index([productId, sortOrder], map: "ProductImage_productId_sortOrder_idx")
 }
@@ -158,7 +157,7 @@ model productvariant {
   updatedAt  DateTime    @updatedAt
   cartitem   cartitem[]
   orderitem  orderitem[]
-  product    product     @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductVariant_productId_fkey")
+  product    product     @relation(fields: [productId], references: [id], onDelete: Cascade )
   stock      stock?
 
   @@index([productId, active], map: "ProductVariant_productId_active_idx")
@@ -170,8 +169,8 @@ model stock {
   variantId      Int?            @unique(map: "Stock_variantId_key")
   quantity       Int             @default(0)
   updatedAt      DateTime        @updatedAt
-  product        product?        @relation(fields: [productId], references: [id], onDelete: Cascade, map: "Stock_productId_fkey")
-  productvariant productvariant? @relation(fields: [variantId], references: [id], onDelete: Cascade, map: "Stock_variantId_fkey")
+  product        product?        @relation(fields: [productId], references: [id], onDelete: Cascade )
+  productvariant productvariant? @relation(fields: [variantId], references: [id], onDelete: Cascade )
 
   @@index([quantity], map: "Stock_quantity_idx")
 }
