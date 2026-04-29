@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import s from "@/app/styles/home.module.css";
 
 const banners = [
-  "/produtos/banner1.png",
-  "/produtos/banner2.png",
-  "/produtos/banner3.png",
+  "/produtos/banner-1.png",
+  "/produtos/banner-2.png",
+  "/produtos/banner-3.png",
+  "/produtos/banner-4.png",
 ];
 
 export default function HomeBannerCarousel() {
