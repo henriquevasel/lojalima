@@ -88,66 +88,87 @@ export async function POST(req: Request) {
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const data: any[] = xlsx.utils.sheet_to_json(sheet);
 
-    for (const item of data) {
-      if (!item.CODPROD || !item.DESCRPROD) continue;
+    // 🔥 CACHE DE CATEGORIAS (evita milhares de queries)
+    const categoryCache = new Map<string, any>();
 
-      const name = item.DESCRPROD;
-      const sku = String(item.CODPROD);
+    // 🔥 LOTE CONTROLADO (não estoura conexão)
+    const BATCH_SIZE = 2;
 
-      const baseSlug = name
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
+    for (let i = 0; i < data.length; i += BATCH_SIZE) {
+      const batch = data.slice(i, i + BATCH_SIZE);
 
-      const slug = `${baseSlug}-${sku}`;
-      const categorySlug = getCategorySlug(name);
+      for (const item of batch) {
+        if (!item.CODPROD || !item.DESCRPROD) continue;
 
-      const category = await prisma.category.findUnique({
-        where: { slug: categorySlug },
-      });
+        const name = item.DESCRPROD;
+        const sku = String(item.CODPROD);
 
-      const price = parseFloat(
-        String(item.PRECO || "0").replace(",", ".")
-      );
+        const baseSlug = name
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
 
-      const priceCents = Math.round(price * 100);
+        const slug = `${baseSlug}-${sku}`;
+        const categorySlug = getCategorySlug(name);
 
-      await prisma.product.upsert({
-        where: { sku },
+        // 🔥 USA CACHE
+        let category = categoryCache.get(categorySlug);
 
-        update: {
-          name,
-          slug,
-          priceCents,
-          brand: item.MARCA,
-          active: item.FORA_LINHA !== "S",
+        if (!category) {
+          category = await prisma.category.upsert({
+            where: { slug: categorySlug },
+            update: {},
+            create: {
+              name: categorySlug,
+              slug: categorySlug,
+              active: true,
+            },
+          });
 
-          productcategory: category
-            ? {
-                deleteMany: {},
-                create: [{ categoryId: category.id }],
-              }
-            : undefined,
-        },
+          categoryCache.set(categorySlug, category);
+        }
 
-        create: {
-          name,
-          slug,
-          description: name,
-          priceCents,
-          brand: item.MARCA,
-          sku,
-          active: true,
+        const price = parseFloat(
+          String(item.PRECO || "0").replace(",", ".")
+        );
 
-          productcategory: category
-            ? {
-                create: [{ categoryId: category.id }],
-              }
-            : undefined,
-        },
-      });
+        const priceCents = Math.round(price * 100);
+
+        await prisma.product.upsert({
+          where: { sku },
+
+          update: {
+            name,
+            slug,
+            priceCents,
+            brand: item.MARCA,
+            active: item.FORA_LINHA !== "S",
+
+            productcategory: {
+              deleteMany: {},
+              create: [{ categoryId: category.id }],
+            },
+          },
+
+          create: {
+            name,
+            slug,
+            description: name,
+            priceCents,
+            brand: item.MARCA,
+            sku,
+            active: true,
+
+            productcategory: {
+              create: [{ categoryId: category.id }],
+            },
+          },
+        });
+      }
+
+      console.log(`✅ Lote ${i} - ${i + BATCH_SIZE}`);
     }
 
     return NextResponse.json({
