@@ -717,7 +717,7 @@ border: 1px solid #e5e7eb;
 
   .slide {
     background-size: contain; /* 🔥 ESSA LINHA resolve */
-    background-position: center;
+    background-position: top center;
     background-repeat: no-repeat;
     background-color: transparent;
   }
