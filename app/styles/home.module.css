@@ -707,6 +707,20 @@ border: 1px solid #e5e7eb;
   }
 
 }
+
+@media (max-width: 480px) {
+  .bannerTop {
+    height: auto;
+    aspect-ratio: 16 / 9; /* 🔥 deixa mais alto e não corta tanto */
+  }
+
+    .slide {
+    background-position: center;
+    background-color: #fff;
+  }
+}
+
+
 .sectionBox{
   background: var(--card);
   border: 1px solid var(--border);
