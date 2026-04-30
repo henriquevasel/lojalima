@@ -187,7 +187,7 @@ totalCents += price * item.qty;
 
     const preference = new Preference(client);
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const baseUrl = "https://lojalimaelima.com.br";
 
 const preferenceData = await preference.create({
   body: {

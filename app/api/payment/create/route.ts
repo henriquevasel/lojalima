@@ -57,7 +57,7 @@ const total = totalCents / 100;
 
     const preference = new Preference(client);
 
-   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+   const baseUrl = "https://lojalimaelima.com.br";
 
 const response = await preference.create({
   body: {
