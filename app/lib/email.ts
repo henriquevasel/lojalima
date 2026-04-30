@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function sendVerificationEmail(email: string, link: string) {
   try {
     await resend.emails.send({
-      from: "Loja Lima & Lima <contato@lojalimaelima.com.br>",
+      from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
       to: email,
       subject: "Confirme seu email",
       html: `
@@ -58,7 +58,7 @@ export async function sendOrderEmail(order: any) {
       .join("");
 
     await resend.emails.send({
-      from: "Loja Lima & Lima <contato@lojalimaelima.com.br>",
+      from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
       to: [process.env.COMPANY_EMAIL as string, order.customerEmail],
       subject: `🛒 Pedido confirmado #${order.id.slice(0, 8)}`,
       html: `
@@ -68,7 +68,7 @@ export async function sendOrderEmail(order: any) {
           <!-- HEADER COM LOGO -->
           <div style="background:#000;padding:20px;text-align:center;">
             <img 
-              src="https://behalf-remember-promotional-nyc.trycloudflare.com/produtos/logo.png"
+              src="https://lojalimaelima.com.br/produtos/logo.png"
               alt="Logo"
               style="max-height:60px;"
             />
@@ -123,7 +123,7 @@ export async function sendOrderEmail(order: any) {
           <!-- FOOTER -->
           <div style="background:#fafafa;padding:15px;text-align:center;font-size:12px;color:#777;">
             <p>Este é um email automático.</p>
-            <p>Loja Lima & Lima © ${new Date().getFullYear()}</p>
+            <p>Loja Lima e Lima © ${new Date().getFullYear()}</p>
           </div>
 
         </div>
@@ -141,7 +141,7 @@ export async function sendOrderEmail(order: any) {
 export async function sendResetEmail(email: string, link: string) {
   try {
     await resend.emails.send({
-      from: "Loja Lima & Lima <contato@lojalimaelima.com.br>",
+      from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
       to: email,
       subject: "Redefinição de senha",
       html: `
