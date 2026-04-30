@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     });
 
     // 🔗 LINK CORRETO (DIRETO NA API)
-   const verifyLink = `https://lojaliamelima.com.br/api/verify-email?token=${emailToken}`;
+   const verifyLink = `https://lojalimaelima.com.br/api/verify-email?token=${emailToken}`;
     console.log("🔥 BASE URL:", process.env.NEXT_PUBLIC_SITE_URL);
 
     await sendVerificationEmail(email, verifyLink);
