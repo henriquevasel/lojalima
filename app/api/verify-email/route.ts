@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import crypto from "crypto";
 
+const BASE_URL = "https://lojalimaelima.com.br";
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -9,7 +11,7 @@ export async function GET(req: Request) {
 
     if (!token) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/login?error=missing_token`
+        `${BASE_URL}/login?error=missing_token`
       );
     }
 
@@ -29,13 +31,13 @@ export async function GET(req: Request) {
 
     if (!user) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/login?error=invalid_token`
+        `${BASE_URL}/login?error=invalid_token`
       );
     }
 
     if (user.emailVerified) {
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_SITE_URL}/login?alreadyVerified=true`
+        `${BASE_URL}/login?alreadyVerified=true`
       );
     }
 
@@ -49,14 +51,14 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/login?verified=true`
+      `${BASE_URL}/login?verified=true`
     );
 
   } catch (error) {
     console.error("💥 ERRO NO VERIFY:", error);
 
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/login?error=server_error`
+      `${BASE_URL}/login?error=server_error`
     );
   }
 }
