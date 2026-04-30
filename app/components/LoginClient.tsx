@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import s from "@/app/styles/form.module.css";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
 
-export default function LoginClient(){
+export default function LoginClient() {
   const params = useSearchParams();
-  const redirect = params.get("redirect") || "/carrinho";
+  const redirect = params.get("redirect") || "/"; // 🔥 agora vai pra HOME por padrão
 
   const router = useRouter();
 
@@ -17,66 +16,70 @@ export default function LoginClient(){
 
   const verified = params.get("verified");
 
-useEffect(() => {
-  if (verified) {
-    toast.success("Email verificado com sucesso! 🎉");
-  }
-}, [verified]);
-
-async function login() {
-  const res = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-  if (data.code === "EMAIL_NOT_VERIFIED") {
-    toast.error("Confirme seu email 📧");
-  } else {
-    toast.error(data.error || "Erro ao fazer login");
-  }
-  return;
-}
-
-  // 🔥 RECUPERA ITEM PENDENTE
-  const pending = localStorage.getItem("pendingCart");
-
-  if (pending) {
-    try {
-      const item = JSON.parse(pending);
-
-      await fetch("/api/cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(item),
-      });
-
-      localStorage.removeItem("pendingCart");
-
-      window.dispatchEvent(new Event("cartUpdated"));
-
-      toast.success("Produto adicionado ao carrinho!");
-    } catch {
-      console.log("Erro ao recuperar carrinho pendente");
+  useEffect(() => {
+    if (verified) {
+      toast.success("Email verificado com sucesso! 🎉");
     }
+  }, [verified]);
+
+  async function login() {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      if (data.code === "EMAIL_NOT_VERIFIED") {
+        toast.error("Confirme seu email 📧");
+      } else {
+        toast.error(data.error || "Erro ao fazer login");
+      }
+      return;
+    }
+
+    // 🔥 RECUPERA ITEM PENDENTE
+    const pending = localStorage.getItem("pendingCart");
+
+    if (pending) {
+      try {
+        const item = JSON.parse(pending);
+
+        await fetch("/api/cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(item),
+        });
+
+        localStorage.removeItem("pendingCart");
+
+        window.dispatchEvent(new Event("cartUpdated"));
+
+        toast.success("Produto adicionado ao carrinho!");
+      } catch {
+        console.log("Erro ao recuperar carrinho pendente");
+      }
+    }
+
+    toast.success("Login realizado!");
+
+    // ✅ REDIRECIONAMENTO CORRETO (SEM RECARREGAR A PÁGINA)
+    setTimeout(() => {
+      router.replace(redirect);
+    }, 500);
   }
 
-  toast.success("Login realizado!");
-  
-  window.location.href = redirect; // 🔥 ESSENCIAL
-}
   return (
     <div className={s.page}>
       <div className={s.container}>
@@ -101,7 +104,6 @@ async function login() {
           <button onClick={login} className={s.button}>
             Entrar
           </button>
-
 
           <div style={{ marginTop: 10, textAlign: "right" }}>
             <a href="/forgot-password" style={{ fontSize: 13, color: "#888" }}>
