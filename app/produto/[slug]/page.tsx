@@ -121,17 +121,34 @@ export default async function ProdutoPage({ params }: any) {
 
   {/* preço antigo */}
   <div style={{ textDecoration: "line-through", color: "#999", fontSize: 13 }}>
-    R$ {(preco * 1.2).toFixed(2)}
+    {(preco * 1.2).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
   </div>
 
   {/* preço atual */}
   <div style={{ fontSize: 28, fontWeight: 900 }}>
-    por <span style={{ color: "#111" }}>R$ {preco.toFixed(2)}</span>
+    por{" "}
+    <span style={{ color: "#111" }}>
+      {preco.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </span>
   </div>
 
   {/* parcelamento */}
   <div style={{ fontSize: 13, marginTop: 4 }}>
-    até <strong>3x de R$ {(preco / 3).toFixed(2)}</strong> sem juros
+    até{" "}
+    <strong>
+      3x de{" "}
+      {(preco / 3).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </strong>{" "}
+    sem juros
   </div>
 
   {/* BOX PAGAMENTOS */}
@@ -159,10 +176,18 @@ export default async function ProdutoPage({ params }: any) {
 
       <div style={{ lineHeight: 1.2 }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: "#2e7d32" }}>
-          R$ {precoComDesconto.toFixed(2)} no boleto
+          {precoComDesconto.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}{" "}
+          no boleto
         </div>
         <div style={{ fontSize: 12, color: "#555" }}>
-          Economize R$ {desconto.toFixed(2)}
+          Economize{" "}
+          {desconto.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
         </div>
       </div>
     </div>
@@ -182,7 +207,11 @@ export default async function ProdutoPage({ params }: any) {
 
       <div style={{ lineHeight: 1.2 }}>
         <div style={{ fontSize: 14, fontWeight: 600 }}>
-          R$ {precoComDesconto.toFixed(2)} no pix
+          {precoComDesconto.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}{" "}
+          no pix
           <span
             style={{
               marginLeft: 6,
