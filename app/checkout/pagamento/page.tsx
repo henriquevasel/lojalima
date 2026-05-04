@@ -111,8 +111,12 @@ async function finalizar(){
       JSON.stringify(data)
     );
 
-    // 🔥 REDIRECIONA PRO MERCADO PAGO
-    window.location.href = data.init_point;
+    
+    // 🔥 abre o Mercado Pago em nova aba
+window.open(data.init_point, "_blank");
+
+// 🔥 redireciona pra sua tela de aguardando
+router.push(`/pagamento/aguardando?orderId=${data.orderId}`);
 
   } catch (error) {
     console.error(error);

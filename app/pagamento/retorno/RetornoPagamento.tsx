@@ -1,37 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function RetornoPagamento() {
-
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [status, setStatus] = useState<"loading" | "paid" | "pending">("loading");
   const [orderId, setOrderId] = useState<string | null>(null);
+  const [seconds, setSeconds] = useState(0);
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 🔹 pega orderId
   useEffect(() => {
     const id = searchParams.get("orderId");
-    if (id) {
-      setOrderId(id);
-    }
+    if (id) setOrderId(id);
   }, [searchParams]);
 
+  // 🔹 contador de tempo
   useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds((prev) => prev + 1);
+    }, 1000);
 
+    return () => clearInterval(timer);
+  }, []);
+
+  // 🔹 verifica status
+  useEffect(() => {
     if (!orderId) return;
-
-    let interval: ReturnType<typeof setInterval>;
 
     async function checkStatus() {
       try {
-        
-const res = await fetch(`/api/order-status?orderId=${orderId}`);
-
+        const res = await fetch(`/api/order-status?orderId=${orderId}`);
 
         if (res.status === 401) {
           router.push("/login");
+          return;
+        }
+
+        if (!res.ok) {
+          console.error("Erro na API");
+          setStatus("pending");
           return;
         }
 
@@ -39,11 +51,13 @@ const res = await fetch(`/api/order-status?orderId=${orderId}`);
 
         if (order.status === "paid") {
           setStatus("paid");
-          clearInterval(interval);
+
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
         } else {
           setStatus("pending");
         }
-
       } catch (error) {
         console.error("Erro ao verificar pagamento:", error);
         setStatus("pending");
@@ -51,12 +65,14 @@ const res = await fetch(`/api/order-status?orderId=${orderId}`);
     }
 
     checkStatus();
-    interval = setInterval(checkStatus, 2000);
+    intervalRef.current = setInterval(checkStatus, 2000);
 
-    return () => clearInterval(interval);
-
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [orderId, router]);
 
+  // 🔹 redirect após pagamento
   useEffect(() => {
     if (status === "paid") {
       setTimeout(() => {
@@ -75,13 +91,42 @@ const res = await fetch(`/api/order-status?orderId=${orderId}`);
       {status === "pending" && (
         <>
           <h2>⏳ Aguardando pagamento...</h2>
-          <p>Confirmando com o banco...</p>
+          <p>Pague o PIX na outra aba. Esta tela atualizará automaticamente.</p>
+
+          <br />
+
+          <p>⏳ Confirmação geralmente leva até 10 segundos</p>
+          <p>⏱️ Tempo aguardando: {seconds}s</p>
+
+          {seconds > 10 && (
+            <p style={{ color: "#ffaa00", marginTop: 10 }}>
+              Isso está demorando um pouco mais que o normal...
+            </p>
+          )}
+
+          <br />
+
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              marginTop: 10,
+              padding: "10px 20px",
+              borderRadius: 8,
+              border: "none",
+              background: "#00aa55",
+              color: "#fff",
+              cursor: "pointer"
+            }}
+          >
+            Já paguei, atualizar
+          </button>
         </>
       )}
 
       {status === "paid" && (
         <>
           <h2>✅ Pedido realizado com sucesso!</h2>
+          <p>Pagamento confirmado 🎉</p>
           <p>Redirecionando...</p>
         </>
       )}
