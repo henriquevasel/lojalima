@@ -9,6 +9,13 @@ import { calcularPrecoVenda } from "@/app/lib/pricing";
 export async function GET() {
   try {
     const userId = await getUserId();
+     
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Não autenticado" },
+        { status: 401 }
+      );
+    }
 
     const cartItems = await prisma.cartitem.findMany({
       where: { userId },
@@ -71,6 +78,13 @@ export async function POST(req: Request) {
   try {
     const userId = await getUserId();
 
+      if (!userId) {
+      return NextResponse.json(
+        { error: "Não autenticado" },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const { productId, variantId, qty } = body;
 
@@ -125,6 +139,13 @@ export async function POST(req: Request) {
 export async function DELETE() {
   try {
     const userId = await getUserId();
+
+        if (!userId) {
+      return NextResponse.json(
+        { error: "Não autenticado" },
+        { status: 401 }
+      );
+    }
 
     await prisma.cartitem.deleteMany({
       where: { userId },

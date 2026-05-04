@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 export default function LoginClient() {
   const params = useSearchParams();
-  const redirect = params.get("redirect") || "/"; // 🔥 agora vai pra HOME por padrão
+  const redirect = params.get("redirect") || "/";
 
   const router = useRouter();
 
@@ -74,10 +74,8 @@ export default function LoginClient() {
 
     toast.success("Login realizado!");
 
-    // ✅ REDIRECIONAMENTO CORRETO (SEM RECARREGAR A PÁGINA)
-    setTimeout(() => {
-      router.replace(redirect);
-    }, 500);
+    // 🔥 REDIRECIONAMENTO CORRETO (resolve seu bug)
+    window.location.href = redirect;
   }
 
   return (
