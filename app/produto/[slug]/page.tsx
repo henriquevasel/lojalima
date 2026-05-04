@@ -7,7 +7,7 @@ import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
 import { productsWithImage } from "@/app/lib/productsWithImage";
-import { CreditCard, QrCode } from "lucide-react";
+import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
 
 export default async function ProdutoPage({ params }: any) {
 
