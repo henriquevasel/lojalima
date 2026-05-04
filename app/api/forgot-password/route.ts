@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       },
     });
 
-    const link = `https://lojaliamelima.com.br/reset-password?token=${token}`;
+    const link = `https://lojalimaelima.com.br/reset-password?token=${token}`;
 
     await sendResetEmail(email, link);
 
