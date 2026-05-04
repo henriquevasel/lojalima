@@ -112,26 +112,67 @@ export default async function ProdutoPage({ params }: any) {
           </h1>
 
 
-          {/* PREÇO */}
+{/* PREÇO NOVO */}
 
-          <div style={{ marginBottom: 10 }}>
+<div style={{ marginBottom: 20 }}>
 
-            <div
-              style={{
-                fontSize: 34,
-                fontWeight: 900,
-                color: "#22c55e",
-              }}
-            >
-              R$ {preco.toFixed(2)}
-            </div>
+  {/* preço antigo (fake opcional) */}
+  <div style={{ textDecoration: "line-through", color: "#999" }}>
+    R$ {(preco * 1.2).toFixed(2)}
+  </div>
 
-            <div style={{ opacity: 0.8 }}>
-              ou 12x de R$ {precoParcelado} sem juros
-            </div>
+  {/* preço principal */}
+  <div
+    style={{
+      fontSize: 34,
+      fontWeight: 900,
+      color: "#22c55e",
+    }}
+  >
+    por R$ {preco.toFixed(2)}
+  </div>
 
-          </div>
+  {/* parcelamento */}
+  <div style={{ opacity: 0.8 }}>
+    até 3x de R$ {(preco / 3).toFixed(2)} sem juros
+  </div>
 
+  {/* boleto */}
+  <div
+    style={{
+      background: "#e6f4ea",
+      padding: 10,
+      borderRadius: 8,
+      marginTop: 10,
+      color: "#2e7d32",
+      fontSize: 14,
+    }}
+  >
+    <div>
+      R$ {(preco * 0.95).toFixed(2)} no Boleto
+    </div>
+    <small>
+      Economize R$ {(preco * 0.05).toFixed(2)}
+    </small>
+  </div>
+
+  {/* pix */}
+  <div
+    style={{
+      background: "#f1f5f9",
+      padding: 10,
+      borderRadius: 8,
+      marginTop: 10,
+      fontSize: 14,
+    }}
+  >
+    <div>
+      R$ {(preco * 0.95).toFixed(2)} no PIX
+    </div>
+    <small>5% de desconto</small>
+  </div>
+
+</div>
 
           {/* BENEFÍCIOS */}
 
