@@ -238,25 +238,6 @@ export default async function ProdutoPage({ params }: any) {
   </div>
 </div>
 
-          {/* BENEFÍCIOS */}
-
-          <div
-            style={{
-              margin: "25px 0",
-              padding: 20,
-              borderRadius: 18,
-              background: "var(--soft)",
-              border: "1px solid var(--border)",
-              display: "grid",
-              gap: 10,
-              fontSize: 14,
-            }}
-          >
-            <div>✔ Produto original com nota fiscal</div>
-            <div>✔ Garantia de 12 meses</div>
-            <div>✔ Suporte especializado</div>
-            <div>✔ Envio rápido e seguro</div>
-          </div>
 
 
           {/* BOTÃO COMPRAR */}
