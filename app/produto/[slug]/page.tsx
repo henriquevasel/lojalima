@@ -7,6 +7,7 @@ import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
 import { productsWithImage } from "@/app/lib/productsWithImage";
+import { CreditCard, QrCode } from "lucide-react";
 
 export default async function ProdutoPage({ params }: any) {
 
@@ -69,6 +70,8 @@ export default async function ProdutoPage({ params }: any) {
   const precoCents = calcularPrecoVenda(produto.priceCents);
   const preco = precoCents / 100;
   const precoParcelado = (preco / 12).toFixed(2);
+  const desconto = Math.round(preco * 0.05 * 100) / 100;
+  const precoComDesconto = preco - desconto;
 
   const WHATSAPP_LINK =
     "https://wa.me/554738423235?text=" +
@@ -112,85 +115,127 @@ export default async function ProdutoPage({ params }: any) {
           </h1>
 
 
-{/* PREÇO COMPLETO ESTILO LOJA */}
+{/* PREÇO + PAGAMENTO */}
 
 <div style={{ marginBottom: 20 }}>
 
   {/* preço antigo */}
-  <div style={{ textDecoration: "line-through", color: "#999", fontSize: 14 }}>
+  <div style={{ textDecoration: "line-through", color: "#999", fontSize: 13 }}>
     R$ {(preco * 1.2).toFixed(2)}
   </div>
 
-  {/* preço principal */}
+  {/* preço atual */}
   <div style={{ fontSize: 28, fontWeight: 900 }}>
     por <span style={{ color: "#111" }}>R$ {preco.toFixed(2)}</span>
   </div>
 
   {/* parcelamento */}
-  <div style={{ fontSize: 14, marginTop: 5 }}>
+  <div style={{ fontSize: 13, marginTop: 4 }}>
     até <strong>3x de R$ {(preco / 3).toFixed(2)}</strong> sem juros
   </div>
 
-  {/* boleto */}
+  {/* BOX PAGAMENTOS */}
   <div
     style={{
+      marginTop: 12,
       display: "flex",
-      alignItems: "center",
-      gap: 10,
-      background: "#e6f4ea",
-      padding: "10px 12px",
-      borderRadius: 6,
-      marginTop: 10,
-      fontSize: 14,
+      flexDirection: "column",
+      gap: 8,
     }}
   >
-    <span style={{ fontSize: 18 }}>💳</span>
-    <div>
-      <strong style={{ color: "#2e7d32" }}>
-        R$ {(preco - (Math.round(preco * 0.05 * 100) / 100)).toFixed(2)} no Boleto
-      </strong>
-      <div style={{ fontSize: 12 }}>
-        Economize R$ {(Math.round(preco * 0.05 * 100) / 100).toFixed(2)}
+
+    {/* boleto */}
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        background: "#eaf7ef",
+        padding: "10px 12px",
+        borderRadius: 8,
+      }}
+    >
+      <CreditCard size={18} color="#2e7d32" />
+
+      <div style={{ lineHeight: 1.2 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#2e7d32" }}>
+          R$ {precoComDesconto.toFixed(2)} no boleto
+        </div>
+        <div style={{ fontSize: 12, color: "#555" }}>
+          Economize R$ {desconto.toFixed(2)}
+        </div>
       </div>
     </div>
-  </div>
 
-  {/* pix */}
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      background: "#f1f5f9",
-      padding: "10px 12px",
-      borderRadius: 6,
-      marginTop: 8,
-      fontSize: 14,
-    }}
-  >
-    <span style={{ fontSize: 18 }}>🔰</span>
-    <div>
-      <strong>
-        R$ {(preco - (Math.round(preco * 0.05 * 100) / 100)).toFixed(2)} no pix
-      </strong>
-      <span
-        style={{
-          marginLeft: 6,
-          background: "#22c55e",
-          color: "#fff",
-          fontSize: 11,
-          padding: "2px 6px",
-          borderRadius: 4,
-        }}
-      >
-        5% OFF
-      </span>
-      <div style={{ fontSize: 12 }}>
-        Pague com pix e economize
+    {/* pix */}
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        background: "#f4f6f8",
+        padding: "10px 12px",
+        borderRadius: 8,
+      }}
+    >
+      <QrCode size={18} color="#22c55e" />
+
+      <div style={{ lineHeight: 1.2 }}>
+        <div style={{ fontSize: 14, fontWeight: 600 }}>
+          R$ {precoComDesconto.toFixed(2)} no pix
+          <span
+            style={{
+              marginLeft: 6,
+              background: "#22c55e",
+              color: "#fff",
+              fontSize: 10,
+              padding: "2px 6px",
+              borderRadius: 4,
+              fontWeight: 700,
+            }}
+          >
+            5% OFF
+          </span>
+        </div>
+        <div style={{ fontSize: 12, color: "#555" }}>
+          Pagamento instantâneo
+        </div>
       </div>
     </div>
+
   </div>
 
+</div>
+
+{/* BENEFÍCIOS MELHORADOS */}
+
+<div
+  style={{
+    margin: "20px 0",
+    padding: 16,
+    borderRadius: 12,
+    background: "var(--soft)",
+    border: "1px solid var(--border)",
+    display: "grid",
+    gap: 8,
+    fontSize: 13,
+  }}
+>
+  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <BadgeCheck size={16} /> Produto original com nota fiscal
+  </div>
+
+  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <ShieldCheck size={16} /> Garantia de 12 meses
+  </div>
+
+  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <BadgeCheck size={16} /> Suporte especializado
+  </div>
+
+  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <Truck size={16} /> Envio rápido e seguro
+  </div>
 </div>
 
           {/* BENEFÍCIOS */}
