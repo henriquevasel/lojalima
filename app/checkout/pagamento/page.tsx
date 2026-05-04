@@ -4,6 +4,7 @@ import { useEffect,useState } from "react";
 import { useRouter } from "next/navigation";
 import s from "@/app/styles/form.module.css";
 import toast from "react-hot-toast";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function PagamentoPage(){
 
@@ -199,6 +200,41 @@ Pagamento
 
 <br/>
 
+{payment === "pix" && (
+  <div style={{
+    background: "#0f2f1f",
+    border: "1px solid #1f7a4d",
+    padding: "14px",
+    borderRadius: "10px",
+    marginBottom: "15px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px"
+  }}>
+    
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <AlertCircle size={18} color="#4ade80" />
+      <span style={{ color: "#4ade80", fontWeight: 500 }}>
+        Pagamento via PIX
+      </span>
+    </div>
+
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <CheckCircle2 size={16} color="#22c55e" />
+      <span style={{ color: "#d1fae5", fontSize: "14px" }}>
+        Após pagar, volte para esta página
+      </span>
+    </div>
+
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <CheckCircle2 size={16} color="#22c55e" />
+      <span style={{ color: "#d1fae5", fontSize: "14px" }}>
+        O pagamento será confirmado automaticamente
+      </span>
+    </div>
+
+  </div>
+)}
 
 <label>
 
