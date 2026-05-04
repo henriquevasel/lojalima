@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function RetornoPagamento() {
+export default function AguardandoPagamento() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -19,7 +19,7 @@ export default function RetornoPagamento() {
     if (id) setOrderId(id);
   }, [searchParams]);
 
-  // 🔹 contador de tempo
+  // 🔹 contador
   useEffect(() => {
     const timer = setInterval(() => {
       setSeconds((prev) => prev + 1);
@@ -28,28 +28,17 @@ export default function RetornoPagamento() {
     return () => clearInterval(timer);
   }, []);
 
-  // 🔹 verifica status
+  // 🔹 verifica pagamento
   useEffect(() => {
     if (!orderId) return;
 
     async function checkStatus() {
       try {
         const res = await fetch(`/api/order-status?orderId=${orderId}`);
+        const data = await res.json();
 
-        if (res.status === 401) {
-          router.push("/login");
-          return;
-        }
-
-        if (!res.ok) {
-          console.error("Erro na API");
-          setStatus("pending");
-          return;
-        }
-
-        const order = await res.json();
-
-        if (order.status === "paid" || order.status === "approved") {
+        // 🔥 aceita os dois (resolve teu bug)
+        if (data.status === "paid" || data.status === "approved") {
           setStatus("paid");
 
           if (intervalRef.current) {
@@ -58,8 +47,9 @@ export default function RetornoPagamento() {
         } else {
           setStatus("pending");
         }
-      } catch (error) {
-        console.error("Erro ao verificar pagamento:", error);
+
+      } catch (err) {
+        console.log("erro ao verificar pagamento");
         setStatus("pending");
       }
     }
@@ -70,9 +60,9 @@ export default function RetornoPagamento() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [orderId, router]);
+  }, [orderId]);
 
-  // 🔹 redirect após pagamento
+  // 🔹 redirect automático
   useEffect(() => {
     if (status === "paid") {
       setTimeout(() => {
@@ -82,7 +72,15 @@ export default function RetornoPagamento() {
   }, [status, router]);
 
   return (
-    <div style={{ padding: 40, textAlign: "center" }}>
+    <div style={{
+      minHeight: "70vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      color: "#fff",
+      textAlign: "center"
+    }}>
 
       {status === "loading" && (
         <p>🔄 Verificando pagamento...</p>
@@ -99,8 +97,8 @@ export default function RetornoPagamento() {
           <p>⏱️ Tempo aguardando: {seconds}s</p>
 
           {seconds > 10 && (
-            <p style={{ color: "#ffaa00", marginTop: 10 }}>
-              Isso está demorando um pouco mais que o normal...
+            <p style={{ color: "#ffaa00" }}>
+              Isso está demorando mais que o normal...
             </p>
           )}
 
@@ -109,12 +107,11 @@ export default function RetornoPagamento() {
           <button
             onClick={() => window.location.reload()}
             style={{
-              marginTop: 10,
-              padding: "10px 20px",
-              borderRadius: 8,
-              border: "none",
               background: "#00aa55",
               color: "#fff",
+              border: "none",
+              padding: "12px 20px",
+              borderRadius: 8,
               cursor: "pointer"
             }}
           >
@@ -125,8 +122,8 @@ export default function RetornoPagamento() {
 
       {status === "paid" && (
         <>
-          <h2>✅ Pedido realizado com sucesso!</h2>
-          <p>Pagamento confirmado 🎉</p>
+          <h2>✅ Pedido confirmado!</h2>
+          <p>Pagamento recebido 🎉</p>
           <p>Redirecionando...</p>
         </>
       )}
