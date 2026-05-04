@@ -112,64 +112,83 @@ export default async function ProdutoPage({ params }: any) {
           </h1>
 
 
-{/* PREÇO NOVO */}
+{/* PREÇO COMPLETO ESTILO LOJA */}
 
 <div style={{ marginBottom: 20 }}>
 
-  {/* preço antigo (fake opcional) */}
-  <div style={{ textDecoration: "line-through", color: "#999" }}>
+  {/* preço antigo */}
+  <div style={{ textDecoration: "line-through", color: "#999", fontSize: 14 }}>
     R$ {(preco * 1.2).toFixed(2)}
   </div>
 
   {/* preço principal */}
-  <div
-    style={{
-      fontSize: 34,
-      fontWeight: 900,
-      color: "#22c55e",
-    }}
-  >
-    por R$ {preco.toFixed(2)}
+  <div style={{ fontSize: 28, fontWeight: 900 }}>
+    por <span style={{ color: "#111" }}>R$ {preco.toFixed(2)}</span>
   </div>
 
   {/* parcelamento */}
-  <div style={{ opacity: 0.8 }}>
-    até 3x de R$ {(preco / 3).toFixed(2)} sem juros
+  <div style={{ fontSize: 14, marginTop: 5 }}>
+    até <strong>3x de R$ {(preco / 3).toFixed(2)}</strong> sem juros
   </div>
 
   {/* boleto */}
   <div
     style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
       background: "#e6f4ea",
-      padding: 10,
-      borderRadius: 8,
+      padding: "10px 12px",
+      borderRadius: 6,
       marginTop: 10,
-      color: "#2e7d32",
       fontSize: 14,
     }}
   >
+    <span style={{ fontSize: 18 }}>💳</span>
     <div>
-      R$ {(preco * 0.95).toFixed(2)} no Boleto
+      <strong style={{ color: "#2e7d32" }}>
+        R$ {(preco - (Math.round(preco * 0.05 * 100) / 100)).toFixed(2)} no Boleto
+      </strong>
+      <div style={{ fontSize: 12 }}>
+        Economize R$ {(Math.round(preco * 0.05 * 100) / 100).toFixed(2)}
+      </div>
     </div>
-    <small>
-      Economize R$ {(preco * 0.05).toFixed(2)}
-    </small>
   </div>
 
   {/* pix */}
   <div
     style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
       background: "#f1f5f9",
-      padding: 10,
-      borderRadius: 8,
-      marginTop: 10,
+      padding: "10px 12px",
+      borderRadius: 6,
+      marginTop: 8,
       fontSize: 14,
     }}
   >
+    <span style={{ fontSize: 18 }}>🔰</span>
     <div>
-      R$ {(preco * 0.95).toFixed(2)} no PIX
+      <strong>
+        R$ {(preco - (Math.round(preco * 0.05 * 100) / 100)).toFixed(2)} no pix
+      </strong>
+      <span
+        style={{
+          marginLeft: 6,
+          background: "#22c55e",
+          color: "#fff",
+          fontSize: 11,
+          padding: "2px 6px",
+          borderRadius: 4,
+        }}
+      >
+        5% OFF
+      </span>
+      <div style={{ fontSize: 12 }}>
+        Pague com pix e economize
+      </div>
     </div>
-    <small>5% de desconto</small>
   </div>
 
 </div>
