@@ -125,7 +125,7 @@ export default function CarrinhoPage() {
         }}
       >
 
-       {item.product.images?.length > 0 && (
+       {item.product.images?.[0] && (
   <img
     src={item.product.images[0].url}
     alt={item.product.name}
