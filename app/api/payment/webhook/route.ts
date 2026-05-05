@@ -8,7 +8,7 @@ import { sendOrderEmail } from "@/app/lib/email";
 
 const WEBHOOK_SECRET = process.env.MP_WEBHOOK_SECRET as string;
 
-// 🔥 MAPEAMENTO CORRETO
+// 🔥 MAPEAMENTO
 function mapPayment_status(status: string | undefined): payment_status {
   switch (status) {
     case "approved":
@@ -30,7 +30,6 @@ export async function POST(req: Request) {
 
     const rawBody = await req.text();
 
-    // 🔐 (opcional)
     if (WEBHOOK_SECRET) {
       crypto
         .createHmac("sha256", WEBHOOK_SECRET)
@@ -40,37 +39,42 @@ export async function POST(req: Request) {
 
     const body = JSON.parse(rawBody);
 
-    // 🔥 RESPONDE IMEDIATO (ESSENCIAL)
+    // 🔥 DEBUG PRINCIPAL
+    console.log("📦 BODY:", body);
+
     const response = NextResponse.json({ ok: true });
 
-    // 🔥 PROCESSA DEPOIS (SEM TRAVAR O MP)
     processWebhook(body).catch((err) => {
-  console.error("❌ ERRO BACKGROUND:", err);
-});
+      console.error("❌ ERRO BACKGROUND:", err);
+    });
 
     return response;
-
   } catch (error) {
     console.error("❌ Erro webhook:", error);
     return NextResponse.json({ ok: true });
   }
 }
 
-// 🔥 SUA LÓGICA ORIGINAL (MOVIDA PRA CÁ)
 async function processWebhook(body: any) {
   try {
+    // 🔥 FILTRO FLEXÍVEL
     if (
-  body.type !== "payment" &&
-  body.action !== "payment.created" &&
-  body.action !== "payment.updated"
-) {
-  return;
-}
+      body.type !== "payment" &&
+      body.action !== "payment.created" &&
+      body.action !== "payment.updated"
+    ) {
+      console.log("⛔ Evento ignorado:", body);
+      return;
+    }
 
     const paymentId = body?.data?.id || body?.id;
-    if (!paymentId) return;
 
-    console.log("Webhook recebido:", paymentId);
+    if (!paymentId) {
+      console.log("❌ Sem paymentId");
+      return;
+    }
+
+    console.log("💳 Payment ID:", paymentId);
 
     const paymentClient = new Payment(client);
 
@@ -78,10 +82,17 @@ async function processWebhook(body: any) {
       id: paymentId,
     });
 
-    console.log("STATUS DO PAGAMENTO:", payment.status);
+    // 🔥 DEBUG CRÍTICO
+    console.log("💰 PAYMENT:", payment);
+    console.log("📌 STATUS:", payment.status);
+    console.log("🧾 EXTERNAL REF:", payment.external_reference);
 
     const orderId = payment.external_reference;
-    if (!orderId) return;
+
+    if (!orderId) {
+      console.log("❌ Sem orderId (external_reference vazio)");
+      return;
+    }
 
     const order = await prisma.order.findUnique({
       where: { id: orderId },
@@ -91,29 +102,37 @@ async function processWebhook(body: any) {
       },
     });
 
-    if (!order) return;
+    if (!order) {
+      console.log("❌ Pedido não encontrado:", orderId);
+      return;
+    }
 
     const status = mapPayment_status(payment.status);
     let shouldSendEmail = false;
 
     await prisma.$transaction(async (tx) => {
-   await tx.payment.upsert({
-  where: { orderId },
-  update: {
-    status,
-    externalId: String(paymentId),
-  },
-  create: {
-    orderId,
-    provider: "mercadopago",
-    status,
-    amountCents: order.totalCents,
-    externalId: String(paymentId),
-  },
-});
+      // 🔥 UPSERT (CORRETO)
+      await tx.payment.upsert({
+        where: { orderId },
+        update: {
+          status,
+          externalId: String(paymentId),
+        },
+        create: {
+          orderId,
+          provider: "mercadopago",
+          status,
+          amountCents: order.totalCents,
+          externalId: String(paymentId),
+        },
+      });
 
+      // 🔥 APROVADO
       if (status === payment_status.approved) {
-        if (order.status === "paid") return;
+        if (order.status === "paid") {
+          console.log("⚠️ Pedido já estava pago");
+          return;
+        }
 
         console.log("✅ Pagamento aprovado:", paymentId);
 
@@ -122,6 +141,7 @@ async function processWebhook(body: any) {
           data: { status: "paid" },
         });
 
+        // 🔥 BAIXA ESTOQUE
         for (const item of order.orderitem) {
           if (item.variantId) {
             await tx.stock.updateMany({
@@ -140,6 +160,7 @@ async function processWebhook(body: any) {
           }
         }
 
+        // 🔥 LIMPA CARRINHO
         await tx.cartitem.deleteMany({
           where: { userId: order.userId },
         });
@@ -148,19 +169,24 @@ async function processWebhook(body: any) {
       }
     });
 
+    // 🔥 EMAIL
     if (shouldSendEmail) {
-  const fullOrder = await prisma.order.findUnique({
-    where: { id: orderId },
-    include: {
-      orderitem: true,
-    },
-  });
+      const fullOrder = await prisma.order.findUnique({
+        where: { id: orderId },
+        include: {
+          orderitem: true,
+        },
+      });
 
-  if (fullOrder) {
-    await sendOrderEmail(fullOrder);
-  }
-}
-
+      if (fullOrder) {
+        console.log("📧 Enviando email...");
+        await sendOrderEmail(fullOrder);
+      } else {
+        console.log("❌ Pedido não encontrado para email");
+      }
+    } else {
+      console.log("⛔ Email não enviado (status não aprovado)");
+    }
   } catch (err) {
     console.error("❌ Erro async webhook:", err);
   }
