@@ -96,128 +96,221 @@ export default function CarrinhoPage() {
     window.location.href = "/checkout";
   }
 
-  return(
+  return (
 
-    <div style={{maxWidth:1100,margin:"60px auto"}}>
+  <div style={{maxWidth:1100,margin:"60px auto",padding:"0 16px"}}>
 
-      <h1 style={{color:"#fff"}}>Carrinho</h1>
+    <h1 style={{
+      color:"#fff",
+      marginBottom:30,
+      fontSize:28,
+      fontWeight:800
+    }}>
+      Carrinho
+    </h1>
 
-      {items.map((item)=>(
+    {items.map((item)=>(
 
-        <div
-          key={item.id}
-          style={{
-            display:"flex",
-            gap:20,
-            background:"#111",
-            padding:20,
-            marginTop:20,
-            borderRadius:10
-          }}
-        >
+      <div
+        key={item.id}
+        style={{
+          display:"flex",
+          gap:20,
+          background:"#11161d",
+          padding:16,
+          marginBottom:16,
+          borderRadius:14,
+          border:"1px solid rgba(255,255,255,0.05)",
+          transition:"0.2s"
+        }}
+      >
 
-          <img
-            src={item.product.images?.[0]?.url}
-            alt={item.product.name}
-            style={{width:120}}
-          />
+       {item.product.images?.length > 0 && (
+  <img
+    src={item.product.images[0].url}
+    alt={item.product.name}
+    style={{
+      width:100,
+      height:100,
+      objectFit:"cover",
+      borderRadius:10
+    }}
+  />
+)}
 
-          <div style={{flex:1}}>
+        {/* INFO */}
+        <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
 
-            <h3 style={{color:"#fff"}}>
+          <div>
+            <h3 style={{
+              color:"#fff",
+              margin:0,
+              fontSize:16,
+              fontWeight:700
+            }}>
               {item.product.name}
             </h3>
 
-            <p style={{color:"#aaa"}}>
-              R$ {(item.product.priceCents/100).toFixed(2)}
+            <p style={{
+              color:"#9ca3af",
+              fontSize:13,
+              marginTop:6
+            }}>
+              R$ {(item.product.priceCents/100).toFixed(2)} / unidade
             </p>
+          </div>
+
+          {/* QTD */}
+          <div style={{
+            display:"flex",
+            alignItems:"center",
+            gap:10,
+            marginTop:10
+          }}>
 
             <button
-              className={s.qtyBtn}
               onClick={()=>updateQty(item.id,item.qty-1)}
+              style={qtyBtnStyle}
             >
               -
             </button>
 
-            <span style={{color:"#fff",margin:"0 10px"}}>
+            <span style={{color:"#fff",fontWeight:700}}>
               {item.qty}
             </span>
 
             <button
-              className={s.qtyBtn}
               onClick={()=>updateQty(item.id,item.qty+1)}
+              style={qtyBtnStyle}
             >
               +
             </button>
 
           </div>
 
-          <div>
+        </div>
 
-            <div style={{color:"#fff"}}>
-              R$ {((item.product.priceCents/100)*item.qty).toFixed(2)}
-            </div>
+        {/* PREÇO + REMOVE */}
+        <div style={{
+          display:"flex",
+          flexDirection:"column",
+          justifyContent:"space-between",
+          alignItems:"flex-end"
+        }}>
 
-            <button
-              className={s.removeBtn}
-              onClick={()=>removeItem(item.id)}
-            >
-              Remover
-            </button>
-
+          <div style={{
+            color:"#39ff14",
+            fontWeight:800,
+            fontSize:16
+          }}>
+            R$ {((item.product.priceCents/100)*item.qty).toFixed(2)}
           </div>
+
+          <button
+            onClick={()=>removeItem(item.id)}
+            style={{
+              background:"transparent",
+              border:"none",
+              color:"#888",
+              cursor:"pointer",
+              fontSize:13
+            }}
+          >
+            Remover
+          </button>
 
         </div>
 
-      ))}
+      </div>
 
-      <div
+    ))}
+
+    {/* RESUMO */}
+    <div
+      style={{
+        marginTop:30,
+        background:"#0f141a",
+        padding:24,
+        borderRadius:16,
+        border:"1px solid rgba(255,255,255,0.05)"
+      }}
+    >
+
+      <div style={{
+        display:"flex",
+        justifyContent:"space-between",
+        marginBottom:10,
+        color:"#aaa"
+      }}>
+        <span>Subtotal</span>
+        <span>R$ {total.toFixed(2)}</span>
+      </div>
+
+      {frete > 0 && (
+        <div style={{
+          display:"flex",
+          justifyContent:"space-between",
+          marginBottom:10,
+          color:"#aaa"
+        }}>
+          <span>Frete</span>
+          <span>R$ {(frete / 100).toFixed(2)}</span>
+        </div>
+      )}
+
+      <div style={{
+        display:"flex",
+        justifyContent:"space-between",
+        fontSize:20,
+        fontWeight:800,
+        color:"#fff",
+        borderTop:"1px solid rgba(255,255,255,0.05)",
+        paddingTop:14,
+        marginTop:10
+      }}>
+        <span>Total</span>
+        <span>R$ {totalFinal.toFixed(2)}</span>
+      </div>
+
+      {items.length === 0 && (
+        <p style={{ color: "#888", marginTop: 20 }}>
+          Seu carrinho está vazio
+        </p>
+      )}
+
+      <button
+        onClick={handleCheckout}
+        disabled={items.length === 0}
         style={{
-          marginTop:40,
-          background:"#022",
-          padding:30,
-          borderRadius:12
+          marginTop:20,
+          width:"100%",
+          height:50,
+          borderRadius:12,
+          border:"none",
+          fontWeight:700,
+          fontSize:16,
+          background: items.length === 0 ? "#333" : "#22c55e",
+          color:"#022c22",
+          cursor: items.length === 0 ? "not-allowed" : "pointer",
+          transition:"0.2s"
         }}
       >
-
-        <h2 style={{color:"#fff"}}>
-          Total: R$ {totalFinal.toFixed(2)}
-        </h2>
-
-        {/* FRETE */}
-        {frete > 0 && (
-          <p style={{color:"#aaa", marginTop:10}}>
-            Frete: R$ {(frete / 100).toFixed(2)}
-          </p>
-        )}
-
-        {items.length === 0 && (
-          <p style={{ color: "#aaa", marginTop: 20 }}>
-            Seu carrinho está vazio
-          </p>
-        )}
-
-        <button
-          onClick={handleCheckout}
-          disabled={items.length === 0}
-          style={{
-            marginTop:20,
-            background: items.length === 0 ? "#555" : "#00aa55",
-            color:"#fff",
-            border:"none",
-            padding:15,
-            fontSize:18,
-            borderRadius:10,
-            cursor: items.length === 0 ? "not-allowed" : "pointer"
-          }}
-        >
-          Finalizar compra
-        </button>
-
-      </div>
+        Finalizar compra
+      </button>
 
     </div>
 
-  );
+  </div>
 
+);
+
+const qtyBtnStyle = {
+  width:32,
+  height:32,
+  borderRadius:8,
+  border:"1px solid rgba(255,255,255,0.1)",
+  background:"#1a222c",
+  color:"#fff",
+  cursor:"pointer"
+};
 }

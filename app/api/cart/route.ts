@@ -39,10 +39,11 @@ export async function GET() {
         priceCents,
 
         // produto com preço atualizado
-        product: {
-          ...item.product,
-          priceCents: calcularPrecoVenda(item.product.priceCents),
-        },
+       product: {
+  ...item.product,
+  images: item.product.productimage, // ✅ ESSA LINHA NOVA
+  priceCents: calcularPrecoVenda(item.product.priceCents),
+},
 
         // variante (se existir)
       productvariant: item.productvariant
