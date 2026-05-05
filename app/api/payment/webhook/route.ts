@@ -27,6 +27,7 @@ function mapPayment_status(status: string | undefined): payment_status {
 export async function POST(req: Request) {
   try {
     console.log("🔥 WEBHOOK CHEGOU");
+    console.log("🚀 NOVO WEBHOOK V2");
 
     const rawBody = await req.text();
 
