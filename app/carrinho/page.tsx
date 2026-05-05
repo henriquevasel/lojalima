@@ -125,7 +125,7 @@ export default function CarrinhoPage() {
         }}
       >
 
-       {item.product.images?.[0] && (
+     {item.product?.images?.[0]?.url ? (
   <img
     src={item.product.images[0].url}
     alt={item.product.name}
@@ -136,6 +136,13 @@ export default function CarrinhoPage() {
       borderRadius:10
     }}
   />
+) : (
+  <div style={{
+    width:100,
+    height:100,
+    borderRadius:10,
+    background:"#1a222c"
+  }} />
 )}
 
         {/* INFO */}
