@@ -9,8 +9,9 @@ type CartItem = {
   product: {
     name: string;
     priceCents: number;
+    sku: string;
     images?: { url: string }[];
-  };
+  }
 };
 
 export default function CarrinhoPage() {
@@ -135,25 +136,16 @@ export default function CarrinhoPage() {
         }}
       >
 
-     {item.product?.images?.[0]?.url ? (
-  <img
-    src={item.product.images[0].url}
-    alt={item.product.name}
-    style={{
-      width:100,
-      height:100,
-      objectFit:"cover",
-      borderRadius:10
-    }}
-  />
-) : (
-  <div style={{
+<img
+  src={`/produtos/${item.product.sku}-1.png`}
+  alt={item.product.name}
+  style={{
     width:100,
     height:100,
-    borderRadius:10,
-    background:"#1a222c"
-  }} />
-)}
+    objectFit:"cover",
+    borderRadius:10
+  }}
+/>
 
         {/* INFO */}
         <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>

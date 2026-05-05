@@ -41,6 +41,7 @@ export async function GET() {
         // produto com preço atualizado
        product: {
   ...item.product,
+  sku: item.product.sku,
   images: item.product.productimage, // ✅ ESSA LINHA NOVA
   priceCents: calcularPrecoVenda(item.product.priceCents),
 },
