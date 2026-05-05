@@ -44,7 +44,9 @@ export async function POST(req: Request) {
     const response = NextResponse.json({ ok: true });
 
     // 🔥 PROCESSA DEPOIS (SEM TRAVAR O MP)
-    processWebhook(body);
+    processWebhook(body).catch((err) => {
+  console.error("❌ ERRO BACKGROUND:", err);
+});
 
     return response;
 
@@ -57,9 +59,15 @@ export async function POST(req: Request) {
 // 🔥 SUA LÓGICA ORIGINAL (MOVIDA PRA CÁ)
 async function processWebhook(body: any) {
   try {
-    if (body.type !== "payment") return;
+    if (
+  body.type !== "payment" &&
+  body.action !== "payment.created" &&
+  body.action !== "payment.updated"
+) {
+  return;
+}
 
-    const paymentId = body?.data?.id;
+    const paymentId = body?.data?.id || body?.id;
     if (!paymentId) return;
 
     console.log("Webhook recebido:", paymentId);
@@ -89,13 +97,20 @@ async function processWebhook(body: any) {
     let shouldSendEmail = false;
 
     await prisma.$transaction(async (tx) => {
-      await tx.payment.updateMany({
-        where: { orderId },
-        data: {
-          status,
-          externalId: String(paymentId),
-        },
-      });
+   await tx.payment.upsert({
+  where: { orderId },
+  update: {
+    status,
+    externalId: String(paymentId),
+  },
+  create: {
+    orderId,
+    provider: "mercadopago",
+    status,
+    amountCents: order.totalCents,
+    externalId: String(paymentId),
+  },
+});
 
       if (status === payment_status.approved) {
         if (order.status === "paid") return;
