@@ -18,6 +18,16 @@ export default function CarrinhoPage() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [frete, setFrete] = useState(0);
 
+  const qtyBtnStyle = {
+  width:32,
+  height:32,
+  borderRadius:8,
+  border:"1px solid rgba(255,255,255,0.1)",
+  background:"#1a222c",
+  color:"#fff",
+  cursor:"pointer"
+};
+
   async function fetchCart() {
 
   const res = await fetch("/api/cart", {
@@ -311,13 +321,5 @@ export default function CarrinhoPage() {
 
 );
 
-const qtyBtnStyle = {
-  width:32,
-  height:32,
-  borderRadius:8,
-  border:"1px solid rgba(255,255,255,0.1)",
-  background:"#1a222c",
-  color:"#fff",
-  cursor:"pointer"
-};
+
 }
