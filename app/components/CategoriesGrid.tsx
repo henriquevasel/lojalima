@@ -50,15 +50,15 @@ export default function CategoriesGrid() {
 
               <div
                 style={{
-                  height: 60,
+                  height: 90,
                   marginBottom: 10
                 }}
               >
                 <Image
                   src={cat.icon || "/icons/camera.png"}
                   alt={cat.name}
-                  width={60}
-                  height={60}
+                  width={90}
+                  height={90}
                 />
               </div>
 
