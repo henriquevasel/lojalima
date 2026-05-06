@@ -35,6 +35,7 @@ export default function Header() {
   const [loadingUser, setLoadingUser] = useState(true);
 
   const menu = [
+    { label: "Loja", href: "/" },
     { label: "Projetos", href: ROUTES.projetos },
     { label: "Data center", href: ROUTES.categoria("data-center") },
     { label: "Sistema de Segurança", href: ROUTES.categoria("sistema-de-seguranca") },
