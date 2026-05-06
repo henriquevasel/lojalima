@@ -140,10 +140,12 @@ export default function CarrinhoPage() {
   src={`/produtos/${item.product.sku}-1.png`}
   alt={item.product.name}
   style={{
-    width:100,
-    height:100,
-    objectFit:"cover",
-    borderRadius:10
+  width:100,
+  height:100,
+  objectFit:"contain",
+  borderRadius:10,
+  background:"#fff",
+  padding:8
   }}
 />
 
@@ -217,13 +219,20 @@ export default function CarrinhoPage() {
 
           <button
             onClick={()=>removeItem(item.id)}
-            style={{
-              background:"transparent",
-              border:"none",
-              color:"#888",
-              cursor:"pointer",
-              fontSize:13
-            }}
+           style={{
+  background:"transparent",
+  border:"none",
+  color:"#888",
+  cursor:"pointer",
+  fontSize:13,
+  transition:"0.2s"
+}}
+onMouseEnter={(e)=>(
+  e.currentTarget.style.color="#ef4444"
+)}
+onMouseLeave={(e)=>(
+  e.currentTarget.style.color="#888"
+)}
           >
             Remover
           </button>
