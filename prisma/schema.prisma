@@ -102,6 +102,8 @@ model product {
   id              Int               @id @default(autoincrement())
   name            String
   slug            String            @unique(map: "Product_slug_key")
+  ean             String?
+  supplier        String?
   description     String?           @db.Text
   priceCents      Int
   active          Boolean           @default(true)
