@@ -122,7 +122,14 @@ export default function HomePage() {
                 {/* Imagem do card */}
                 <div className={s.thumb}>
                   {c.image ? (
-                    <Image src={c.image} alt={c.title} fill className={s.thumbImg} />
+                   <Image
+  src={c.image}
+  alt={c.title}
+  fill
+  className={s.thumbImg}
+  sizes="(max-width: 768px) 100vw, 25vw"
+  quality={75}
+/>
                   ) : (
                     <span className={s.thumbPlaceholder}>IMAGEM AQUI</span>
                   )}
