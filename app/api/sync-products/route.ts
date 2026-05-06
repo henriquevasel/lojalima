@@ -27,7 +27,10 @@ export async function GET() {
 
     const data = await response.json();
 
-    // 🔥 agrupa produtos por SKU
+    // =========================
+    // AGRUPAR SKU
+    // =========================
+
     const grouped = new Map();
 
     for (const item of data) {
@@ -45,10 +48,17 @@ export async function GET() {
           name: item.DESCRICAO,
           brand: item.MARCA,
           ean: item.EAN,
+
           image:
-  item.URL_IMAGEM ||
-  "/produtos/placeholder.jpg",
+            item.URL_IMAGEM ||
+            "/produtos/placeholder.jpg",
+
+          group:
+            item.GRUPO ||
+            "Sem categoria",
+
           price: Math.round(Number(item.PRECO) * 100),
+
           stock: estoque,
         });
 
@@ -62,19 +72,60 @@ export async function GET() {
     let created = 0;
     let updated = 0;
 
+    // =========================
+    // LOOP PRODUTOS
+    // =========================
+
     for (const product of grouped.values()) {
 
       const slug = slugify(product.name);
 
-      const existing = await prisma.product.findUnique({
-        where: {
-          sku: product.sku,
-        },
-        include: {
-          stock: true,
-          productimage: true,
-        },
-      });
+      // =========================
+      // CATEGORIA
+      // =========================
+
+      const categoryName =
+        product.group?.trim() ||
+        "Sem categoria";
+
+      const categorySlug =
+        slugify(categoryName);
+
+      let category =
+        await prisma.category.findUnique({
+          where: {
+            slug: categorySlug,
+          },
+        });
+
+      if (!category) {
+
+        category =
+          await prisma.category.create({
+            data: {
+              name: categoryName,
+              slug: categorySlug,
+              active: true,
+            },
+          });
+
+      }
+
+      // =========================
+      // PRODUTO EXISTE?
+      // =========================
+
+      const existing =
+        await prisma.product.findUnique({
+          where: {
+            sku: product.sku,
+          },
+          include: {
+            stock: true,
+            productimage: true,
+            productcategory: true,
+          },
+        });
 
       // =========================
       // CREATE
@@ -84,15 +135,28 @@ export async function GET() {
 
         await prisma.product.create({
           data: {
+
             name: product.name,
+
             slug: `${slug}-${product.sku}`,
+
             sku: product.sku,
+
             ean: product.ean,
+
             brand: product.brand,
+
             supplier: "DigitalSat",
+
             description: product.name,
+
             priceCents: product.price,
+
             active: true,
+
+            // =========================
+            // ESTOQUE
+            // =========================
 
             stock: {
               create: {
@@ -100,11 +164,25 @@ export async function GET() {
               },
             },
 
+            // =========================
+            // IMAGEM
+            // =========================
+
             productimage: {
               create: {
                 url: product.image,
                 alt: product.name,
                 sortOrder: 1,
+              },
+            },
+
+            // =========================
+            // CATEGORIA
+            // =========================
+
+            productcategory: {
+              create: {
+                categoryId: category.id,
               },
             },
           },
@@ -115,7 +193,7 @@ export async function GET() {
       } else {
 
         // =========================
-        // UPDATE PRODUCT
+        // UPDATE PRODUTO
         // =========================
 
         await prisma.product.update({
@@ -131,7 +209,7 @@ export async function GET() {
         });
 
         // =========================
-        // UPDATE STOCK
+        // UPDATE ESTOQUE
         // =========================
 
         if (existing.stock) {
@@ -157,7 +235,7 @@ export async function GET() {
         }
 
         // =========================
-        // UPDATE IMAGE
+        // UPDATE IMAGEM
         // =========================
 
         if (existing.productimage.length > 0) {
@@ -180,6 +258,27 @@ export async function GET() {
               url: product.image,
               alt: product.name,
               sortOrder: 1,
+            },
+          });
+
+        }
+
+        // =========================
+        // CATEGORIA
+        // =========================
+
+        const alreadyLinked =
+          existing.productcategory.some(
+            (pc) =>
+              pc.categoryId === category.id
+          );
+
+        if (!alreadyLinked) {
+
+          await prisma.productcategory.create({
+            data: {
+              productId: existing.id,
+              categoryId: category.id,
             },
           });
 
