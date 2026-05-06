@@ -80,9 +80,17 @@ export default function CategoriesCarousel() {
           }}
         >
 
-          {categories
+    {categories
   .filter(cat =>
-    !["promocoes", "mais-vendidos", "lancamentos"].includes(cat.slug)
+    [
+      "seguranca",
+      "redes",
+      "energia",
+      "informatica",
+      "telefonia",
+      "cftv",
+      "cabeamento"
+    ].includes(cat.slug)
   )
   .map((cat) => (
 
