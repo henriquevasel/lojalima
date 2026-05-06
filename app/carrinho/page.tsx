@@ -153,7 +153,10 @@ export default function CarrinhoPage() {
       >
 
 <img
-  src={`/produtos/${item.product.sku}-1.png`}
+  src={
+  item.product.images?.[0]?.url ||
+  "/produtos/placeholder.jpg"
+}
   alt={item.product.name}
   style={{
   width:100,

@@ -7,9 +7,9 @@ import styles from "@/app/styles/productCard.module.css";
 export default function ProductCard({ product }: any) {
 
   // imagem baseada no SKU (com fallback seguro)
-  const image = product?.sku
-    ? `/produtos/${product.sku}-1.png`
-    : "/produtos/placeholder.jpg";
+  const image =
+  product?.productimage?.[0]?.url ||
+  "/produtos/placeholder.jpg";
 
   const priceNumber = product.priceCents / 100;
 

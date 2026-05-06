@@ -47,7 +47,7 @@ export default async function ProdutoPage({ params }: any) {
   PRODUTOS RELACIONADOS
   ========================= */
 
- const relacionados = await prisma.product.findMany({
+const relacionados = await prisma.product.findMany({
   where: {
     active: true,
     id: { not: produto.id },
@@ -64,6 +64,15 @@ export default async function ProdutoPage({ params }: any) {
         }
       : undefined
   },
+
+  include: {
+    productimage: {
+      orderBy: {
+        sortOrder: "asc"
+      }
+    }
+  },
+
   take: 4,
 });
 
@@ -89,10 +98,16 @@ export default async function ProdutoPage({ params }: any) {
 
         <div className={s.imageWrap}>
 
-  <ProductGallery
-  images={[1,2,3,4].map(i => ({
-    url: `/produtos/${produto.sku}-${i}.png`
-  }))}
+<ProductGallery
+  images={
+    produto.productimage.length > 0
+      ? produto.productimage
+      : [
+          {
+            url: "/produtos/placeholder.jpg",
+          },
+        ]
+  }
   name={produto.name}
 />
 
@@ -351,9 +366,9 @@ export default async function ProdutoPage({ params }: any) {
   <div className={s.relatedGrid} >
     {relacionados.map((p) => {
 
-    const img = p.sku
-  ? `/produtos/${p.sku}-1.png`
-  : "/produtos/placeholder.jpg";
+const img =
+  p.productimage?.[0]?.url ||
+  "/produtos/placeholder.jpg";
 
       return (
         <Link
