@@ -275,14 +275,18 @@ export async function GET() {
 
         if (!alreadyLinked) {
 
-          await prisma.productcategory.create({
-            data: {
-              productId: existing.id,
-              categoryId: category.id,
-            },
-          });
+  try {
 
-        }
+    await prisma.productcategory.create({
+      data: {
+        productId: existing.id,
+        categoryId: category.id,
+      },
+    });
+
+  } catch {}
+
+}
 
         updated++;
       }
