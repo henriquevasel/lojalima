@@ -109,16 +109,32 @@ export default function CarrinhoPage() {
 
   return (
 
-  <div style={{maxWidth:1100,margin:"60px auto",padding:"0 16px"}}>
+  <div
+  style={{
+    maxWidth:1200,
+    margin:"60px auto",
+    padding:"0 16px",
+    display:"grid",
+    gridTemplateColumns:
+  typeof window !== "undefined" && window.innerWidth < 900
+    ? "1fr"
+    : "1fr 340px",
+    gap:24,
+    alignItems:"start"
+  }}
+>
 
-    <h1 style={{
-      color:"#fff",
-      marginBottom:30,
-      fontSize:28,
-      fontWeight:800
-    }}>
+ <h1 style={{
+  color:"#fff",
+  marginBottom:30,
+  fontSize:28,
+  fontWeight:800,
+  gridColumn:"1 / -1"
+}}>
       Carrinho
     </h1>
+
+    <div>
 
     {items.map((item)=>(
 
@@ -243,16 +259,33 @@ onMouseLeave={(e)=>(
 
     ))}
 
+    </div>
+
     {/* RESUMO */}
     <div
       style={{
-        marginTop:30,
+        position:"sticky",
+        top:20,
+        height:"fit-content",
         background:"#0f141a",
         padding:24,
         borderRadius:16,
         border:"1px solid rgba(255,255,255,0.05)"
       }}
     >
+      {frete > 0 && (
+  <div style={{
+    display:"flex",
+    justifyContent:"space-between",
+    marginBottom:10,
+    color:"#aaa"
+  }}>
+    <span>Frete</span>
+    <span>
+      R$ {(frete / 100).toFixed(2)}
+    </span>
+  </div>
+)}
 
       <div style={{
         display:"flex",
@@ -264,17 +297,7 @@ onMouseLeave={(e)=>(
         <span>R$ {total.toFixed(2)}</span>
       </div>
 
-      {frete > 0 && (
-        <div style={{
-          display:"flex",
-          justifyContent:"space-between",
-          marginBottom:10,
-          color:"#aaa"
-        }}>
-          <span>Frete</span>
-          <span>R$ {(frete / 100).toFixed(2)}</span>
-        </div>
-      )}
+
 
       <div style={{
         display:"flex",
@@ -295,6 +318,36 @@ onMouseLeave={(e)=>(
           Seu carrinho está vazio
         </p>
       )}
+
+      <div
+  style={{
+    marginTop:14,
+    padding:12,
+    borderRadius:12,
+    background:"rgba(34,197,94,0.08)",
+    border:"1px solid rgba(34,197,94,0.2)",
+    color:"#22c55e",
+    fontWeight:700,
+    fontSize:14
+  }}
+>
+  À vista no PIX:
+  <div style={{
+    fontSize:24,
+    marginTop:4
+  }}>
+    R$ {(totalFinal * 0.95).toFixed(2)}
+  </div>
+
+  <div style={{
+    color:"#888",
+    fontWeight:400,
+    fontSize:12,
+    marginTop:4
+  }}>
+    Economia de 5%
+  </div>
+</div>
 
       <button
         onClick={handleCheckout}
