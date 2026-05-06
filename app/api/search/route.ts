@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
-import { productsWithImage } from "@/app/lib/productsWithImage";
+
 
 export async function GET(req: Request) {
   try {
@@ -19,10 +19,7 @@ export async function GET(req: Request) {
       where: {
         active: true,
 
-        sku: {
-          in: productsWithImage
-        },
-
+       
         AND: terms.map(term => ({
           OR: [
             { name: { contains: term } },

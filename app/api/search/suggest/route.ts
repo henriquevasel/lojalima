@@ -17,10 +17,7 @@ export async function GET(req: Request) {
     where: {
       active: true,
 
-      sku: {
-        in: productsWithImage
-      },
-
+  
       OR: [
         {
           name: {

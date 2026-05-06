@@ -6,7 +6,7 @@ import ProductGallery from "@/app/components/ProductGallery";
 import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
-import { productsWithImage } from "@/app/lib/productsWithImage";
+
 import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
 
 export default async function ProdutoPage({ params }: any) {
@@ -52,10 +52,7 @@ const relacionados = await prisma.product.findMany({
     active: true,
     id: { not: produto.id },
 
-    sku: {
-      in: productsWithImage
-    },
-
+    
     productcategory: produto.productcategory?.length
       ? {
           some: {

@@ -44,9 +44,7 @@ FILTROS
 const where: any = {
   active: true,
 
-  sku: {
-   in: productsWithImage.map(s => String(s))
-  }
+
 };
 
 /* busca */

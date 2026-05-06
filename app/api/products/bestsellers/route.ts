@@ -1,7 +1,7 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { aplicarMarkupProdutos } from "@/app/lib/product";
-import { productsWithImage } from "@/app/lib/productsWithImage";
+
 
 export async function GET() {
 
@@ -26,7 +26,7 @@ export async function GET() {
     products = await prisma.product.findMany({
       where: {
         id: { in: productIds as number[] },
-        sku: { in: productsWithImage }
+       
       },
       include: { productimage: true },
     });
@@ -37,7 +37,7 @@ export async function GET() {
   const fallback = await prisma.product.findMany({
     where: {
       active: true,
-      sku: { in: productsWithImage }
+      
     },
     include: { productimage: true },
     take: 20 // 🔥 pega mais produtos
