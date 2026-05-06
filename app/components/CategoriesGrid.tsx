@@ -48,19 +48,25 @@ export default function CategoriesGrid() {
               }}
             >
 
-              <div
-                style={{
-                  height: 90,
-                  marginBottom: 10
-                }}
-              >
-                <Image
-                  src={cat.icon || "/icons/camera.png"}
-                  alt={cat.name}
-                  width={90}
-                  height={90}
-                />
-              </div>
+             <div
+  style={{
+    height: 120,
+    marginBottom: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }}
+>
+  <Image
+    src={cat.icon || "/icons/camera.png"}
+    alt={cat.name}
+    width={120}
+    height={120}
+    style={{
+      objectFit: "contain"
+    }}
+  />
+</div>
 
               <div style={{ fontSize: 13 }}>
                 {cat.name}
