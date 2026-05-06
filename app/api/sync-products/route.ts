@@ -45,7 +45,9 @@ export async function GET() {
           name: item.DESCRICAO,
           brand: item.MARCA,
           ean: item.EAN,
-          image: item.URL_IMAGEM,
+          image:
+  item.URL_IMAGEM ||
+  "/produtos/placeholder.jpg",
           price: Math.round(Number(item.PRECO) * 100),
           stock: estoque,
         });
