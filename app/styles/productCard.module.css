@@ -31,18 +31,20 @@
 .imageWrapper {
   position: relative;
   width: 100%;
-  height: 170px;
-  position: relative;
-  aspect-ratio: 1 / 1;
-  background: #f9fafb;
-  background: #f9fafb; /* 🔥 fundo claro */
-  flex-shrink: 0;
+  height: 220px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image {
-    width: 100%;
+  width: 100%;
   height: 100%;
   object-fit: contain;
+
+  display: block;
 }
 
 /* BADGE */
