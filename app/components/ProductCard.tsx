@@ -6,23 +6,16 @@ import styles from "@/app/styles/productCard.module.css";
 
 export default function ProductCard({ product }: any) {
 
-  // fallback local
-  const localImages = [
-    `/produtos/${product?.sku}-1.png`,
-    `/produtos/${product?.sku}-1.jpg`,
-    `/produtos/${product?.sku}-1.jpeg`,
-    `/produtos/${product?.sku}-1.webp`,
-  ];
+// fallback local
+const localImages = [
+  `/produtos/${product?.sku}.jpg`,
+  `/produtos/${product?.sku}.png`,
+  `/produtos/${product?.sku}.jpeg`,
+  `/produtos/${product?.sku}.webp`,
+];
 
-  // prioridade:
-  // 1. imagem da API
-  // 2. imagem local
-  // 3. placeholder
-  const image =
-    product?.productimage?.[0]?.url &&
-    product.productimage[0].url !== "null"
-      ? product.productimage[0].url
-      : localImages[0];
+// imagem principal
+const image = localImages[0];
 
   const priceNumber = product.priceCents / 100;
 
