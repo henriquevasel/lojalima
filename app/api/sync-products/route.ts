@@ -83,8 +83,7 @@ export async function GET() {
       // =========================
       // CATEGORIA
       // =========================
-
-      const rawGroup =
+const rawGroup =
   product.group?.toLowerCase() || "";
 
 let categoryName = "Diversos";
@@ -94,7 +93,12 @@ let categoryName = "Diversos";
 // =========================
 
 if (
-  rawGroup.includes("informatica")
+
+  rawGroup.includes("informatica") ||
+  rawGroup.includes("computador") ||
+  rawGroup.includes("notebook") ||
+  rawGroup.includes("pc")
+
 ) {
   categoryName = "Informática";
 }
@@ -104,7 +108,10 @@ if (
 // =========================
 
 else if (
-  rawGroup.includes("controle de acesso")
+
+  rawGroup.includes("controle de acesso") ||
+  rawGroup.includes("acesso")
+
 ) {
   categoryName = "Controle de Acesso";
 }
@@ -114,7 +121,13 @@ else if (
 // =========================
 
 else if (
-  rawGroup.includes("cftv")
+
+  rawGroup.includes("cftv") ||
+  rawGroup.includes("dvr") ||
+  rawGroup.includes("nvr") ||
+  rawGroup.includes("camera") ||
+  rawGroup.includes("video monitoramento")
+
 ) {
   categoryName = "CFTV";
 }
@@ -124,9 +137,12 @@ else if (
 // =========================
 
 else if (
+
   rawGroup.includes("cabeamento") ||
   rawGroup.includes("fios") ||
-  rawGroup.includes("cabos")
+  rawGroup.includes("cabos") ||
+  rawGroup.includes("cabo")
+
 ) {
   categoryName = "Cabeamento";
 }
@@ -136,7 +152,12 @@ else if (
 // =========================
 
 else if (
-  rawGroup.includes("telefonia")
+
+  rawGroup.includes("telefonia") ||
+  rawGroup.includes("telefone") ||
+  rawGroup.includes("ramal") ||
+  rawGroup.includes("pabx")
+
 ) {
   categoryName = "Telefonia";
 }
@@ -146,7 +167,12 @@ else if (
 // =========================
 
 else if (
-  rawGroup.includes("alarme")
+
+  rawGroup.includes("alarme") ||
+  rawGroup.includes("sensor") ||
+  rawGroup.includes("sirene") ||
+  rawGroup.includes("incendio")
+
 ) {
   categoryName = "Alarmes";
 }
@@ -156,8 +182,12 @@ else if (
 // =========================
 
 else if (
+
   rawGroup.includes("nobreak") ||
-  rawGroup.includes("energia")
+  rawGroup.includes("energia") ||
+  rawGroup.includes("fonte") ||
+  rawGroup.includes("solar")
+
 ) {
   categoryName = "Energia";
 }
@@ -167,7 +197,17 @@ else if (
 // =========================
 
 else if (
-  rawGroup.includes("redes")
+
+  rawGroup.includes("redes") ||
+  rawGroup.includes("connect") ||
+  rawGroup.includes("switch") ||
+  rawGroup.includes("roteador") ||
+  rawGroup.includes("router") ||
+  rawGroup.includes("fibra") ||
+  rawGroup.includes("access point") ||
+  rawGroup.includes("rack") ||
+  rawGroup.includes("wifi")
+
 ) {
   categoryName = "Redes";
 }
@@ -177,7 +217,12 @@ else if (
 // =========================
 
 else if (
-  rawGroup.includes("automat")
+
+  rawGroup.includes("automat") ||
+  rawGroup.includes("motor") ||
+  rawGroup.includes("deslizante") ||
+  rawGroup.includes("pivotante")
+
 ) {
   categoryName = "Automatizadores";
 }
@@ -187,7 +232,9 @@ else if (
 // =========================
 
 else if (
+
   rawGroup.includes("fechadura")
+
 ) {
   categoryName = "Fechaduras";
 }
@@ -197,7 +244,11 @@ else if (
 // =========================
 
 else if (
-  rawGroup.includes("porteiro")
+
+  rawGroup.includes("porteiro") ||
+  rawGroup.includes("interfone") ||
+  rawGroup.includes("video porteiro")
+
 ) {
   categoryName = "Porteiros";
 }
@@ -207,13 +258,16 @@ else if (
 // =========================
 
 else if (
+
   rawGroup.includes("monitor")
+
 ) {
   categoryName = "Monitores";
 }
 
 const categorySlug =
   slugify(categoryName);
+
       let category =
         await prisma.category.findUnique({
           where: {
