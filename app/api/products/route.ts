@@ -23,7 +23,14 @@ const max = searchParams.get("max");
 ORDER BY DINÂMICO
 ========================= */
 
-let orderBy: any = { createdAt: "desc" };
+let orderBy: any = [
+  {
+    priceCents: "desc",
+  },
+  {
+    createdAt: "desc",
+  },
+];
 
 if (sort === "price_asc") {
   orderBy = { priceCents: "asc" };
@@ -43,12 +50,24 @@ FILTROS
 
 const where: any = {
   active: true,
+
+  // 🔥 evita produto sem estoque
+ stock: {
+  quantity: {
+    gt: 0,
+  },
+},
+
+  // 🔥 evita produtos baratos/genéricos
+  priceCents: {
+    gt: 10000, // acima de R$100
+  },
 };
 
 where.productimage = {
   some: {
     url: {
-      not: "",
+      notIn: ["", "/placeholder.png"],
     },
   },
 };
