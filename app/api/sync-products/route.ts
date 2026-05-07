@@ -84,13 +84,136 @@ export async function GET() {
       // CATEGORIA
       // =========================
 
-      const categoryName =
-        product.group?.trim() ||
-        "Sem categoria";
+      const rawGroup =
+  product.group?.toLowerCase() || "";
 
-      const categorySlug =
-        slugify(categoryName);
+let categoryName = "Diversos";
 
+// =========================
+// INFORMÁTICA
+// =========================
+
+if (
+  rawGroup.includes("informatica")
+) {
+  categoryName = "Informática";
+}
+
+// =========================
+// CONTROLE DE ACESSO
+// =========================
+
+else if (
+  rawGroup.includes("controle de acesso")
+) {
+  categoryName = "Controle de Acesso";
+}
+
+// =========================
+// CFTV
+// =========================
+
+else if (
+  rawGroup.includes("cftv")
+) {
+  categoryName = "CFTV";
+}
+
+// =========================
+// CABEAMENTO
+// =========================
+
+else if (
+  rawGroup.includes("cabeamento") ||
+  rawGroup.includes("fios") ||
+  rawGroup.includes("cabos")
+) {
+  categoryName = "Cabeamento";
+}
+
+// =========================
+// TELEFONIA
+// =========================
+
+else if (
+  rawGroup.includes("telefonia")
+) {
+  categoryName = "Telefonia";
+}
+
+// =========================
+// ALARMES
+// =========================
+
+else if (
+  rawGroup.includes("alarme")
+) {
+  categoryName = "Alarmes";
+}
+
+// =========================
+// ENERGIA
+// =========================
+
+else if (
+  rawGroup.includes("nobreak") ||
+  rawGroup.includes("energia")
+) {
+  categoryName = "Energia";
+}
+
+// =========================
+// REDES
+// =========================
+
+else if (
+  rawGroup.includes("redes")
+) {
+  categoryName = "Redes";
+}
+
+// =========================
+// AUTOMATIZADORES
+// =========================
+
+else if (
+  rawGroup.includes("automat")
+) {
+  categoryName = "Automatizadores";
+}
+
+// =========================
+// FECHADURAS
+// =========================
+
+else if (
+  rawGroup.includes("fechadura")
+) {
+  categoryName = "Fechaduras";
+}
+
+// =========================
+// PORTEIROS
+// =========================
+
+else if (
+  rawGroup.includes("porteiro")
+) {
+  categoryName = "Porteiros";
+}
+
+// =========================
+// MONITORES
+// =========================
+
+else if (
+  rawGroup.includes("monitor")
+) {
+  categoryName = "Monitores";
+}
+
+const categorySlug =
+  slugify(categoryName);
       let category =
         await prisma.category.findUnique({
           where: {
@@ -103,10 +226,21 @@ export async function GET() {
         category =
           await prisma.category.create({
             data: {
-              name: categoryName,
-              slug: categorySlug,
-              active: true,
-            },
+  name: categoryName,
+  slug: categorySlug,
+  active: true,
+
+  featured: [
+    "CFTV",
+    "Redes",
+    "Alarmes",
+    "Telefonia",
+    "Controle de Acesso",
+    "Energia",
+    "Automatizadores",
+    "Fechaduras"
+  ].includes(categoryName),
+},
           });
 
       }

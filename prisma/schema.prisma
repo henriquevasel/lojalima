@@ -27,12 +27,19 @@ model category {
   name            String
   slug            String            @unique(map: "Category_slug_key")
   active          Boolean           @default(true)
+
+  featured        Boolean           @default(false)
+
   sortOrder       Int               @default(0)
   parentId        Int?
+
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+
   category        category?         @relation("categoryTocategory", fields: [parentId], references: [id])
+
   other_category  category[]        @relation("categoryTocategory")
+
   productcategory productcategory[]
 
   @@index([active, sortOrder], map: "Category_active_sortOrder_idx")
