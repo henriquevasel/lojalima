@@ -266,27 +266,13 @@ export async function GET() {
         // =========================
         // CATEGORIA
         // =========================
+        await prisma.productcategory.deleteMany({
+  where: {
+    productId: existing.id,
+  },
+});
 
-        const alreadyLinked =
-          existing.productcategory.some(
-            (pc) =>
-              pc.categoryId === category.id
-          );
-
-        if (!alreadyLinked) {
-
-  try {
-
-    await prisma.productcategory.create({
-      data: {
-        productId: existing.id,
-        categoryId: category.id,
-      },
-    });
-
-  } catch {}
-
-}
+      
 
         updated++;
       }
