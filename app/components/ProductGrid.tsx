@@ -95,7 +95,7 @@ export default function ProductGrid({
         }
 
         {/* PRODUTOS FILTRADOS */}
-        {filteredProducts.map((p) => (
+        {products.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
 
