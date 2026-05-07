@@ -7,7 +7,7 @@ import styles from "@/app/styles/productCard.module.css";
 export default function ProductCard({ product }: any) {
 
   // imagem baseada no SKU (com fallback seguro)
-onst image =
+const image =
   product?.productimage?.[0]?.url &&
   product.productimage[0].url !== "null"
     ? product.productimage[0].url
