@@ -460,6 +460,12 @@ const categorySlug =
   },
 });
 
+await prisma.productcategory.create({
+  data: {
+    productId: existing.id,
+    categoryId: category.id,
+  },
+});
       
 
         updated++;

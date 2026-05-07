@@ -4,26 +4,11 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-  console.log("🗑 Limpando categorias antigas...");
+  console.log("🗑 Limpando relações produto/categoria...");
 
   await prisma.productcategory.deleteMany();
 
-  await prisma.category.deleteMany({
-    where: {
-      slug: {
-        in: [
-          "cameras",
-          "seguranca",
-          "redes",
-          "energia",
-          "audio",
-          "acessorios",
-        ]
-      }
-    }
-  });
-
-  console.log("✅ Categorias antigas removidas");
+  console.log("✅ Relações removidas");
 }
 
 main()
