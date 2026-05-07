@@ -30,7 +30,7 @@
 
 .imageWrapper {
   width: 100%;
-  height: 220px;
+  height: 150px;
 
   display: flex;
   align-items: center;
@@ -38,11 +38,14 @@
 
   overflow: hidden;
   background: #fff;
+
+  padding: 10px;
 }
 
 .image {
-  width: 100%;
-  height: 100%;
+  max-width: 85%;
+  max-height: 85%;
+
   object-fit: contain;
 
   display: block;

@@ -56,6 +56,14 @@ onError={(e) => {
 
   const target = e.currentTarget;
 
+  // já está no placeholder
+  if (
+    target.src.includes("placeholder.jpg")
+  ) {
+    return;
+  }
+
+  // ainda não tentou imagem local
   if (
     !target.src.includes("/produtos/")
   ) {
@@ -63,12 +71,12 @@ onError={(e) => {
     target.src =
       `/produtos/${product?.sku}.jpg`;
 
-  } else {
-
-    target.src =
-      "/produtos/placeholder.jpg";
-
+    return;
   }
+
+  // fallback final
+  target.src =
+    "/produtos/placeholder.jpg";
 
 }}
 />
