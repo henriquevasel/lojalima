@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "@/app/components/ProductCard";
-import { productsWithImage } from "@/app/lib/productsWithImage"; // ✅ IMPORT
+
 
 export default function BuscaClient() {
 

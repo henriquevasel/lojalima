@@ -1,7 +1,7 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
-import { productsWithImage } from "@/app/lib/productsWithImage";
+
 
 export async function GET(req: Request) {
 

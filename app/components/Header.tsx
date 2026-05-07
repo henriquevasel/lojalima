@@ -11,7 +11,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import s from "@/app/styles/header.module.css";
 import { ROUTES } from "@/routes/routes";
-import { productsWithImage } from "@/app/lib/productsWithImage";
+
 
 export default function Header() {
   const [cartCount, setCartCount] = useState(0);

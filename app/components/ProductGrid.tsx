@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import React from "react";
-import { productsWithImage } from "@/app/lib/productsWithImage"; // ✅ IMPORT
+
 
 type Props = {
   title: string;
@@ -65,9 +65,6 @@ export default function ProductGrid({
   }, [endpoint]);
 
   // ✅ FILTRO AQUI
-  const filteredProducts = products.filter(p =>
-    productsWithImage.includes(String(p.sku))
-  );
 
   return (
     <section className="gridSection">

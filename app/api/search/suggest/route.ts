@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
-import { productsWithImage } from "@/app/lib/productsWithImage";
+
 
 export async function GET(req: Request) {
 
