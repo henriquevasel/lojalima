@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+
 import Link from "next/link";
 import styles from "@/app/styles/productCard.module.css";
 
@@ -49,19 +49,24 @@ export default function ProductCard({ product }: any) {
         {/* IMAGEM */}
         <div className={styles.imageWrapper}>
 
-          <Image
-            src={image}
-            alt={product.name}
-            fill
-            unoptimized
-            sizes="(max-width: 768px) 100vw, 25vw"
-            className={styles.image}
+          <img
+  src={image}
+  alt={product.name}
+  className={styles.image}
 
-            onError={(e) => {
-              e.currentTarget.src =
-                "/produtos/placeholder.jpg";
-            }}
-          />
+  onError={(e) => {
+
+    const target = e.currentTarget;
+
+    if (
+      !target.src.includes("placeholder.jpg")
+    ) {
+      target.src =
+        "/produtos/placeholder.jpg";
+    }
+
+  }}
+/>
 
           {product.featured && (
             <div className={styles.badgeFeatured}>

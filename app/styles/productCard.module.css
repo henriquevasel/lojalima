@@ -40,7 +40,9 @@
 }
 
 .image {
-  object-fit: contain; /* 🔥 melhor pra produto */
+    width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* BADGE */
