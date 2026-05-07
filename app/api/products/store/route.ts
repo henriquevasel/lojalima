@@ -3,104 +3,171 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
 
-const { searchParams } = new URL(req.url);
+  const { searchParams } = new URL(req.url);
 
-const category = searchParams.get("category");
-const search = searchParams.get("search");
-const sort = searchParams.get("sort");
-const page = Number(searchParams.get("page") || "1");
-const take = 24;
-const skip = (page - 1) * take;
-const min = searchParams.get("min");    
-const max = searchParams.get("max");
+  const category = searchParams.get("category");
+  const search = searchParams.get("search");
+  const sort = searchParams.get("sort");
+  const page = Number(searchParams.get("page") || "1");
 
-const where: any = {
-active: true
-};
+  const take = Number(searchParams.get("limit") || "24");
 
-if (search) {
-  const terms = search.split(" ").filter(t => t.length > 1);
+  const skip = (page - 1) * take;
 
-  where.AND = [
-    ...(where.AND || []),
+  const min = searchParams.get("min");
+  const max = searchParams.get("max");
 
-    ...terms.map(term => ({
-        OR: [
-    {
-      name: {
-        contains: term,
-        
+  const where: any = {
+    active: true,
+
+    // 🔥 somente produtos bons
+    featured: true,
+
+    // 🔥 somente com estoque
+    stock: {
+      quantity: {
+        gt: 0,
       },
     },
-    {
-      slug: {
-        contains: term,
-        
-      },
+
+    // 🔥 evita produtos muito baratos/genéricos
+    priceCents: {
+      gt: 10000,
     },
-    {
-      brand: {
-        contains: term,
-        
-      },
-    },
-    {
-      productcategory: {
-        some: {
-          category: {
-            name: {
-              contains: term,
-              
-            },
-          },
+
+    // 🔥 somente produtos com imagem
+    productimage: {
+      some: {
+        url: {
+          notIn: ["", "null"],
         },
       },
     },
-  ],
-    })),
-  ];
-}
-if (category) {
-where.categories = {
-some: {
-category: {
-slug: category
-}
-}
-};
-}
+  };
 
-if (min || max) {
-where.priceCents = {
-...(min && { gte: Number(min) * 100 }),
-...(max && { lte: Number(max) * 100 })
-};
-}
+  /* =========================
+  BUSCA
+  ========================= */
 
-let orderBy: any = {
-createdAt: "desc"
-};
+  if (search) {
 
-if (sort === "price_asc") {
-orderBy = { priceCents: "asc" };
-}
+    const terms = search
+      .split(" ")
+      .filter(t => t.length > 1);
 
-if (sort === "price_desc") {
-orderBy = { priceCents: "desc" };
-}
+    where.AND = [
+      ...(where.AND || []),
 
-const products = await prisma.product.findMany({
-  where,
-  include: {
-    productimage: {
-      orderBy: { sortOrder: "asc" },
-      take: 1,
+      ...terms.map(term => ({
+        OR: [
+          {
+            name: {
+              contains: term,
+            },
+          },
+          {
+            slug: {
+              contains: term,
+            },
+          },
+          {
+            brand: {
+              contains: term,
+            },
+          },
+          {
+            productcategory: {
+              some: {
+                category: {
+                  name: {
+                    contains: term,
+                  },
+                },
+              },
+            },
+          },
+        ],
+      })),
+    ];
+  }
+
+  /* =========================
+  CATEGORIA
+  ========================= */
+
+  if (category) {
+
+    where.productcategory = {
+      some: {
+        category: {
+          slug: category,
+        },
+      },
+    };
+
+  }
+
+  /* =========================
+  PREÇO
+  ========================= */
+
+  if (min || max) {
+
+    where.priceCents = {
+      ...(where.priceCents || {}),
+
+      ...(min && {
+        gte: Number(min) * 100,
+      }),
+
+      ...(max && {
+        lte: Number(max) * 100,
+      }),
+    };
+
+  }
+
+  /* =========================
+  ORDENAÇÃO
+  ========================= */
+
+  let orderBy: any = [
+    {
+      priority: "desc",
     },
-  },
-  orderBy,
-  take,
-  skip,
-});
+    {
+      createdAt: "desc",
+    },
+  ];
 
-return NextResponse.json(products);
+  if (sort === "price_asc") {
+    orderBy = { priceCents: "asc" };
+  }
+
+  if (sort === "price_desc") {
+    orderBy = { priceCents: "desc" };
+  }
+
+  /* =========================
+  QUERY
+  ========================= */
+
+  const products = await prisma.product.findMany({
+    where,
+
+    include: {
+      productimage: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+        take: 1,
+      },
+    },
+
+    orderBy,
+    take,
+    skip,
+  });
+
+  return NextResponse.json(products);
 }
