@@ -5,7 +5,6 @@ import ProductGrid from "@/app/components/ProductGrid";
 import ProductsCarousel from "@/app/components/ProductsCarousel";
 import StoreToolbar from "@/app/components/StoreToolbar";
 import WhatsAppSection from "@/app/components/WhatsAppSection";
-import InstallationServices from "@/app/components/InstallationServices";
 import WhatsappCTA from "@/app/components/WhatsappCTA";
 
 export default function HomeProducts() {
@@ -39,41 +38,52 @@ export default function HomeProducts() {
         </>
       )}
 
-      {/* 🏠 MODO NORMAL */}
+      {/* 🏠 HOME */}
       {!isResults && (
         <>
+
+          {/* CÂMERAS */}
           <div className="homeSection">
             <ProductsCarousel
-              title="⭐ Produtos em destaque"
-              endpoint="/api/products/featured"
+              title="📹 Câmeras e Gravadores"
+              endpoint="/api/products?category=cftv"
             />
           </div>
 
+          {/* FECHADURAS */}
           <div className="homeSection">
             <ProductsCarousel
-              title="🔥 Lançamentos"
-              endpoint="/api/products/new"
+              title="🔐 Fechaduras Inteligentes"
+              endpoint="/api/products?category=fechaduras"
             />
           </div>
 
+          {/* CTA */}
           <div className="homeSection alt">
             <WhatsAppSection />
           </div>
 
+          {/* SMART HOME */}
           <div className="homeSection">
             <ProductsCarousel
-              title="Mais vendidos"
-              endpoint="/api/products/bestsellers"
+              title="🏠 Smart Home"
+              endpoint="/api/products?category=smart-home"
             />
           </div>
 
-          <div className="homeSection alt">
-            
+          {/* AUTOMATIZADORES */}
+          <div className="homeSection">
+            <ProductsCarousel
+              title="🚪 Automatizadores"
+              endpoint="/api/products?category=automatizadores"
+            />
           </div>
 
+          {/* CTA FINAL */}
           <div className="homeSection highlight">
             <WhatsappCTA />
           </div>
+
         </>
       )}
     </>

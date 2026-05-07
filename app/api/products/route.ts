@@ -43,8 +43,14 @@ FILTROS
 
 const where: any = {
   active: true,
+};
 
-
+where.productimage = {
+  some: {
+    url: {
+      not: "",
+    },
+  },
 };
 
 /* busca */
