@@ -47,13 +47,24 @@ export default function ProductsCarousel({ title, endpoint }: any) {
     load();
   }, [endpoint]);
 
-  const safeProducts = Array.isArray(products) ? products : [];
+  const safeProducts = Array.isArray(products)
+    ? products.filter((p) => {
+        const image = p?.productimage?.[0]?.url;
+
+        return (
+          image &&
+          image !== "" &&
+          image !== "null"
+        );
+      })
+    : [];
 
   const skeletons = Array.from({ length: 4 });
 
   return (
     <section className="section">
       <div className="container">
+
         <div className="section-header">
           <h2>{title}</h2>
           <p>Equipamentos profissionais de segurança eletrônica</p>
@@ -71,6 +82,7 @@ export default function ProductsCarousel({ title, endpoint }: any) {
         {/* CARROSSEL */}
         {!loading && safeProducts.length > 0 && (
           <div className="carouselWrapper">
+
             <Swiper
               className="mySwiper"
               modules={[Navigation, Pagination, Autoplay]}
@@ -80,44 +92,54 @@ export default function ProductsCarousel({ title, endpoint }: any) {
               grabCursor={true}
               navigation
               pagination={{ clickable: true }}
+
               autoplay={{
                 delay: 3000,
                 disableOnInteraction: false,
               }}
+
               breakpoints={{
-  0: {
-    slidesPerView: 2,
-    spaceBetween: 12,
-  },
-  640: {
-    slidesPerView: 3,
-    spaceBetween: 16,
-  },
-  1024: {
-    slidesPerView: 4,
-    spaceBetween: 20,
-  },
-  1400: {
-    slidesPerView: 5,
-    spaceBetween: 20,
-  },
-  1600: {
-    slidesPerView: 6,
-    spaceBetween: 24,
-  },
-}}
+                0: {
+                  slidesPerView: 2,
+                  spaceBetween: 12,
+                },
+
+                640: {
+                  slidesPerView: 3,
+                  spaceBetween: 16,
+                },
+
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 20,
+                },
+
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+
+                1600: {
+                  slidesPerView: 6,
+                  spaceBetween: 24,
+                },
+              }}
+
               onSwiper={(swiper) => {
                 setTimeout(() => {
                   swiper.update();
                 }, 100);
               }}
             >
+
               {safeProducts.map((p) => (
                 <SwiperSlide key={p.id}>
                   <ProductCard product={p} />
                 </SwiperSlide>
               ))}
+
             </Swiper>
+
           </div>
         )}
 
@@ -127,6 +149,7 @@ export default function ProductsCarousel({ title, endpoint }: any) {
             Nenhum produto encontrado
           </p>
         )}
+
       </div>
     </section>
   );
