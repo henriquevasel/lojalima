@@ -15,7 +15,12 @@ const localImages = [
 ];
 
 // imagem principal
-const image = localImages[0];
+const image =
+  product?.productimage?.[0]?.url &&
+  product.productimage[0].url !== "null" &&
+  product.productimage[0].url !== ""
+    ? product.productimage[0].url
+    : localImages[0];
 
   const priceNumber = product.priceCents / 100;
 
@@ -47,18 +52,25 @@ const image = localImages[0];
   alt={product.name}
   className={styles.image}
 
-  onError={(e) => {
+onError={(e) => {
 
-    const target = e.currentTarget;
+  const target = e.currentTarget;
 
-    if (
-      !target.src.includes("placeholder.jpg")
-    ) {
-      target.src =
-        "/produtos/placeholder.jpg";
-    }
+  if (
+    !target.src.includes("/produtos/")
+  ) {
 
-  }}
+    target.src =
+      `/produtos/${product?.sku}.jpg`;
+
+  } else {
+
+    target.src =
+      "/produtos/placeholder.jpg";
+
+  }
+
+}}
 />
 
           {product.featured && (
