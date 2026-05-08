@@ -8,6 +8,7 @@ import WhatsAppSection from "@/app/components/WhatsAppSection";
 import WhatsappCTA from "@/app/components/WhatsappCTA";
 
 export default function HomeProducts() {
+
   const params = useSearchParams();
   const query = params.toString();
 
@@ -49,7 +50,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Câmeras e Gravadores"
-              endpoint="/api/products?category=cftv-cameras&limit=30"
+              endpoint="/api/products/store?category=cftv-cameras&limit=30"
             />
           </div>
 
@@ -57,7 +58,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Fechaduras Inteligentes"
-              endpoint="/api/products?category=fechaduras-digitais&limit=30"
+              endpoint="/api/products/store?category=fechaduras-digitais&limit=30"
             />
           </div>
 
@@ -65,7 +66,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Controle de Acesso"
-              endpoint="/api/products?category=controle-de-acesso&limit=30"
+              endpoint="/api/products/store?category=controle-de-acesso&limit=30"
             />
           </div>
 
@@ -73,7 +74,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Automatizadores"
-              endpoint="/api/products?category=automatizadores&limit=30"
+              endpoint="/api/products/store?category=automatizadores&limit=30"
             />
           </div>
 
@@ -81,7 +82,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Redes e Wi-Fi"
-              endpoint="/api/products?category=redes&limit=30"
+              endpoint="/api/products/store?category=redes&limit=30"
             />
           </div>
 
@@ -89,7 +90,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Alarmes e Sensores"
-              endpoint="/api/products?category=alarmes&limit=30"
+              endpoint="/api/products/store?category=alarmes&limit=30"
             />
           </div>
 
