@@ -42,9 +42,7 @@ export default function HomeProducts() {
       {!isResults && (
         <>
 
-          <div className="homeSection alt">
-            <WhatsAppSection />
-          </div>
+         
 
           {/* CFTV */}
           <div className="homeSection">
@@ -63,9 +61,7 @@ export default function HomeProducts() {
           </div>
 
           
-          <div className="homeSection alt">
-            <WhatsAppSection />
-          </div>
+      
 
           {/* CONTROLE ACESSO */}
           <div className="homeSection">
@@ -73,6 +69,10 @@ export default function HomeProducts() {
               title="Controle de Acesso"
               endpoint="/api/products/store?category=controle-acesso&limit=10"
             />
+          </div>
+
+              <div className="homeSection alt">
+            <WhatsAppSection />
           </div>
 
           {/* AUTOMATIZADORES */}
