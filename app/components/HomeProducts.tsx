@@ -76,13 +76,13 @@ export default function HomeProducts() {
           </div>
 
           {/* AUTOMATIZADORES */}
-          <div className="homeSection">
-            <ProductsCarousel
-              title="Automatizadores"
-              endpoint="/api/products/store?category=automatizadores-residencial&limit=10"
-            />
-          </div>
-
+          {/* CASA INTELIGENTE */}
+<div className="homeSection">
+  <ProductsCarousel
+    title="Casa Inteligente"
+    endpoint="/api/products/store?search=smart-home&limit=30"
+  />
+</div>
           {/* REDES */}
           <div className="homeSection">
             <ProductsCarousel

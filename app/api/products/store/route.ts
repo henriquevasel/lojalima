@@ -9,6 +9,7 @@ export async function GET(req: Request) {
   const search = searchParams.get("search");
   const sort = searchParams.get("sort");
   const page = Number(searchParams.get("page") || "1");
+  const smartHome = search === "smart-home";
 
   const take = Number(searchParams.get("limit") || "60");
 
@@ -49,47 +50,81 @@ export async function GET(req: Request) {
   BUSCA
   ========================= */
 
-  if (search) {
+ if (smartHome) {
 
-    const terms = search
-      .split(" ")
-      .filter(t => t.length > 1);
+  where.OR = [
 
-    where.AND = [
-      ...(where.AND || []),
-
-      ...terms.map(term => ({
-        OR: [
-          {
-            name: {
-              contains: term,
-            },
-          },
-          {
+    // automatizadores
+    {
+      productcategory: {
+        some: {
+          category: {
             slug: {
-              contains: term,
+              contains: "automat",
             },
           },
-          {
-            brand: {
-              contains: term,
-            },
+        },
+      },
+    },
+
+    // EWS
+    {
+      name: {
+        contains: "EWS",
+      },
+    },
+
+    // SMART
+    {
+      name: {
+        contains: "SMART",
+      },
+    },
+
+  ];
+
+} else if (search) {
+
+  const terms = search
+    .split(" ")
+    .filter(t => t.length > 1);
+
+  where.AND = [
+    ...(where.AND || []),
+
+    ...terms.map(term => ({
+      OR: [
+        {
+          name: {
+            contains: term,
           },
-          {
-            productcategory: {
-              some: {
-                category: {
-                  name: {
-                    contains: term,
-                  },
+        },
+        {
+          slug: {
+            contains: term,
+          },
+        },
+        {
+          brand: {
+            contains: term,
+          },
+        },
+        {
+          productcategory: {
+            some: {
+              category: {
+                name: {
+                  contains: term,
                 },
               },
             },
           },
-        ],
-      })),
-    ];
-  }
+        },
+      ],
+    })),
+  ];
+
+}
 
   /* =========================
   CATEGORIA
