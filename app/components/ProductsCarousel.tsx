@@ -87,6 +87,8 @@ export default function ProductsCarousel({ title, endpoint }: any) {
               className="mySwiper"
               modules={[Navigation, Pagination, Autoplay]}
               slidesPerView={2}
+              // 🔥 quantos cards anda
+              slidesPerGroup={3}
               spaceBetween={16}
               speed={800}
               grabCursor={true}
