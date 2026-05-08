@@ -79,7 +79,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Automatizadores"
-              endpoint="/api/products/store?category=automatizadores&limit=10"
+              endpoint="/api/products/store?category=automatizadores-residencial&limit=10"
             />
           </div>
 
