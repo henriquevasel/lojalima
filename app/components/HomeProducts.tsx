@@ -50,7 +50,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Câmeras e Gravadores"
-              endpoint="/api/products/store?category=cftv&limit=30"
+              endpoint="/api/products/store?category=cftv&limit=10"
             />
           </div>
 
@@ -58,15 +58,20 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Fechaduras Inteligentes"
-              endpoint="/api/products/store?category=fechaduras&limit=30"
+              endpoint="/api/products/store?category=fechaduras&limit=10"
             />
+          </div>
+
+          
+          <div className="homeSection alt">
+            <WhatsAppSection />
           </div>
 
           {/* CONTROLE ACESSO */}
           <div className="homeSection">
             <ProductsCarousel
               title="Controle de Acesso"
-              endpoint="/api/products/store?category=controle-acesso&limit=30"
+              endpoint="/api/products/store?category=controle-acesso&limit=10"
             />
           </div>
 
@@ -74,7 +79,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Automatizadores"
-              endpoint="/api/products/store?category=automatizadores&limit=30"
+              endpoint="/api/products/store?category=automatizadores&limit=10"
             />
           </div>
 
@@ -82,7 +87,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Redes e Wi-Fi"
-              endpoint="/api/products/store?category=redes&limit=30"
+              endpoint="/api/products/store?category=redes&limit=10"
             />
           </div>
 
@@ -90,7 +95,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Alarmes"
-              endpoint="/api/products/store?category=alarmes&limit=30"
+              endpoint="/api/products/store?category=alarmes&limit=10"
             />
           </div>
 
