@@ -3,7 +3,6 @@ import Image from "next/image";
 import s from "@/app/styles/home.module.css";
 import CategoriesSection from "@/app/components/CategoriesSection";
 import HomeProducts from "@/app/components/HomeProducts";
-import HomeSections from "@/app/components/HomeSections";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
 import { Suspense } from "react";
 
