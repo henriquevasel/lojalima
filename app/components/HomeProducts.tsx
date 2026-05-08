@@ -19,7 +19,7 @@ export default function HomeProducts() {
 
   return (
     <>
-      {/* 🔍 RESULTADOS */}
+      {/* RESULTADOS */}
       {isResults && (
         <>
           <StoreToolbar />
@@ -38,19 +38,19 @@ export default function HomeProducts() {
         </>
       )}
 
-      {/* 🏠 HOME */}
+      {/* HOME */}
       {!isResults && (
         <>
-          {/* HERO */}
+
           <div className="homeSection alt">
             <WhatsAppSection />
           </div>
 
-          {/* CÂMERAS */}
+          {/* CFTV */}
           <div className="homeSection">
             <ProductsCarousel
               title="Câmeras e Gravadores"
-              endpoint="/api/products/store?category=cftv-cameras&limit=30"
+              endpoint="/api/products/store?category=cftv&limit=30"
             />
           </div>
 
@@ -58,15 +58,15 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Fechaduras Inteligentes"
-              endpoint="/api/products/store?category=fechaduras-digitais&limit=30"
+              endpoint="/api/products/store?category=fechaduras&limit=30"
             />
           </div>
 
-          {/* CONTROLE DE ACESSO */}
+          {/* CONTROLE ACESSO */}
           <div className="homeSection">
             <ProductsCarousel
               title="Controle de Acesso"
-              endpoint="/api/products/store?category=controle-de-acesso&limit=30"
+              endpoint="/api/products/store?category=controle-acesso&limit=30"
             />
           </div>
 
@@ -89,15 +89,15 @@ export default function HomeProducts() {
           {/* ALARMES */}
           <div className="homeSection">
             <ProductsCarousel
-              title="Alarmes e Sensores"
+              title="Alarmes"
               endpoint="/api/products/store?category=alarmes&limit=30"
             />
           </div>
 
-          {/* CTA FINAL */}
           <div className="homeSection highlight">
             <WhatsappCTA />
           </div>
+
         </>
       )}
     </>
