@@ -8,15 +8,6 @@ export default function ProductCard({ product }: any) {
   // imagem principal
   const image = product?.productimage?.[0]?.url;
 
-  // 🔥 remove produtos sem imagem válida
-  if (
-    !image ||
-    image === "null" ||
-    image === ""
-  ) {
-    return null;
-  }
-
   const priceNumber = product.priceCents / 100;
 
   const price = new Intl.NumberFormat("pt-BR", {
@@ -48,12 +39,7 @@ export default function ProductCard({ product }: any) {
             className={styles.image}
 
             onError={(e) => {
-
-              // 🔥 remove card se imagem quebrar
-              e.currentTarget
-                .closest(`.${styles.card}`)
-                ?.remove();
-
+              e.currentTarget.src = "/produtos/placeholder.jpg";
             }}
           />
 
