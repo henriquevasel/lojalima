@@ -67,7 +67,7 @@ export default function HomeProducts() {
           <div className="homeSection">
             <ProductsCarousel
               title="Controle de Acesso"
-              endpoint="/api/products/store?category=controle-acesso&limit=10"
+              endpoint="/api/products/store?category=controle-de-acesso&limit=30"
             />
           </div>
 
