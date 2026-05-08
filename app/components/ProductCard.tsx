@@ -38,8 +38,15 @@ export default function ProductCard({ product }: any) {
             alt={product.name}
             className={styles.image}
 
+            loading="lazy"
+
             onError={(e) => {
-              e.currentTarget.src = "/produtos/placeholder.jpg";
+
+              // 🔥 remove slide inteiro se imagem quebrar
+              e.currentTarget
+                .closest(".swiper-slide")
+                ?.remove();
+
             }}
           />
 
