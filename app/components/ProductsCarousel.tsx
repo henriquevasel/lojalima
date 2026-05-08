@@ -51,7 +51,11 @@ export default function ProductsCarousel({ title, endpoint }: any) {
     ? products.filter((p) => {
         const image = p?.productimage?.[0]?.url;
 
-        
+        return (
+          image &&
+          image !== "" &&
+          image !== "null"
+        );
       })
     : [];
 

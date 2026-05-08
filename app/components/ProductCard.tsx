@@ -40,14 +40,9 @@ export default function ProductCard({ product }: any) {
 
             loading="lazy"
 
-            onError={(e) => {
-
-              // 🔥 remove slide inteiro se imagem quebrar
-              e.currentTarget
-                .closest(".swiper-slide")
-                ?.remove();
-
-            }}
+         onError={(e) => {
+  e.currentTarget.src = "/produtos/placeholder.jpg";
+}}
           />
 
           {product.featured && (
