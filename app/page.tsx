@@ -93,10 +93,10 @@ export default function HomePage() {
 
           <CategoriesSection />
 
-          <HomeSections />
+          
           <Suspense>
-  <HomeProducts />
-</Suspense>
+            <HomeProducts />
+          </Suspense>
 
           {/* QUEBRA VISUAL */}
 
