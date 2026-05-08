@@ -1,14 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import s from "@/app/styles/home.module.css";
-import ProductsCarousel from "@/app/components/ProductsCarousel";
 import CategoriesSection from "@/app/components/CategoriesSection";
 import HomeProducts from "@/app/components/HomeProducts";
-import InstallationServices from "@/app/components/InstallationServices";
-import WhatsAppSection from "@/app/components/WhatsAppSection";
-import WhatsappCTA from "@/app/components/WhatsappCTA";
 import HomeSections from "@/app/components/HomeSections";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
+import { Suspense } from "react";
+
 
 
 // Define o tipo de dados de um card de categoria da home
@@ -96,7 +94,9 @@ export default function HomePage() {
           <CategoriesSection />
 
           <HomeSections />
-          <HomeProducts />
+          <Suspense>
+  <HomeProducts />
+</Suspense>
 
           {/* QUEBRA VISUAL */}
 
