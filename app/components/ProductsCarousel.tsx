@@ -90,7 +90,7 @@ export default function ProductsCarousel({ title, endpoint }: any) {
               // 🔥 quantos cards anda
               slidesPerGroup={3}
               spaceBetween={16}
-              speed={800}
+              speed={600}
               grabCursor={true}
               navigation
               pagination={{ clickable: true }}
