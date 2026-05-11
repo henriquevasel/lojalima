@@ -30,15 +30,20 @@ export default function RootLayout({
 
         <GoogleAnalytics gaId="G-3CYH2XHY6X" />
 
-        <Script id="clarity" strategy="afterInteractive">
-          {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "wpb8dmvkj7");
-          `}
-        </Script>
+       <Script id="clarity" strategy="afterInteractive">
+  {`
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){
+            (c[a].q=c[a].q||[]).push(arguments)
+        };
+        t=l.createElement(r);
+        t.async=1;
+        t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wph8dmwkjj");
+  `}
+</Script>
 
         <Script
   id="facebook-pixel"
