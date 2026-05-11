@@ -14,12 +14,7 @@ const nextConfig = {
     config.resolve.alias["@"] = require("path").resolve(__dirname);
     return config;
   },
-};
 
-module.exports = nextConfig;
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
   async headers() {
     return [
       {
@@ -56,8 +51,7 @@ const nextConfig = {
               font-src 'self' data: https:;
               connect-src 'self' https:;
               frame-src https:;
-            `
-              .replace(/\n/g, ""),
+            `.replace(/\\n/g, ""),
           },
         ],
       },
