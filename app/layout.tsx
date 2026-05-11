@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { Toaster } from "react-hot-toast";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "Lima e Lima",
@@ -24,8 +25,9 @@ export default function RootLayout({
 
         <Footer />
 
-        {/* 🔥 FALTAVA ISSO */}
         <Toaster />
+
+        <GoogleAnalytics gaId="G-3CYH2XHY6X" />
       </body>
     </html>
   );
