@@ -41,18 +41,18 @@ const nextConfig = {
             value:
               "max-age=63072000; includeSubDomains; preload",
           },
-          {
+         {
             key: "Content-Security-Policy",
             value: `
-              default-src 'self';
-              img-src 'self' data: https:;
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
-              style-src 'self' 'unsafe-inline' https:;
-              font-src 'self' data: https:;
-              connect-src 'self' https:;
-              frame-src https:;
+            default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+            img-src * data: blob:;
+            media-src * data: blob:;
+            connect-src *;
+            script-src * 'unsafe-inline' 'unsafe-eval';
+            style-src * 'unsafe-inline';
+            frame-src *;
             `.replace(/\\n/g, ""),
-          },
+},
         ],
       },
     ];
