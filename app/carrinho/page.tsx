@@ -337,209 +337,248 @@ onMouseLeave={(e)=>(
 
     </div>
 
-    {/* SUBTOTAL */}
+    {/* RESUMO */}
 <div
   style={{
-    display:"flex",
-    justifyContent:"space-between",
-    marginBottom:10,
-    color:"#9ca3af",
-    fontSize:14
+    position:"sticky",
+    top:20,
+    height:"fit-content",
+    background:"#0f141a",
+    padding:24,
+    borderRadius:16,
+    border:"1px solid rgba(255,255,255,0.05)"
   }}
 >
-  <span>Subtotal</span>
 
-  <span>
-    R$ {total.toFixed(2)}
-  </span>
-</div>
+  {/* CUPOM */}
+  <div style={{ marginBottom:20 }}>
 
-{/* FRETE */}
-{frete > 0 && (
+    <div
+      style={{
+        display:"flex",
+        gap:10
+      }}
+    >
+
+      <input
+        type="text"
+        placeholder="Cupom"
+        value={coupon}
+        onChange={(e)=>
+          setCoupon(e.target.value.toUpperCase())
+        }
+        style={{
+          flex:1,
+          height:44,
+          borderRadius:10,
+          border:"1px solid rgba(255,255,255,0.08)",
+          background:"#11161d",
+          color:"#fff",
+          padding:"0 12px",
+          fontSize:14
+        }}
+      />
+
+      <button
+        onClick={aplicarCupom}
+        disabled={couponLoading}
+        style={{
+          border:"none",
+          padding:"0 18px",
+          borderRadius:10,
+          background:"#22c55e",
+          color:"#022c22",
+          fontWeight:700,
+          cursor:"pointer"
+        }}
+      >
+        {couponLoading
+          ? "..."
+          : "Aplicar"}
+      </button>
+
+    </div>
+
+    {discount > 0 && (
+      <div
+        style={{
+          marginTop:10,
+          color:"#22c55e",
+          fontSize:13,
+          fontWeight:700
+        }}
+      >
+        Cupom {couponCode} aplicado
+        {" "}
+        (-R$ {discount.toFixed(2)})
+      </div>
+    )}
+
+  </div>
+
+  {/* FRETE */}
+  {frete > 0 && (
+    <div
+      style={{
+        display:"flex",
+        justifyContent:"space-between",
+        marginBottom:8,
+        color:"#9ca3af",
+        fontSize:14
+      }}
+    >
+      <span>Frete</span>
+
+      <span style={{ color:"#fff" }}>
+        R$ {(frete / 100).toFixed(2)}
+      </span>
+    </div>
+  )}
+
+  {/* SUBTOTAL */}
   <div
     style={{
       display:"flex",
       justifyContent:"space-between",
-      marginBottom:10,
+      marginBottom:8,
       color:"#9ca3af",
       fontSize:14
     }}
   >
-    <span>Frete</span>
+    <span>Subtotal</span>
 
-    <span>
-      R$ {(frete / 100).toFixed(2)}
+    <span style={{ color:"#fff" }}>
+      R$ {total.toFixed(2)}
     </span>
   </div>
-)}
 
-{/* DESCONTO */}
-{discount > 0 && (
+  {/* DESCONTO */}
+  {discount > 0 && (
+    <div
+      style={{
+        display:"flex",
+        justifyContent:"space-between",
+        marginBottom:8,
+        color:"#22c55e",
+        fontSize:14,
+        fontWeight:700
+      }}
+    >
+      <span>Desconto</span>
+
+      <span>
+        -R$ {discount.toFixed(2)}
+      </span>
+    </div>
+  )}
+
+  {/* TOTAL */}
   <div
     style={{
       display:"flex",
       justifyContent:"space-between",
-      marginBottom:10,
-      color:"#22c55e",
-      fontSize:14,
-      fontWeight:700
-    }}
-  >
-    <span>Desconto</span>
-
-    <span>
-      - R$ {discount.toFixed(2)}
-    </span>
-  </div>
-)}
-
-{/* LINHA */}
-<div
-  style={{
-    height:1,
-    background:"rgba(255,255,255,0.06)",
-    margin:"16px 0"
-  }}
-/>
-
-{/* TOTAL */}
-<div
-  style={{
-    display:"flex",
-    justifyContent:"space-between",
-    alignItems:"center",
-    marginBottom:16
-  }}
->
-
-  <div
-    style={{
-      color:"#fff",
-      fontSize:16,
-      fontWeight:700
-    }}
-  >
-    Total
-  </div>
-
-  <div
-    style={{
-      color:"#fff",
-      fontSize:28,
-      fontWeight:900
-    }}
-  >
-    R$ {totalFinal.toFixed(2)}
-  </div>
-
-</div>
-
-{/* PIX */}
-<div
-  style={{
-    marginBottom:18,
-    padding:12,
-    borderRadius:12,
-    background:"rgba(34,197,94,0.08)",
-    border:"1px solid rgba(34,197,94,0.18)"
-  }}
->
-
-  <div
-    style={{
-      color:"#22c55e",
-      fontSize:12,
-      fontWeight:700,
-      marginBottom:4
-    }}
-  >
-    NO PIX
-  </div>
-
-  <div
-    style={{
-      color:"#22c55e",
-      fontSize:24,
-      fontWeight:900,
-      lineHeight:1
-    }}
-  >
-    R$ {(totalFinal * 0.95).toFixed(2)}
-  </div>
-
-  <div
-    style={{
-      color:"#888",
-      fontSize:11,
-      marginTop:4
-    }}
-  >
-    Economia de 5%
-  </div>
-
-</div>
-
-{/* CUPOM */}
-<div style={{ marginBottom:18 }}>
-
-  <div
-    style={{
-      display:"flex",
-      gap:8
+      alignItems:"flex-end",
+      borderTop:"1px solid rgba(255,255,255,0.06)",
+      paddingTop:16,
+      marginTop:14
     }}
   >
 
-    <input
-      type="text"
-      placeholder="Cupom"
-      value={coupon}
-      onChange={(e)=>
-        setCoupon(e.target.value.toUpperCase())
-      }
-      style={{
-        flex:1,
-        height:42,
-        borderRadius:10,
-        border:"1px solid rgba(255,255,255,0.08)",
-        background:"#11161d",
-        color:"#fff",
-        padding:"0 12px",
-        fontSize:13
-      }}
-    />
-
-    <button
-      onClick={aplicarCupom}
-      disabled={couponLoading}
-      style={{
-        border:"none",
-        padding:"0 16px",
-        borderRadius:10,
-        background:"#22c55e",
-        color:"#022c22",
-        fontWeight:700,
-        cursor:"pointer"
-      }}
-    >
-      {couponLoading
-        ? "..."
-        : "Aplicar"}
-    </button>
-
-  </div>
-
-  {discount > 0 && (
     <div
       style={{
-        marginTop:8,
-        color:"#22c55e",
-        fontSize:12,
+        color:"#fff",
+        fontSize:15,
         fontWeight:700
       }}
     >
-      Cupom aplicado
+      Total
     </div>
+
+    <div
+      style={{
+        color:"#fff",
+        fontSize:32,
+        fontWeight:900,
+        lineHeight:1
+      }}
+    >
+      R$ {totalFinal.toFixed(2)}
+    </div>
+
+  </div>
+
+  {items.length === 0 && (
+    <p style={{ color: "#888", marginTop: 20 }}>
+      Seu carrinho está vazio
+    </p>
   )}
+
+  {/* PIX */}
+  <div
+    style={{
+      marginTop:16,
+      padding:14,
+      borderRadius:14,
+      background:"rgba(34,197,94,0.08)",
+      border:"1px solid rgba(34,197,94,0.16)"
+    }}
+  >
+
+    <div
+      style={{
+        color:"#22c55e",
+        fontWeight:700,
+        fontSize:13,
+        marginBottom:6
+      }}
+    >
+      À vista no PIX
+    </div>
+
+    <div
+      style={{
+        color:"#22c55e",
+        fontSize:28,
+        fontWeight:900,
+        lineHeight:1
+      }}
+    >
+      R$ {(totalFinal * 0.95).toFixed(2)}
+    </div>
+
+    <div
+      style={{
+        color:"#888",
+        fontWeight:400,
+        fontSize:11,
+        marginTop:6
+      }}
+    >
+      Economia instantânea de 5%
+    </div>
+
+  </div>
+
+  {/* BOTÃO */}
+  <button
+    onClick={handleCheckout}
+    disabled={items.length === 0}
+    style={{
+      marginTop:20,
+      width:"100%",
+      height:50,
+      borderRadius:12,
+      border:"none",
+      fontWeight:700,
+      fontSize:16,
+      background: items.length === 0 ? "#333" : "#22c55e",
+      color:"#022c22",
+      cursor: items.length === 0 ? "not-allowed" : "pointer",
+      transition:"0.2s"
+    }}
+  >
+    Finalizar compra
+  </button>
 
 </div>
 
