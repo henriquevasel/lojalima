@@ -33,11 +33,35 @@ export default function FreteCalculator() {
 
       setEndereco(data);
 
-      let valor = 3000;
+     const freteRes = await fetch("/api/frete", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    cep: cepLimpo,
+  }),
+});
 
-      if (data.uf === "SC") valor = 1000;
-      else if (data.uf === "PR") valor = 1500;
-      else if (data.uf === "SP") valor = 2000;
+const freteData = await freteRes.json();
+
+console.log(freteData);
+
+const melhorOpcao = freteData?.[0];
+
+if (!melhorOpcao || melhorOpcao.error) {
+  alert("Não foi possível calcular o frete");
+  return;
+}
+
+const valor = Math.round(Number(melhorOpcao.price) * 100);
+
+setFrete(valor);
+
+sessionStorage.setItem(
+  "freteCents",
+  String(valor)
+);
 
       setFrete(valor);
 
@@ -167,7 +191,7 @@ export default function FreteCalculator() {
             fontSize: 12,
             opacity: 0.7
           }}>
-            Entrega para {endereco.localidade} - {endereco.uf} (3 a 5 dias úteis)
+            Entrega para {endereco.localidade} - {endereco.uf}
           </div>
         </div>
       )}
