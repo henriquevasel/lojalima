@@ -16,11 +16,7 @@ const [loading,setLoading]=useState(false);
 
 const [payment,setPayment]=useState("pix");
 
-const [coupon,setCoupon] = useState("");
 
-const [discount,setDiscount] = useState(0);
-
-const [couponLoading,setCouponLoading] = useState(false);
 
 
 useEffect(()=>{
@@ -55,53 +51,7 @@ init();
 
 },[]);
 
-async function aplicarCupom(){
 
-  if(!coupon){
-    toast.error("Digite um cupom");
-    return;
-  }
-
-  try {
-
-    setCouponLoading(true);
-
-    const subtotal = 500;
-
-    const res = await fetch("/api/coupons", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        code: coupon,
-        subtotal
-      })
-    });
-
-    const data = await res.json();
-
-    if(!data.valid){
-      toast.error(data.message || "Cupom inválido");
-      setDiscount(0);
-      return;
-    }
-
-    setDiscount(data.discount);
-
-    toast.success("Cupom aplicado");
-
-  } catch (error){
-
-    console.error(error);
-    toast.error("Erro ao aplicar cupom");
-
-  } finally {
-
-    setCouponLoading(false);
-
-  }
-}
 async function finalizar(){
 
   if(!customer){
@@ -337,46 +287,6 @@ onChange={()=>setPayment("debito")}
 
 <br/><br/>
 
-<div style={{ marginBottom: "20px" }}>
-
-  <h3>Cupom de desconto</h3>
-
-  <br/>
-
-  <input
-    type="text"
-    placeholder="Digite seu cupom"
-    value={coupon}
-    onChange={(e)=>setCoupon(e.target.value.toUpperCase())}
-    className={s.input}
-  />
-
-  <br/><br/>
-
-  <button
-    type="button"
-    onClick={aplicarCupom}
-    className={s.button}
-    disabled={couponLoading}
-  >
-    {couponLoading
-      ? "Aplicando..."
-      : "Aplicar Cupom"}
-  </button>
-
-  {discount > 0 && (
-    <p style={{
-      marginTop:"15px",
-      color:"#22c55e",
-      fontWeight:600
-    }}>
-      Desconto aplicado:
-      {" "}
-      R$ {discount.toFixed(2)}
-    </p>
-  )}
-
-</div>
 
 <button
 onClick={finalizar}
