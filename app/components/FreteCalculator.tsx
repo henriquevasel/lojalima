@@ -48,8 +48,13 @@ const freteData = await freteRes.json();
 console.log("FRETE:", freteData);
 
 const melhorOpcao = Array.isArray(freteData)
-  ? freteData[0]
-  : freteData;
+  ? freteData.find(
+      (item: any) =>
+        !item.error &&
+        item.price &&
+        Number(item.price) > 0
+    )
+  : null;
 
 if (
   !melhorOpcao ||
@@ -68,6 +73,11 @@ const valor = Math.round(
 );
 
 setFrete(valor);
+
+localStorage.setItem(
+  "freteNome",
+  melhorOpcao.name
+);
 
 sessionStorage.setItem(
   "freteCents",
@@ -191,7 +201,7 @@ sessionStorage.setItem(
           border: "1px solid #22c55e",
         }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>🚚 Entrega</span>
+            <span>🚚 {localStorage.getItem("freteNome")}</span>
             <span style={{ fontWeight: 700 }}>
               R$ {(frete / 100).toFixed(2)}
             </span>
