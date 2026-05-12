@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const response = await fetch(
-      "https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate",
+      "https://www.melhorenvio.com.br/api/v2/me/shipment/calculate",
       {
         method: "POST",
 
@@ -26,13 +26,13 @@ export async function POST(req: Request) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${process.env.MELHOR_ENVIO_TOKEN}`,
           "Accept": "application/json",
-          "User-Agent": "Aplicação"
+          "User-Agent": "Lima e Lima Ecommerce (contato@lojalimaelima.com.br)"
         },
 
         body: JSON.stringify({
 
           from: {
-            postal_code: "89200000" // TEU CEP
+            postal_code: "89251155" // TEU CEP
           },
 
           to: {
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
             own_hand: false
           },
 
-          services: "1,2"
+          
         })
       }
     );

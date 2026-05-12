@@ -74,7 +74,7 @@ sessionStorage.setItem(
   String(valor)
 );
 
-      setFrete(valor);
+     
 
       // 🔥 SALVA
       sessionStorage.setItem("freteCents", String(valor));
