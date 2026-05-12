@@ -55,7 +55,7 @@ const [couponCode,setCouponCode] = useState("");
 
   // 🔥 pega frete do localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("frete");
+    const saved = sessionStorage.getItem("freteCents");
     if (saved) {
       setFrete(Number(saved));
     }
@@ -417,23 +417,29 @@ onMouseLeave={(e)=>(
   </div>
 
   {/* FRETE */}
-  {frete > 0 && (
-    <div
-      style={{
-        display:"flex",
-        justifyContent:"space-between",
-        marginBottom:8,
-        color:"#9ca3af",
-        fontSize:14
-      }}
-    >
-      <span>Frete</span>
+  {/* FRETE */}
+{frete > 0 && (
+  <div
+    style={{
+      display:"flex",
+      justifyContent:"space-between",
+      marginBottom:8,
+      color:"#9ca3af",
+      fontSize:14
+    }}
+  >
+    <span>
+      Frete
+      {localStorage.getItem("freteNome")
+        ? ` (${localStorage.getItem("freteNome")})`
+        : ""}
+    </span>
 
-      <span style={{ color:"#fff" }}>
-        R$ {(frete / 100).toFixed(2)}
-      </span>
-    </div>
-  )}
+    <span style={{ color:"#fff" }}>
+      R$ {(frete / 100).toFixed(2)}
+    </span>
+  </div>
+)}
 
   {/* SUBTOTAL */}
   <div
