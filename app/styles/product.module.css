@@ -87,10 +87,56 @@
   color: var(--text-strong);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1200px) {
+
   .grid {
     grid-template-columns: 1fr;
   }
+
+}
+
+@media (max-width: 768px) {
+
+  .page{
+    padding: 32px 14px;
+    overflow-x: hidden;
+  }
+
+  .grid{
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .title{
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .price{
+    font-size: 30px;
+  }
+
+  .benefits{
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  .whatsappBtn{
+    width: 100%;
+    font-size: 15px;
+    padding: 16px;
+  }
+
+  .description{
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .trustBox{
+    font-size: 13px;
+    padding: 16px;
+  }
+
 }
 
 @media (max-width: 980px) {
