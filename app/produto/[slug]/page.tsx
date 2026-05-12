@@ -6,7 +6,7 @@ import ProductGallery from "@/app/components/ProductGallery";
 import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
-import CouponBox from "@/app/components/CouponBox";
+
 
 import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
 
@@ -289,7 +289,7 @@ const relacionados = await prisma.product.findMany({
           </div>
 
             <FreteCalculator />
-            <CouponBox />
+            
 
           {/* BOTÃO WHATSAPP */}
 

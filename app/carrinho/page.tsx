@@ -128,20 +128,7 @@ if(savedCoupon){
       })
     });
 
-    {discount > 0 && (
-  <div style={{
-    display:"flex",
-    justifyContent:"space-between",
-    marginBottom:10,
-    color:"#22c55e",
-    fontWeight:700
-  }}>
-    <span>Desconto</span>
-    <span>
-      - R$ {discount.toFixed(2)}
-    </span>
-  </div>
-)}
+  
 
     const data = await res.json();
 
@@ -350,20 +337,75 @@ onMouseLeave={(e)=>(
 
     </div>
 
-    {/* RESUMO */}
+    {/* RESUMO FINANCEIRO */}
+
+<div
+  style={{
+    display:"flex",
+    flexDirection:"column",
+    gap:12,
+    marginBottom:24
+  }}
+>
+
+  {/* SUBTOTAL */}
+  <div
+    style={{
+      display:"flex",
+      justifyContent:"space-between",
+      color:"#9ca3af",
+      fontSize:15
+    }}
+  >
+    <span>Subtotal</span>
+
+    <span>
+      R$ {total.toFixed(2)}
+    </span>
+  </div>
+
+  {/* FRETE */}
+  {frete > 0 && (
     <div
       style={{
-        position:"sticky",
-        top:20,
-        height:"fit-content",
-        background:"#0f141a",
-        padding:24,
-        borderRadius:16,
-        border:"1px solid rgba(255,255,255,0.05)"
+        display:"flex",
+        justifyContent:"space-between",
+        color:"#9ca3af",
+        fontSize:15
       }}
     >
+      <span>Frete</span>
 
-      <div style={{ marginBottom:20 }}>
+      <span>
+        R$ {(frete / 100).toFixed(2)}
+      </span>
+    </div>
+  )}
+
+  {/* DESCONTO */}
+  {discount > 0 && (
+    <div
+      style={{
+        display:"flex",
+        justifyContent:"space-between",
+        color:"#22c55e",
+        fontSize:15,
+        fontWeight:700
+      }}
+    >
+      <span>Desconto</span>
+
+      <span>
+        - R$ {discount.toFixed(2)}
+      </span>
+    </div>
+  )}
+
+</div>
+
+{/* CUPOM */}
+
+<div style={{ marginBottom:24 }}>
 
   <div
     style={{
@@ -374,19 +416,20 @@ onMouseLeave={(e)=>(
 
     <input
       type="text"
-      placeholder="Cupom"
+      placeholder="Cupom de desconto"
       value={coupon}
       onChange={(e)=>
         setCoupon(e.target.value.toUpperCase())
       }
       style={{
         flex:1,
-        height:44,
-        borderRadius:10,
+        height:46,
+        borderRadius:12,
         border:"1px solid rgba(255,255,255,0.08)",
         background:"#11161d",
         color:"#fff",
-        padding:"0 12px"
+        padding:"0 14px",
+        fontSize:14
       }}
     />
 
@@ -395,12 +438,13 @@ onMouseLeave={(e)=>(
       disabled={couponLoading}
       style={{
         border:"none",
-        padding:"0 18px",
-        borderRadius:10,
+        padding:"0 20px",
+        borderRadius:12,
         background:"#22c55e",
         color:"#022c22",
         fontWeight:700,
-        cursor:"pointer"
+        cursor:"pointer",
+        minWidth:100
       }}
     >
       {couponLoading
@@ -415,115 +459,100 @@ onMouseLeave={(e)=>(
       style={{
         marginTop:10,
         color:"#22c55e",
-        fontSize:14,
+        fontSize:13,
         fontWeight:700
       }}
     >
-      Cupom {couponCode} aplicado
-      (-R$ {discount.toFixed(2)})
+      Cupom {couponCode} aplicado com sucesso
     </div>
   )}
 
 </div>
 
+{/* TOTAL */}
 
-      {frete > 0 && (
-  <div style={{
+<div
+  style={{
     display:"flex",
     justifyContent:"space-between",
-    marginBottom:10,
-    color:"#aaa"
-  }}>
-    <span>Frete</span>
-    <span>
-      R$ {(frete / 100).toFixed(2)}
-    </span>
-  </div>
-)}
-
-      <div style={{
-        display:"flex",
-        justifyContent:"space-between",
-        marginBottom:10,
-        color:"#aaa"
-      }}>
-        <span>Subtotal</span>
-        <span>R$ {total.toFixed(2)}</span>
-      </div>
-
-
-
-      <div style={{
-        display:"flex",
-        justifyContent:"space-between",
-        fontSize:20,
-        fontWeight:800,
-        color:"#fff",
-        borderTop:"1px solid rgba(255,255,255,0.05)",
-        paddingTop:14,
-        marginTop:10
-      }}>
-        <span>Total</span>
-        <span>R$ {totalFinal.toFixed(2)}</span>
-      </div>
-
-      {items.length === 0 && (
-        <p style={{ color: "#888", marginTop: 20 }}>
-          Seu carrinho está vazio
-        </p>
-      )}
-
-      <div
-  style={{
-    marginTop:14,
-    padding:12,
-    borderRadius:12,
-    background:"rgba(34,197,94,0.08)",
-    border:"1px solid rgba(34,197,94,0.2)",
-    color:"#22c55e",
-    fontWeight:700,
-    fontSize:14
+    alignItems:"center",
+    borderTop:"1px solid rgba(255,255,255,0.06)",
+    paddingTop:20,
+    marginBottom:20
   }}
 >
-  À vista no PIX:
-  <div style={{
-    fontSize:24,
-    marginTop:4
-  }}>
+
+  <div>
+
+    <div
+      style={{
+        color:"#9ca3af",
+        fontSize:13,
+        marginBottom:4
+      }}
+    >
+      Total
+    </div>
+
+    <div
+      style={{
+        color:"#fff",
+        fontSize:32,
+        fontWeight:900,
+        lineHeight:1
+      }}
+    >
+      R$ {totalFinal.toFixed(2)}
+    </div>
+
+  </div>
+
+</div>
+
+{/* PIX */}
+
+<div
+  style={{
+    marginBottom:24,
+    padding:16,
+    borderRadius:14,
+    background:"rgba(34,197,94,0.08)",
+    border:"1px solid rgba(34,197,94,0.18)"
+  }}
+>
+
+  <div
+    style={{
+      color:"#22c55e",
+      fontSize:13,
+      fontWeight:700,
+      marginBottom:6
+    }}
+  >
+    PAGANDO VIA PIX
+  </div>
+
+  <div
+    style={{
+      color:"#22c55e",
+      fontSize:26,
+      fontWeight:900
+    }}
+  >
     R$ {(totalFinal * 0.95).toFixed(2)}
   </div>
 
-  <div style={{
-    color:"#888",
-    fontWeight:400,
-    fontSize:12,
-    marginTop:4
-  }}>
-    Economia de 5%
+  <div
+    style={{
+      color:"#888",
+      fontSize:12,
+      marginTop:4
+    }}
+  >
+    Economia instantânea de 5%
   </div>
+
 </div>
-
-      <button
-        onClick={handleCheckout}
-        disabled={items.length === 0}
-        style={{
-          marginTop:20,
-          width:"100%",
-          height:50,
-          borderRadius:12,
-          border:"none",
-          fontWeight:700,
-          fontSize:16,
-          background: items.length === 0 ? "#333" : "#22c55e",
-          color:"#022c22",
-          cursor: items.length === 0 ? "not-allowed" : "pointer",
-          transition:"0.2s"
-        }}
-      >
-        Finalizar compra
-      </button>
-
-    </div>
 
   </div>
 
