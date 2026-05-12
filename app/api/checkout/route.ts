@@ -38,7 +38,8 @@ const userId = await getUserId();
         paymentMethod,
         freteCents,
         endereco,
-        numero
+        numero,
+        couponCode
         
     } = body;
 
@@ -94,7 +95,7 @@ const userId = await getUserId();
 
 
     // ================= TOTAL =================
-
+    let discountCents = 0;
     let totalCents = 0;
 
     for (const item of cartItems) {
@@ -111,12 +112,69 @@ totalCents += price * item.qty;
 
     totalCents += freteCents || 0;
 
+    if (couponCode) {
+
+  const coupon = await prisma.coupon.findUnique({
+    where: {
+      code: couponCode
+    }
+  });
+
+  if (
+    coupon &&
+    coupon.active
+  ) {
+
+    const subtotal = totalCents;
+
+    // validade
+    if (
+      coupon.expires_at &&
+      new Date(coupon.expires_at) < new Date()
+    ) {
+      throw new Error("Cupom expirado");
+    }
+
+    // mínimo
+    if (
+      subtotal >= Number(coupon.min_purchase)
+    ) {
+
+      if (coupon.type === "percent") {
+
+        discountCents =
+          Math.round(
+            subtotal *
+            (Number(coupon.value) / 100)
+          );
+
+      }
+
+      if (coupon.type === "fixed") {
+
+        discountCents =
+          Number(coupon.value) * 100;
+
+      }
+
+    }
+
+  }
+
+}
+
     if (totalCents <= 0) {
       return NextResponse.json(
         { error: "Total inválido" },
         { status: 400 }
       );
     }
+
+    totalCents =
+  Math.max(
+    totalCents - discountCents,
+    0
+  );
 
 
     // ================= TRANSACTION =================
@@ -192,24 +250,40 @@ const baseUrl = "https://lojalimaelima.com.br";
 const preferenceData = await preference.create({
   body: {
     items: [
-      ...cartItems.map(item => ({
-        id: String(item.productId),
-        title: item.product.name,
-        quantity: item.qty,
-       unit_price:
-  calcularPrecoVenda(
-    item.productvariant?.priceCents ?? item.product.priceCents
-  ) / 100,
-        currency_id: "BRL"
-      })),
-      {
-        id: "frete",
-        title: "Frete",
+
+  ...cartItems.map(item => ({
+    id: String(item.productId),
+    title: item.product.name,
+    quantity: item.qty,
+
+    unit_price:
+      calcularPrecoVenda(
+        item.productvariant?.priceCents ??
+        item.product.priceCents
+      ) / 100,
+
+    currency_id: "BRL"
+  })),
+
+  {
+    id: "frete",
+    title: "Frete",
+    quantity: 1,
+    unit_price: (freteCents || 0) / 100,
+    currency_id: "BRL"
+  },
+
+  ...(discountCents > 0
+    ? [{
+        id: "discount",
+        title: "Cupom de desconto",
         quantity: 1,
-        unit_price: (freteCents || 0) / 100,
+        unit_price: -(discountCents / 100),
         currency_id: "BRL"
-      }
-    ],
+      }]
+    : []),
+
+],
 
   payer: {
   email: customerEmail,

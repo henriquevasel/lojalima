@@ -18,6 +18,10 @@ export default function CarrinhoPage() {
 
   const [items, setItems] = useState<CartItem[]>([]);
   const [frete, setFrete] = useState(0);
+  const [coupon,setCoupon] = useState("");
+const [discount,setDiscount] = useState(0);
+const [couponLoading,setCouponLoading] = useState(false);
+const [couponCode,setCouponCode] = useState("");
 
   const qtyBtnStyle = {
   width:32,
@@ -55,6 +59,17 @@ export default function CarrinhoPage() {
     if (saved) {
       setFrete(Number(saved));
     }
+
+    const savedCoupon =
+  sessionStorage.getItem("coupon");
+
+if(savedCoupon){
+
+  const parsed = JSON.parse(savedCoupon);
+
+ 
+  setCouponCode(parsed.code || "");
+}
   }, []);
 
   useEffect(() => {
@@ -91,12 +106,83 @@ export default function CarrinhoPage() {
     fetchCart();
   }
 
+  async function aplicarCupom(){
+
+  if(!coupon){
+    alert("Digite um cupom");
+    return;
+  }
+
+  try {
+
+    setCouponLoading(true);
+
+    const res = await fetch("/api/coupons", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        code: coupon,
+        subtotal: total
+      })
+    });
+
+    {discount > 0 && (
+  <div style={{
+    display:"flex",
+    justifyContent:"space-between",
+    marginBottom:10,
+    color:"#22c55e",
+    fontWeight:700
+  }}>
+    <span>Desconto</span>
+    <span>
+      - R$ {discount.toFixed(2)}
+    </span>
+  </div>
+)}
+
+    const data = await res.json();
+
+    if(!data.valid){
+      alert(data.message || "Cupom inválido");
+      return;
+    }
+
+    setDiscount(data.discount);
+    setCouponCode(data.code);
+
+sessionStorage.setItem(
+  "coupon",
+  JSON.stringify({
+    code:data.code
+  })
+);
+
+    alert("Cupom aplicado!");
+
+  } catch (error){
+
+    console.error(error);
+    alert("Erro ao aplicar cupom");
+
+  } finally {
+
+    setCouponLoading(false);
+
+  }
+}
+
   const total = items.reduce(
     (acc,item)=>acc+(item.product.priceCents/100)*item.qty,
     0
   );
 
-  const totalFinal = total + (frete / 100);
+const totalFinal = Math.max(
+  total + (frete / 100) - discount,
+  0
+);
 
   function handleCheckout() {
     if (!items || items.length === 0) {
@@ -276,6 +362,71 @@ onMouseLeave={(e)=>(
         border:"1px solid rgba(255,255,255,0.05)"
       }}
     >
+
+      <div style={{ marginBottom:20 }}>
+
+  <div
+    style={{
+      display:"flex",
+      gap:10
+    }}
+  >
+
+    <input
+      type="text"
+      placeholder="Cupom"
+      value={coupon}
+      onChange={(e)=>
+        setCoupon(e.target.value.toUpperCase())
+      }
+      style={{
+        flex:1,
+        height:44,
+        borderRadius:10,
+        border:"1px solid rgba(255,255,255,0.08)",
+        background:"#11161d",
+        color:"#fff",
+        padding:"0 12px"
+      }}
+    />
+
+    <button
+      onClick={aplicarCupom}
+      disabled={couponLoading}
+      style={{
+        border:"none",
+        padding:"0 18px",
+        borderRadius:10,
+        background:"#22c55e",
+        color:"#022c22",
+        fontWeight:700,
+        cursor:"pointer"
+      }}
+    >
+      {couponLoading
+        ? "..."
+        : "Aplicar"}
+    </button>
+
+  </div>
+
+  {discount > 0 && (
+    <div
+      style={{
+        marginTop:10,
+        color:"#22c55e",
+        fontSize:14,
+        fontWeight:700
+      }}
+    >
+      Cupom {couponCode} aplicado
+      (-R$ {discount.toFixed(2)})
+    </div>
+  )}
+
+</div>
+
+
       {frete > 0 && (
   <div style={{
     display:"flex",

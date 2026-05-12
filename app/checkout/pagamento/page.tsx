@@ -88,6 +88,7 @@ async function finalizar(){
       },
       credentials:"include",
    body:JSON.stringify({
+    couponCode: coupon?.code || null,
   customerName: customer.nome,
   customerWhats: customer.whats,
   customerEmail: customer.email,
