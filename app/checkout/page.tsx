@@ -14,7 +14,8 @@ export default function CheckoutPage(){
   const [cpf,setCpf] = useState("");
   const [obs,setObs]=useState("");
   const [frete, setFrete] = useState<number | null>(null);
-
+      
+  const [retirada, setRetirada] = useState(false);
   // 🔥 NOVO
   const [endereco, setEndereco] = useState<any>(null);
 
@@ -49,6 +50,16 @@ export default function CheckoutPage(){
       setFrete(null);
     }
   }, []);
+
+
+  useEffect(() => {
+
+  const retiradaSalva =
+    sessionStorage.getItem("retiradaLoja") === "true";
+
+  setRetirada(retiradaSalva);
+
+}, []);
 
   // 🔥 NOVO: PEGAR ENDEREÇO
   useEffect(() => {
@@ -146,8 +157,9 @@ export default function CheckoutPage(){
 
   function continuar(){
 
-    
-  if (!endereco) {
+
+
+if (!retirada && !endereco) {
   alert("Calcule o frete antes de continuar");
   return;
 }
@@ -192,25 +204,38 @@ export default function CheckoutPage(){
     const bairro = localStorage.getItem("bairro");
     const numero = localStorage.getItem("numero");
 
-    sessionStorage.setItem(
-      "checkout_customer",
-      JSON.stringify({
-        nome,
-        whats,
-        email,
-        cpf,
-        obs,
-        freteCents: frete ? Number(frete) : 0,
-        endereco: {
+   sessionStorage.setItem(
+  "checkout_customer",
+  JSON.stringify({
+    nome,
+    whats,
+    email,
+    cpf,
+    obs,
+
+    retirada,
+
+    freteCents: retirada
+      ? 0
+      : frete
+      ? Number(frete)
+      : 0,
+
+    endereco: retirada
+      ? null
+      : {
           cep,
           cidade,
           uf,
           logradouro,
           bairro
         },
-        numero: numero || "",
-      })
-    );
+
+    numero: retirada
+      ? ""
+      : numero || "",
+  })
+);
 
     router.push("/checkout/pagamento");
   }
