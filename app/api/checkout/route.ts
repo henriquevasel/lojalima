@@ -375,15 +375,7 @@ const preferenceData = await preference.create({
   }
 },
 
-    payment_methods:
-      paymentMethod === "pix"
-        ? {
-            excluded_payment_types: [
-              { id: "credit_card" },
-              { id: "debit_card" }
-            ]
-          }
-        : {},
+   
 
     external_reference: String(result.order.id),
 
