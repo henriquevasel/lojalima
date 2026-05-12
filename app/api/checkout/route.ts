@@ -389,7 +389,7 @@ const preferenceData = await preference.create({
       pending: `${baseUrl}/pagamento/retorno?orderId=${result.order.id}`
     },
 
-    auto_return: "approved"
+    
   }
 });
 

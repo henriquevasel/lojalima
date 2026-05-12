@@ -121,10 +121,10 @@ async function finalizar(){
 
     
     // 🔥 abre o Mercado Pago em nova aba
-window.open(data.init_point, "_blank");
+window.location.href = data.init_point;
 
 // 🔥 redireciona pra sua tela de aguardando
-router.push(`/pagamento/aguardando?orderId=${data.orderId}`);
+
 
   } catch (error) {
     console.error(error);
