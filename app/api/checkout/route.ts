@@ -36,7 +36,7 @@ const userId = await getUserId();
         customerCpf,
         customerObs,
         paymentMethod,
-        freteCents,
+        
         endereco,
         numero,
         couponCode
@@ -45,12 +45,7 @@ const userId = await getUserId();
 
     
 
-    if (!freteCents || freteCents <= 0) {
-    return NextResponse.json(
-        { error: "Frete não informado" },
-        { status: 400 }
-      );
-    }
+
 
     if (!endereco || !endereco.cep) {
   return NextResponse.json(
@@ -81,7 +76,12 @@ const userId = await getUserId();
     const cartItems = await prisma.cartitem.findMany({
       where: { userId },
       include: {
-        product: { include: { productimage: true } },
+        product: {
+  include: {
+    productimage: true,
+    stock: true
+  }
+},
         productvariant: true
       }
     });
@@ -93,12 +93,89 @@ const userId = await getUserId();
       );
     }
 
+    const response = await fetch(
+  "https://www.melhorenvio.com.br/api/v2/me/shipment/calculate",
+  {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.MELHOR_ENVIO_TOKEN}`,
+      "Accept": "application/json",
+      "User-Agent":
+        "Lima e Lima Ecommerce (contato@lojalimaelima.com.br)"
+    },
+
+    body: JSON.stringify({
+
+      from: {
+        postal_code: "89251155"
+      },
+
+      to: {
+        postal_code: endereco.cep.replace(/\D/g, "")
+      },
+
+      products: [
+        {
+          id: "1",
+          width: 20,
+          height: 5,
+          length: 30,
+          weight: 1,
+          insurance_value: 100,
+          quantity: cartItems.length
+        }
+      ],
+
+      options: {
+        receipt: false,
+        own_hand: false
+      }
+    })
+  }
+);
+
+const freteData = await response.json();
+
+const melhorOpcao = Array.isArray(freteData)
+  ? freteData.find(
+      (item: any) =>
+        !item.error &&
+        item.price &&
+        Number(item.price) > 0
+    )
+  : null;
+
+if (!melhorOpcao) {
+  return NextResponse.json(
+    { error: "Erro ao calcular frete" },
+    { status: 400 }
+  );
+}
+
+const freteCents = Math.round(
+  Number(melhorOpcao.price) * 100
+);
+
 
     // ================= TOTAL =================
     let discountCents = 0;
     let totalCents = 0;
 
     for (const item of cartItems) {
+
+      const stockQty =
+  item.product.stock?.quantity || 0;
+
+if (stockQty < item.qty) {
+  return NextResponse.json(
+    {
+      error: `Produto ${item.product.name} sem estoque`
+    },
+    { status: 400 }
+  );
+}
 
     const basePrice =
   item.productvariant?.priceCents ??
@@ -227,7 +304,7 @@ totalCents += price * item.qty;
         }
       });
 
-      await limparCarrinho(userId);
+      
 
       return { order, payment };
 

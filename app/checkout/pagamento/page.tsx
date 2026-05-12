@@ -95,7 +95,7 @@ async function finalizar(){
   customerCpf: customer.cpf,
   customerObs: customer.obs || "",
   paymentMethod: payment,
-  freteCents: customer.freteCents || 0,
+  
   endereco: customer.endereco,
   numero: customer.numero // 🔥 AQUI
 })
