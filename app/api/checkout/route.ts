@@ -375,6 +375,11 @@ const preferenceData = await preference.create({
   }
 },
 
+payment_method_id:
+  paymentMethod === "pix"
+    ? "pix"
+    : undefined,
+
    
 
     external_reference: String(result.order.id),
