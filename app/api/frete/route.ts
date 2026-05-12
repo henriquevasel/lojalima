@@ -16,6 +16,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    console.log(process.env.MELHOR_ENVIO_TOKEN);
 
     const response = await fetch(
       "https://www.melhorenvio.com.br/api/v2/me/shipment/calculate",
