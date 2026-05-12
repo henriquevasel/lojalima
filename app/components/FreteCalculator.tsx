@@ -45,16 +45,27 @@ export default function FreteCalculator() {
 
 const freteData = await freteRes.json();
 
-console.log(freteData);
+console.log("FRETE:", freteData);
 
-const melhorOpcao = freteData?.[0];
+const melhorOpcao = Array.isArray(freteData)
+  ? freteData[0]
+  : freteData;
 
-if (!melhorOpcao || melhorOpcao.error) {
+if (
+  !melhorOpcao ||
+  melhorOpcao.error ||
+  !melhorOpcao.price
+) {
+  console.log("ERRO FRETE:", melhorOpcao);
+
   alert("Não foi possível calcular o frete");
+
   return;
 }
 
-const valor = Math.round(Number(melhorOpcao.price) * 100);
+const valor = Math.round(
+  Number(melhorOpcao.price) * 100
+);
 
 setFrete(valor);
 
