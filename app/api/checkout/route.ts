@@ -375,9 +375,11 @@ const preferenceData = await preference.create({
   }
 },
 
-payment_method_id:
+payment_methods:
   paymentMethod === "pix"
-    ? "pix"
+    ? {
+        default_payment_method_id: "pix"
+      }
     : undefined,
 
    
