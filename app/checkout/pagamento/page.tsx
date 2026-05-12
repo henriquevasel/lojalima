@@ -66,10 +66,7 @@ async function finalizar(){
     return;
   }
 
-   if (customer.freteCents == null) {
-    toast.error("Frete não calculado");
-    return;
-  }
+  
 
   if (!customer.endereco) {
   toast.error("Endereço não informado");
@@ -192,7 +189,7 @@ Pagamento
 <b>CPF:</b> {customer.cpf}
 </p>
 
-{customer.freteCents > 0 && (
+{customer.freteCents && (
   <p>
     <b>Frete:</b> R$ {(customer.freteCents / 100).toFixed(2)}
   </p>
