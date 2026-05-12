@@ -253,6 +253,10 @@ totalCents += price * item.qty;
     0
   );
 
+  // 🔥 DESCONTO PIX
+if (paymentMethod === "pix") {
+  totalCents = Math.round(totalCents * 0.95);
+}
 
     // ================= TRANSACTION =================
 
@@ -359,6 +363,18 @@ const preferenceData = await preference.create({
         currency_id: "BRL"
       }]
     : []),
+
+    ...(paymentMethod === "pix"
+  ? [{
+      id: "pix-discount",
+      title: "Desconto PIX 5%",
+      quantity: 1,
+      unit_price: -(
+        Math.round(totalCents * 0.05) / 100
+      ),
+      currency_id: "BRL"
+    }]
+  : []),
 
 ],
 
