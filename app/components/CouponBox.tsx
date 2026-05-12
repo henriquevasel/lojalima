@@ -40,6 +40,13 @@ export default function CouponBox() {
       }
 
       setDiscount(data.discount);
+      sessionStorage.setItem(
+  "coupon",
+  JSON.stringify({
+    code: data.code,
+    discount: data.discount
+  })
+);
 
       toast.success("Cupom aplicado!");
 

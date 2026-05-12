@@ -16,6 +16,7 @@ const [loading,setLoading]=useState(false);
 
 const [payment,setPayment]=useState("pix");
 
+const [coupon,setCoupon] = useState<any>(null);
 
 
 
@@ -41,6 +42,12 @@ async function init(){
 
   if(raw){
     setCustomer(JSON.parse(raw));
+    const savedCoupon =
+  sessionStorage.getItem("coupon");
+
+if(savedCoupon){
+  setCoupon(JSON.parse(savedCoupon));
+}
   } else {
     router.push("/checkout");
   }
@@ -187,6 +194,14 @@ Pagamento
 {customer.freteCents > 0 && (
   <p>
     <b>Frete:</b> R$ {(customer.freteCents / 100).toFixed(2)}
+  </p>
+)}
+
+{coupon && (
+  <p style={{ color:"#16a34a" }}>
+    <b>Cupom:</b> {coupon.code}
+    {" "}
+    (-R$ {coupon.discount.toFixed(2)})
   </p>
 )}
 
