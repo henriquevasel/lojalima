@@ -232,7 +232,7 @@ sessionStorage.setItem(
       </div>
 
       {/* ENDEREÇO */}
-      {endereco && (
+      {endereco && !retirada && (
         <div style={{
           marginTop: 10,
           fontSize: 13,
@@ -244,7 +244,7 @@ sessionStorage.setItem(
         </div>
       )}
 
-    {endereco && (
+    {endereco && !retirada && (
   <input
     placeholder="Número da casa"
     value={numero}
@@ -306,7 +306,7 @@ sessionStorage.setItem(
 )}
 
       {/* RESULTADO */}
-      {frete !== null && endereco && (
+      {frete !== null && (endereco || retirada) && (
         <div style={{
           marginTop: 12,
           padding: 12,
@@ -321,13 +321,17 @@ sessionStorage.setItem(
             </span>
           </div>
 
-          <div style={{
-            marginTop: 4,
-            fontSize: 12,
-            opacity: 0.7
-          }}>
-            Entrega para {endereco.localidade} - {endereco.uf}
-          </div>
+      {!retirada && endereco && (
+  <div
+    style={{
+      marginTop: 4,
+      fontSize: 12,
+      opacity: 0.7
+    }}
+  >
+    Entrega para {endereco.localidade} - {endereco.uf}
+  </div>
+)}
         </div>
       )}
 

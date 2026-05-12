@@ -8,42 +8,65 @@ type Props = {
   variantId?: number;
 };
 
-export default function AddToCartButton({ productId, variantId }: Props) {
+export default function AddToCartButton({
+  productId,
+  variantId,
+}: Props) {
+
   const router = useRouter();
 
   async function handleAdd() {
+
+    // 🔥 RETIRADA?
+    const retirada =
+      sessionStorage.getItem("retiradaLoja") === "true";
 
     // 🔥 PEGA FRETE
     const freteSalvo =
       sessionStorage.getItem("freteCents") ||
       localStorage.getItem("frete");
 
-    // 🔴 1. SEM FRETE
+    // 🔴 SEM FRETE
     if (!freteSalvo) {
-      toast.error("Calcule o frete antes de adicionar");
+
+      toast.error(
+        retirada
+          ? "Selecione retirada na loja"
+          : "Calcule o frete antes de adicionar"
+      );
 
       document
         .querySelector("#frete")
-        ?.scrollIntoView({ behavior: "smooth" });
+        ?.scrollIntoView({
+          behavior: "smooth"
+        });
 
       return;
     }
 
-    // 🔥 PEGA NÚMERO DA CASA
-    const numero = localStorage.getItem("numero");
+    // 🔥 PEGA NÚMERO
+    const numero =
+      localStorage.getItem("numero");
 
-    // 🔴 2. SEM NÚMERO (ou só espaço)
-    if (!numero || numero.trim() === "") {
+    // 🔴 VALIDA NÚMERO SÓ EM ENTREGA
+    if (
+      !retirada &&
+      (!numero || numero.trim() === "")
+    ) {
+
       toast.error("Informe o número da casa");
 
       document
         .querySelector("#numero-casa")
-        ?.scrollIntoView({ behavior: "smooth" });
+        ?.scrollIntoView({
+          behavior: "smooth"
+        });
 
       return;
     }
 
     try {
+
       const res = await fetch("/api/cart", {
         method: "POST",
         headers: {
@@ -61,30 +84,53 @@ export default function AddToCartButton({ productId, variantId }: Props) {
 
       // 🔴 NÃO LOGADO
       if (res.status === 401) {
+
         localStorage.setItem(
           "pendingCart",
-          JSON.stringify({ productId, variantId, qty: 1 })
+          JSON.stringify({
+            productId,
+            variantId,
+            qty: 1
+          })
         );
 
         toast("Faça login para continuar");
 
-        router.push(`/login?redirect=${window.location.pathname}`);
+        router.push(
+          `/login?redirect=${window.location.pathname}`
+        );
+
         return;
       }
 
-      // 🔴 ERRO NORMAL
+      // 🔴 ERRO
       if (!res.ok) {
-        toast.error(data.error || "Erro ao adicionar ao carrinho");
+
+        toast.error(
+          data.error ||
+          "Erro ao adicionar ao carrinho"
+        );
+
         return;
       }
 
       // 🟢 SUCESSO
-      window.dispatchEvent(new Event("cartUpdated"));
-      toast.success("Adicionado ao carrinho!");
+      window.dispatchEvent(
+        new Event("cartUpdated")
+      );
+
+      toast.success(
+        retirada
+          ? "Produto reservado para retirada!"
+          : "Adicionado ao carrinho!"
+      );
 
     } catch (error) {
+
       console.error(error);
+
       toast.error("Erro inesperado");
+
     }
   }
 
