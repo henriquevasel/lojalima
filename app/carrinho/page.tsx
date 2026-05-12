@@ -337,99 +337,174 @@ onMouseLeave={(e)=>(
 
     </div>
 
-    {/* RESUMO FINANCEIRO */}
-
+    {/* SUBTOTAL */}
 <div
   style={{
     display:"flex",
-    flexDirection:"column",
-    gap:12,
-    marginBottom:24
+    justifyContent:"space-between",
+    marginBottom:10,
+    color:"#9ca3af",
+    fontSize:14
   }}
 >
+  <span>Subtotal</span>
 
-  {/* SUBTOTAL */}
+  <span>
+    R$ {total.toFixed(2)}
+  </span>
+</div>
+
+{/* FRETE */}
+{frete > 0 && (
   <div
     style={{
       display:"flex",
       justifyContent:"space-between",
+      marginBottom:10,
       color:"#9ca3af",
-      fontSize:15
+      fontSize:14
     }}
   >
-    <span>Subtotal</span>
+    <span>Frete</span>
 
     <span>
-      R$ {total.toFixed(2)}
+      R$ {(frete / 100).toFixed(2)}
     </span>
   </div>
+)}
 
-  {/* FRETE */}
-  {frete > 0 && (
-    <div
-      style={{
-        display:"flex",
-        justifyContent:"space-between",
-        color:"#9ca3af",
-        fontSize:15
-      }}
-    >
-      <span>Frete</span>
+{/* DESCONTO */}
+{discount > 0 && (
+  <div
+    style={{
+      display:"flex",
+      justifyContent:"space-between",
+      marginBottom:10,
+      color:"#22c55e",
+      fontSize:14,
+      fontWeight:700
+    }}
+  >
+    <span>Desconto</span>
 
-      <span>
-        R$ {(frete / 100).toFixed(2)}
-      </span>
-    </div>
-  )}
+    <span>
+      - R$ {discount.toFixed(2)}
+    </span>
+  </div>
+)}
 
-  {/* DESCONTO */}
-  {discount > 0 && (
-    <div
-      style={{
-        display:"flex",
-        justifyContent:"space-between",
-        color:"#22c55e",
-        fontSize:15,
-        fontWeight:700
-      }}
-    >
-      <span>Desconto</span>
+{/* LINHA */}
+<div
+  style={{
+    height:1,
+    background:"rgba(255,255,255,0.06)",
+    margin:"16px 0"
+  }}
+/>
 
-      <span>
-        - R$ {discount.toFixed(2)}
-      </span>
-    </div>
-  )}
+{/* TOTAL */}
+<div
+  style={{
+    display:"flex",
+    justifyContent:"space-between",
+    alignItems:"center",
+    marginBottom:16
+  }}
+>
+
+  <div
+    style={{
+      color:"#fff",
+      fontSize:16,
+      fontWeight:700
+    }}
+  >
+    Total
+  </div>
+
+  <div
+    style={{
+      color:"#fff",
+      fontSize:28,
+      fontWeight:900
+    }}
+  >
+    R$ {totalFinal.toFixed(2)}
+  </div>
+
+</div>
+
+{/* PIX */}
+<div
+  style={{
+    marginBottom:18,
+    padding:12,
+    borderRadius:12,
+    background:"rgba(34,197,94,0.08)",
+    border:"1px solid rgba(34,197,94,0.18)"
+  }}
+>
+
+  <div
+    style={{
+      color:"#22c55e",
+      fontSize:12,
+      fontWeight:700,
+      marginBottom:4
+    }}
+  >
+    NO PIX
+  </div>
+
+  <div
+    style={{
+      color:"#22c55e",
+      fontSize:24,
+      fontWeight:900,
+      lineHeight:1
+    }}
+  >
+    R$ {(totalFinal * 0.95).toFixed(2)}
+  </div>
+
+  <div
+    style={{
+      color:"#888",
+      fontSize:11,
+      marginTop:4
+    }}
+  >
+    Economia de 5%
+  </div>
 
 </div>
 
 {/* CUPOM */}
-
-<div style={{ marginBottom:24 }}>
+<div style={{ marginBottom:18 }}>
 
   <div
     style={{
       display:"flex",
-      gap:10
+      gap:8
     }}
   >
 
     <input
       type="text"
-      placeholder="Cupom de desconto"
+      placeholder="Cupom"
       value={coupon}
       onChange={(e)=>
         setCoupon(e.target.value.toUpperCase())
       }
       style={{
         flex:1,
-        height:46,
-        borderRadius:12,
+        height:42,
+        borderRadius:10,
         border:"1px solid rgba(255,255,255,0.08)",
         background:"#11161d",
         color:"#fff",
-        padding:"0 14px",
-        fontSize:14
+        padding:"0 12px",
+        fontSize:13
       }}
     />
 
@@ -438,13 +513,12 @@ onMouseLeave={(e)=>(
       disabled={couponLoading}
       style={{
         border:"none",
-        padding:"0 20px",
-        borderRadius:12,
+        padding:"0 16px",
+        borderRadius:10,
         background:"#22c55e",
         color:"#022c22",
         fontWeight:700,
-        cursor:"pointer",
-        minWidth:100
+        cursor:"pointer"
       }}
     >
       {couponLoading
@@ -457,100 +531,15 @@ onMouseLeave={(e)=>(
   {discount > 0 && (
     <div
       style={{
-        marginTop:10,
+        marginTop:8,
         color:"#22c55e",
-        fontSize:13,
+        fontSize:12,
         fontWeight:700
       }}
     >
-      Cupom {couponCode} aplicado com sucesso
+      Cupom aplicado
     </div>
   )}
-
-</div>
-
-{/* TOTAL */}
-
-<div
-  style={{
-    display:"flex",
-    justifyContent:"space-between",
-    alignItems:"center",
-    borderTop:"1px solid rgba(255,255,255,0.06)",
-    paddingTop:20,
-    marginBottom:20
-  }}
->
-
-  <div>
-
-    <div
-      style={{
-        color:"#9ca3af",
-        fontSize:13,
-        marginBottom:4
-      }}
-    >
-      Total
-    </div>
-
-    <div
-      style={{
-        color:"#fff",
-        fontSize:32,
-        fontWeight:900,
-        lineHeight:1
-      }}
-    >
-      R$ {totalFinal.toFixed(2)}
-    </div>
-
-  </div>
-
-</div>
-
-{/* PIX */}
-
-<div
-  style={{
-    marginBottom:24,
-    padding:16,
-    borderRadius:14,
-    background:"rgba(34,197,94,0.08)",
-    border:"1px solid rgba(34,197,94,0.18)"
-  }}
->
-
-  <div
-    style={{
-      color:"#22c55e",
-      fontSize:13,
-      fontWeight:700,
-      marginBottom:6
-    }}
-  >
-    PAGANDO VIA PIX
-  </div>
-
-  <div
-    style={{
-      color:"#22c55e",
-      fontSize:26,
-      fontWeight:900
-    }}
-  >
-    R$ {(totalFinal * 0.95).toFixed(2)}
-  </div>
-
-  <div
-    style={{
-      color:"#888",
-      fontSize:12,
-      marginTop:4
-    }}
-  >
-    Economia instantânea de 5%
-  </div>
 
 </div>
 
