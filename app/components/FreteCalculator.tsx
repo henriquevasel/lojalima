@@ -11,6 +11,7 @@ export default function FreteCalculator() {
 
   // 🔥 NOVO
   const [numero, setNumero] = useState("");
+  const [retirada, setRetirada] = useState(false);
 
   async function calcularFrete() {
     const cepLimpo = cep.replace(/\D/g, "");
@@ -126,6 +127,77 @@ sessionStorage.setItem(
         alignItems: "center"
       }}>
 
+        <div
+  style={{
+    marginTop: 14,
+    display: "flex",
+    gap: 10
+  }}
+>
+
+  <button
+    onClick={() => {
+
+      setRetirada(false);
+
+      sessionStorage.removeItem("retiradaLoja");
+
+    }}
+    style={{
+      flex: 1,
+      height: 42,
+      borderRadius: 10,
+      border: !retirada
+        ? "2px solid #22c55e"
+        : "1px solid #ddd",
+      background: "#fff",
+      fontWeight: 700,
+      cursor: "pointer"
+    }}
+  >
+    🚚 Entrega
+  </button>
+
+  <button
+    onClick={() => {
+
+      setRetirada(true);
+
+      setFrete(0);
+
+      sessionStorage.setItem(
+        "freteCents",
+        "0"
+      );
+
+      sessionStorage.setItem(
+        "retiradaLoja",
+        "true"
+      );
+
+      localStorage.setItem(
+        "freteNome",
+        "Retirada na loja"
+      );
+
+    }}
+    style={{
+      flex: 1,
+      height: 42,
+      borderRadius: 10,
+      border: retirada
+        ? "2px solid #22c55e"
+        : "1px solid #ddd",
+      background: "#fff",
+      fontWeight: 700,
+      cursor: "pointer"
+    }}
+  >
+    🏪 Retirar na loja
+  </button>
+
+</div>
+
         <input
           placeholder="Digite seu CEP"
           value={cep}
@@ -189,6 +261,48 @@ sessionStorage.setItem(
       fontSize: 14
     }}
   />
+)}
+{retirada && (
+  <div
+    style={{
+      marginTop: 14,
+      padding: 12,
+      borderRadius: 10,
+      background: "#ecfdf5",
+      border: "1px solid #22c55e"
+    }}
+  >
+    <div
+      style={{
+        fontWeight: 700,
+        marginBottom: 6
+      }}
+    >
+      🏪 Retirada na loja
+    </div>
+
+    <div
+      style={{
+        fontSize: 13,
+        opacity: 0.8,
+        lineHeight: 1.5
+      }}
+    >
+      Rua Presidente Epitácio Pessoa, 723 Sala 1
+      <br />
+      CEP: 89251-155
+    </div>
+
+    <div
+      style={{
+        marginTop: 8,
+        color: "#22c55e",
+        fontWeight: 700
+      }}
+    >
+      Frete grátis
+    </div>
+  </div>
 )}
 
       {/* RESULTADO */}

@@ -364,18 +364,7 @@ const preferenceData = await preference.create({
       }]
     : []),
 
-    ...(paymentMethod === "pix"
-  ? [{
-      id: "pix-discount",
-      title: "Desconto PIX 5%",
-      quantity: 1,
-      unit_price: -(
-        Math.round(totalCents * 0.05) / 100
-      ),
-      currency_id: "BRL"
-    }]
-  : []),
-
+   
 ],
 
   payer: {
