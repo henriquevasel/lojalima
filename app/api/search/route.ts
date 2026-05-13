@@ -16,71 +16,55 @@ export async function GET(req: Request) {
 
     const terms = expandTerms(q).slice(0, 10);
 
-    const conditions = terms.flatMap((term) => {
-      const compact = term.replace(/\s|-/g, "");
+   const conditions = terms.flatMap((term) => [
+  {
+    name: {
+      contains: term,
+      
+    },
+  },
 
-      return [
-        // NAME
-        {
+  {
+    brand: {
+      contains: term,
+      
+    },
+  },
+
+  {
+    slug: {
+      contains: term,
+      
+    },
+  },
+
+  {
+    sku: {
+      contains: term,
+      
+    },
+  },
+
+  {
+    description: {
+      contains: term,
+      
+    },
+  },
+
+  {
+    productcategory: {
+      some: {
+        category: {
           name: {
             contains: term,
+            
           },
         },
-
-        {
-          name: {
-            contains: compact,
-          },
-        },
-
-        // SLUG
-        {
-          slug: {
-            contains: term,
-          },
-        },
-
-        {
-          slug: {
-            contains: compact,
-          },
-        },
-
-        // BRAND
-        {
-          brand: {
-            contains: term,
-          },
-        },
-
-        // SKU
-        {
-          sku: {
-            contains: term,
-          },
-        },
-
-        // DESCRIPTION
-        {
-          description: {
-            contains: term,
-          },
-        },
-
-        // CATEGORY
-        {
-          productcategory: {
-            some: {
-              category: {
-                name: {
-                  contains: term,
-                },
-              },
-            },
-          },
-        },
-      ];
-    });
+      },
+    },
+  },
+]);
 
     const products = await prisma.product.findMany({
       where: {
@@ -94,100 +78,60 @@ export async function GET(req: Request) {
         },
       },
 
-      take: 80,
+      take: 200,
     });
 
-    const scored = products
-      .map((product) => {
-        const searchable = normalize(
-          [
-            product.name,
-            product.slug,
-            product.brand,
-            product.description,
-            product.sku,
-          ]
-            .filter(
-              (term): term is string =>
-                Boolean(term && term.length > 1)
-            )
-            .join(" ")
-        );
+   const scored = products
+  .map((product) => {
 
-        let score = 0;
+    const name = normalize(product.name || "");
+    const brand = normalize(product.brand || "");
+    const slug = normalize(product.slug || "");
+    const description = normalize(product.description || "");
 
-        for (const term of terms) {
-          const compact = term.replace(/\s|-/g, "");
+    let score = 0;
 
-          // NOME
-          if (
-            product.name &&
-            normalize(product.name).includes(term)
-          ) {
-            score += 30;
-          }
+    for (const term of terms) {
 
-          // MATCH COMPACTO
-          if (
-            product.name &&
-            normalize(product.name)
-              .replace(/\s|-/g, "")
-              .includes(compact)
-          ) {
-            score += 25;
-          }
+      // nome começa com pesquisa
+      if (name.startsWith(term)) {
+        score += 120;
+      }
 
-          // MARCA
-          if (
-            product.brand &&
-            normalize(product.brand).includes(term)
-          ) {
-            score += 18;
-          }
+      // palavra exata
+      if (name.split(" ").includes(term)) {
+        score += 90;
+      }
 
-          // SKU
-          if (
-            product.sku &&
-            normalize(product.sku).includes(term)
-          ) {
-            score += 20;
-          }
+      // nome contém
+      if (name.includes(term)) {
+        score += 50;
+      }
 
-          // SLUG
-          if (
-            product.slug &&
-            normalize(product.slug).includes(term)
-          ) {
-            score += 10;
-          }
+      // marca
+      if (brand.includes(term)) {
+        score += 25;
+      }
 
-          // DESCRIÇÃO
-          if (
-            product.description &&
-            normalize(product.description).includes(term)
-          ) {
-            score += 6;
-          }
+      // slug
+      if (slug.includes(term)) {
+        score += 15;
+      }
 
-          // MATCH GERAL
-          if (searchable.includes(term)) {
-            score += 3;
-          }
-        }
+      // descrição
+      if (description.includes(term)) {
+        score += 5;
+      }
+    }
 
-        // COMEÇA COM A BUSCA
-        if (searchable.startsWith(q)) {
-          score += 60;
-        }
-
-        return {
-          ...product,
-          score,
-        };
-      })
-      .filter((product) => product.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 8);
+    return {
+      ...product,
+      score,
+    };
+  })
+  .filter((product) => product.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 8);
 
     return NextResponse.json(scored);
 
