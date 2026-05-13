@@ -312,9 +312,10 @@ export default function Header() {
                             color: "#fff",
                           }}
                           onClick={() => {
-                            setSearch(item);
-                            router.push("/loja?q=" + search);
-                          }}
+  setSearch(item);
+  setShowSearchBox(false);
+  router.push("/loja?q=" + encodeURIComponent(item));
+}}
                         >
                           {item}
                         </div>

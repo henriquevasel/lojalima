@@ -1,6 +1,7 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
+import { expandTerms, normalize } from "@/app/lib/search";
 
 
 export async function GET(req: Request) {
@@ -60,7 +61,7 @@ const where: any = {
 
   // 🔥 evita produtos baratos/genéricos
   priceCents: {
-    gt: 10000, // acima de R$100
+   gt: 100, // acima de R$100
   },
 };
 
@@ -74,45 +75,65 @@ where.productimage = {
 
 /* busca */
 
+/* busca */
+
 if (search) {
-  const terms = search.split(" ").filter(t => t.length > 1);
+
+  const terms = expandTerms(
+    normalize(search)
+  );
 
   where.AND = [
     ...(where.AND || []),
 
-    ...terms.map(term => ({
+    ...terms.map((term) => ({
+
       OR: [
+
         {
           name: {
             contains: term,
-            
           },
         },
+
         {
           slug: {
             contains: term,
-            
           },
         },
+
         {
           brand: {
             contains: term,
-            
           },
         },
+
+        {
+          description: {
+            contains: term,
+          },
+        },
+
+        {
+          sku: {
+            contains: term,
+          },
+        },
+
         {
           productcategory: {
             some: {
               category: {
                 name: {
                   contains: term,
-                  
                 },
               },
             },
           },
         },
+
       ],
+
     })),
   ];
 }
