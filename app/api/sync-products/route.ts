@@ -129,7 +129,7 @@ else if (
   rawGroup.includes("video monitoramento")
 
 ) {
-  categoryName = "CFTV";
+  categoryName = "Câmeras";
 }
 
 // =========================
@@ -285,7 +285,7 @@ const categorySlug =
   active: true,
 
   featured: [
-    "CFTV",
+    "Câmeras",
     "Redes",
     "Alarmes",
     "Telefonia",
