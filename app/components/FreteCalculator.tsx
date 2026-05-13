@@ -2,7 +2,7 @@
 
 "use client";
 
-import s from "./FreteCalculator.module.css";
+import s from "@/app/styles/FreteCalculator.module.css";
 
 import { useState } from "react";
 
