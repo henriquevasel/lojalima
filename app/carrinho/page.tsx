@@ -22,6 +22,7 @@ export default function CarrinhoPage() {
 const [discount,setDiscount] = useState(0);
 const [couponLoading,setCouponLoading] = useState(false);
 const [couponCode,setCouponCode] = useState("");
+const [isMobile, setIsMobile] = useState(false);
 
   const qtyBtnStyle = {
   width:32,
@@ -75,6 +76,22 @@ if(savedCoupon){
   useEffect(() => {
     fetchCart();
   }, []);
+
+  useEffect(() => {
+
+  function handleResize() {
+    setIsMobile(window.innerWidth < 900);
+  }
+
+  handleResize();
+
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+
+}, []);
 
   async function removeItem(id:number){
     await fetch(`/api/cart/item/${id}`,{
@@ -188,10 +205,9 @@ const totalFinal = Math.max(
     margin:"60px auto",
     padding:"0 16px",
     display:"grid",
-    gridTemplateColumns:
-  typeof window !== "undefined" && window.innerWidth < 900
-    ? "1fr"
-    : "1fr 340px",
+   gridTemplateColumns: isMobile
+  ? "1fr"
+  : "1fr 340px",
     gap:24,
     alignItems:"start"
   }}
@@ -340,6 +356,7 @@ onMouseLeave={(e)=>(
     {/* RESUMO */}
 <div
   style={{
+    width:"100%",
     position:"sticky",
     top:20,
     height:"fit-content",
@@ -417,7 +434,7 @@ onMouseLeave={(e)=>(
   </div>
 
   {/* FRETE */}
-  {/* FRETE */}
+  
 {frete > 0 && (
   <div
     style={{
