@@ -49,7 +49,7 @@ key={query}
           <div className="homeSection">
             <ProductsCarousel
               title="Câmeras e Gravadores"
-              endpoint="/api/products/store?category=cameras&limit=10"
+              endpoint="/api/products/store?category=cftv&limit=10"
             />
           </div>
 
