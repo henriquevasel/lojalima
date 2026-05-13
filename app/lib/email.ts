@@ -59,7 +59,7 @@ export async function sendOrderEmail(order: any) {
 
     await resend.emails.send({
       from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
-      to: [process.env.COMPANY_EMAIL as string, order.customerEmail],
+     to: [ "marketinglimaelima@gmail.com",order.customerEmail],
       subject: `🛒 Pedido confirmado #${order.id.slice(0, 8)}`,
       html: `
       <div style="background:#f6f6f6;padding:30px 0;">
