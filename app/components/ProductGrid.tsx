@@ -40,6 +40,8 @@ export default function ProductGrid({
 
       const data = await res.json();
 
+      console.log(data);
+
       if (pageToLoad === 1) {
         setProducts(data);
       } else {

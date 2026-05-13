@@ -31,10 +31,7 @@ export async function GET(req: Request) {
       },
     },
 
-    // 🔥 evita produtos muito baratos/genéricos
-    priceCents: {
-      gt: 10000,
-    },
+
 
     // 🔥 somente produtos com imagem
     productimage: {
