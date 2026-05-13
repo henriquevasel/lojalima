@@ -6,7 +6,9 @@ import styles from "@/app/styles/productCard.module.css";
 export default function ProductCard({ product }: any) {
 
   // imagem principal
-  const image = product?.productimage?.[0]?.url;
+  const image =
+  product?.productimage?.[0]?.url ||
+  "/produtos/placeholder.jpg";
 
   const priceNumber = product.priceCents / 100;
 
