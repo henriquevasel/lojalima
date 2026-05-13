@@ -129,7 +129,7 @@ else if (
   rawGroup.includes("video monitoramento")
 
 ) {
-  categoryName = "CFTV";
+  categoryName = "Câmeras";
 }
 
 // =========================
