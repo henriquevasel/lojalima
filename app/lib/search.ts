@@ -1,6 +1,10 @@
 const synonyms: Record<string, string[]> = {
-  wifi: ["wireless", "wi fi", "wi-fi"],
-
+  wifi: [
+  "wireless",
+  "wi fi",
+  "wi-fi",
+  "wifi",
+],
   camera: [
     "cameras",
     "camera ip",
@@ -30,6 +34,8 @@ const synonyms: Record<string, string[]> = {
     "hard drive",
     "harddisk",
   ],
+
+  
 
   tv: [
     "televisao",
@@ -64,9 +70,9 @@ export function normalize(text: string) {
 }
 
 export function singularize(word: string) {
-  if (word.endsWith("es")) {
-    return word.slice(0, -2);
-  }
+  if (word.endsWith("es") && word.length > 4) {
+  return word.slice(0, -1);
+}   
 
   if (word.endsWith("s") && word.length > 3) {
     return word.slice(0, -1);
@@ -87,16 +93,42 @@ export function tokenize(text: string) {
 }
 
 export function expandTerms(query: string) {
+
   const tokens = tokenize(query);
 
   const expanded = new Set<string>();
 
+  // termo completo
+  const full = normalize(query);
+
+  expanded.add(full);
+
+  // versão compacta
+  expanded.add(
+    full.replace(/\s|-/g, "")
+  );
+
   for (const token of tokens) {
+
     expanded.add(token);
 
+    // compacto individual
+    expanded.add(
+      token.replace(/\s|-/g, "")
+    );
+
+    // sinônimos
     if (synonyms[token]) {
+
       for (const synonym of synonyms[token]) {
-        expanded.add(normalize(synonym));
+
+        const normalized = normalize(synonym);
+
+        expanded.add(normalized);
+
+        expanded.add(
+          normalized.replace(/\s|-/g, "")
+        );
       }
     }
   }
