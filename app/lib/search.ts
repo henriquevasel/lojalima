@@ -1,15 +1,64 @@
 const synonyms: Record<string, string[]> = {
   wifi: ["wi-fi", "wi fi", "wireless"],
-  camera: ["cameras", "cam", "cameras", "camêra"],
-  cabo: ["cabos", "fio"],
-  cartao: ["cartão", "card"],
-  controle: ["controlador"],
-  hd: ["harddisk", "hard drive"],
-  tv: ["televisao", "televisão"],
-  roteador: ["router"],
-  internet: ["rede", "network"],
-  seguranca: ["segurança", "security"],
-  acesso: ["entrada"],
+
+  camera: [
+    "cameras",
+    "cam",
+    "camêra",
+    "camera ip",
+  ],
+
+  cabo: [
+    "cabos",
+    "fio",
+    "cabo rede",
+  ],
+
+  cartao: [
+    "cartão",
+    "card",
+    "rfid",
+  ],
+
+  controle: [
+    "controlador",
+  ],
+
+  hd: [
+    "harddisk",
+    "hard drive",
+  ],
+
+  tv: [
+    "televisao",
+    "televisão",
+  ],
+
+  roteador: [
+    "router",
+  ],
+
+  internet: [
+    "rede",
+    "network",
+  ],
+
+  seguranca: [
+    "segurança",
+    "security",
+  ],
+
+  acesso: [
+    "entrada",
+  ],
+
+  cat5: [
+    "cat5e",
+  ],
+
+  cat6: [
+    "cat6e",
+  ],
 };
 
 export function normalize(text: string) {
@@ -17,7 +66,7 @@ export function normalize(text: string) {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/-/g, " ")
+    .replace(/[-_/]/g, " ")
     .replace(/[^a-z0-9\s]/g, "")
     .replace(/\s+/g, " ")
     .trim();
@@ -44,6 +93,24 @@ export function expandTerms(query: string) {
   for (const term of baseTerms) {
     expanded.add(term);
 
+    // versão compacta
+    expanded.add(term.replace(/\s|-/g, ""));
+
+    // wifi inteligente
+    if (term === "wifi") {
+      expanded.add("wi-fi");
+      expanded.add("wi fi");
+      expanded.add("wireless");
+    }
+
+    // camera inteligente
+    if (term === "camera") {
+      expanded.add("cam");
+      expanded.add("cameras");
+      expanded.add("camera ip");
+    }
+
+    // aliases
     if (synonyms[term]) {
       synonyms[term].forEach((s) => {
         expanded.add(normalize(s));

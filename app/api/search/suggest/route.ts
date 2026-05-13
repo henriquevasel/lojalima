@@ -14,7 +14,7 @@ export async function GET(req: Request) {
       return NextResponse.json([]);
     }
 
-    const terms = expandTerms(q);
+    const terms = expandTerms(q).slice(0, 10);
 
     const conditions = terms.flatMap((term) => {
       const compact = term.replace(/\s|-/g, "");
@@ -107,7 +107,7 @@ export async function GET(req: Request) {
             product.description,
             product.sku,
           ]
-            .filter(Boolean)
+            .filter((term): term is string => Boolean(term && term.length > 1))
             .join(" ")
         );
 
