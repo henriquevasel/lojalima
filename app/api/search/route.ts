@@ -1,104 +1,201 @@
-const synonyms: Record<string, string[]> = {
-  wifi: ["wi-fi", "wi fi", "wireless"],
+import { NextResponse } from "next/server";
+import { prisma } from "@/app/lib/prisma";
+import { expandTerms, normalize } from "@/app/lib/search";
 
-  camera: [
-    "cam",
-    "cameras",
-    "camêra",
-    "camera ip",
-  ],
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
 
-  cabo: [
-    "cabos",
-    "fio",
-    "cabo rede",
-  ],
+    const rawQuery = searchParams.get("q") || "";
 
-  seguranca: [
-    "segurança",
-    "security",
-  ],
+    const q = normalize(rawQuery);
 
-  controle: [
-    "controlador",
-  ],
+    if (q.length < 2) {
+      return NextResponse.json([]);
+    }
 
-  cartao: [
-    "cartão",
-    "rfid",
-    "card",
-  ],
+    const terms = expandTerms(q).slice(0, 10);
 
-  internet: [
-    "rede",
-    "network",
-  ],
+    const conditions = terms.flatMap((term) => {
+      const compact = term.replace(/\s|-/g, "");
 
-  cat5: [
-    "cat5e",
-  ],
+      return [
+        // NAME
+        {
+          name: {
+            contains: term,
+          },
+        },
 
-  cat6: [
-    "cat6e",
-  ],
-};
+        {
+          name: {
+            contains: compact,
+          },
+        },
 
-export function normalize(text: string) {
-  return text
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[-_/]/g, " ")
-    .replace(/[^a-z0-9\s]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+        // SLUG
+        {
+          slug: {
+            contains: term,
+          },
+        },
 
-export function singularize(word: string) {
-  if (word.endsWith("s") && word.length > 3) {
-    return word.slice(0, -1);
+        {
+          slug: {
+            contains: compact,
+          },
+        },
+
+        // BRAND
+        {
+          brand: {
+            contains: term,
+          },
+        },
+
+        // SKU
+        {
+          sku: {
+            contains: term,
+          },
+        },
+
+        // DESCRIPTION
+        {
+          description: {
+            contains: term,
+          },
+        },
+
+        // CATEGORY
+        {
+          productcategory: {
+            some: {
+              category: {
+                name: {
+                  contains: term,
+                },
+              },
+            },
+          },
+        },
+      ];
+    });
+
+    const products = await prisma.product.findMany({
+      where: {
+        active: true,
+        OR: conditions,
+      },
+
+      include: {
+        productimage: {
+          take: 1,
+        },
+      },
+
+      take: 80,
+    });
+
+    const scored = products
+      .map((product) => {
+        const searchable = normalize(
+          [
+            product.name,
+            product.slug,
+            product.brand,
+            product.description,
+            product.sku,
+          ]
+            .filter(
+              (term): term is string =>
+                Boolean(term && term.length > 1)
+            )
+            .join(" ")
+        );
+
+        let score = 0;
+
+        for (const term of terms) {
+          const compact = term.replace(/\s|-/g, "");
+
+          // NOME
+          if (
+            product.name &&
+            normalize(product.name).includes(term)
+          ) {
+            score += 30;
+          }
+
+          // MATCH COMPACTO
+          if (
+            product.name &&
+            normalize(product.name)
+              .replace(/\s|-/g, "")
+              .includes(compact)
+          ) {
+            score += 25;
+          }
+
+          // MARCA
+          if (
+            product.brand &&
+            normalize(product.brand).includes(term)
+          ) {
+            score += 18;
+          }
+
+          // SKU
+          if (
+            product.sku &&
+            normalize(product.sku).includes(term)
+          ) {
+            score += 20;
+          }
+
+          // SLUG
+          if (
+            product.slug &&
+            normalize(product.slug).includes(term)
+          ) {
+            score += 10;
+          }
+
+          // DESCRIÇÃO
+          if (
+            product.description &&
+            normalize(product.description).includes(term)
+          ) {
+            score += 6;
+          }
+
+          // MATCH GERAL
+          if (searchable.includes(term)) {
+            score += 3;
+          }
+        }
+
+        // COMEÇA COM A BUSCA
+        if (searchable.startsWith(q)) {
+          score += 60;
+        }
+
+        return {
+          ...product,
+          score,
+        };
+      })
+      .filter((product) => product.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 8);
+
+    return NextResponse.json(scored);
+
+  } catch (error) {
+    console.error("Erro na busca:", error);
+
+    return NextResponse.json([], {
+      status: 500,
+    });
   }
-
-  return word;
-}
-
-export function expandTerms(query: string) {
-  const normalized = normalize(query);
-
-  const baseTerms = normalized
-    .split(" ")
-    .filter(Boolean)
-    .map(singularize);
-
-  const expanded = new Set<string>();
-
-  for (const term of baseTerms) {
-    expanded.add(term);
-
-    // compactado
-    expanded.add(term.replace(/\s|-/g, ""));
-
-    // wifi inteligente
-    if (term === "wifi") {
-      expanded.add("wi-fi");
-      expanded.add("wi fi");
-      expanded.add("wireless");
-    }
-
-    // camera inteligente
-    if (term === "camera") {
-      expanded.add("cam");
-      expanded.add("cameras");
-      expanded.add("camera ip");
-    }
-
-    // aliases
-    if (synonyms[term]) {
-      synonyms[term].forEach((s) => {
-        expanded.add(normalize(s));
-      });
-    }
-  }
-
-  return [...expanded];
 }
