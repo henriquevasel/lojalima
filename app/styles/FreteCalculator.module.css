@@ -39,8 +39,19 @@
 
 .row{
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cepRow{
+  display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.cepRow .input{
+  flex: 1;
+  min-width: 0;
 }
 
 .input{

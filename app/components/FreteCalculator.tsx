@@ -160,20 +160,24 @@ sessionStorage.setItem(
 
 </div>
 
-        <input
-          placeholder="Digite seu CEP"
-          value={cep}
-          onChange={(e) => setCep(e.target.value)}
-         className={s.input}
-        />
+       <div className={s.cepRow}>
 
-        <button
-          onClick={calcularFrete}
-          disabled={loading}
-          className={s.okBtn}
-        >
-          {loading ? "..." : "OK"}
-        </button>
+  <input
+    placeholder="Digite seu CEP"
+    value={cep}
+    onChange={(e) => setCep(e.target.value)}
+    className={s.input}
+  />
+
+  <button
+    onClick={calcularFrete}
+    disabled={loading}
+    className={s.okBtn}
+  >
+    {loading ? "..." : "OK"}
+  </button>
+
+</div>
 
       </div>
 
