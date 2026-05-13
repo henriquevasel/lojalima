@@ -96,6 +96,10 @@ const userId = await getUserId();
       );
     }
 
+    let freteCents = 0;
+
+if (!retiradaLoja) {
+
     const response = await fetch(
   "https://www.melhorenvio.com.br/api/v2/me/shipment/calculate",
   {
@@ -157,10 +161,11 @@ if (!melhorOpcao) {
   );
 }
 
-const freteCents = Math.round(
+freteCents = Math.round(
   Number(melhorOpcao.price) * 100
 );
 
+}
 
     // ================= TOTAL =================
     let discountCents = 0;
