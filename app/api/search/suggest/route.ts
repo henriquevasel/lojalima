@@ -16,60 +16,75 @@ export async function GET(req: Request) {
 
     const terms = expandTerms(q);
 
-    const conditions = terms.flatMap((term) => [
-      {
-        name: {
-          contains: term,
-          
-        },
-      },
+    const conditions = terms.flatMap((term) => {
+      const compact = term.replace(/\s|-/g, "");
 
-      {
-        slug: {
-          contains: term,
-          
+      return [
+        // NAME
+        {
+          name: {
+            contains: term,
+          },
         },
-      },
 
-      {
-        brand: {
-          contains: term,
-          
+        {
+          name: {
+            contains: compact,
+          },
         },
-      },
 
-      {
-        sku: {
-          contains: term,
-          
+        // SLUG
+        {
+          slug: {
+            contains: term,
+          },
         },
-      },
 
-      {
-        description: {
-          contains: term,
-          
+        {
+          slug: {
+            contains: compact,
+          },
         },
-      },
 
-      {
-        productcategory: {
-          some: {
-            category: {
-              name: {
-                contains: term,
-                
+        // BRAND
+        {
+          brand: {
+            contains: term,
+          },
+        },
+
+        // SKU
+        {
+          sku: {
+            contains: term,
+          },
+        },
+
+        // DESCRIPTION
+        {
+          description: {
+            contains: term,
+          },
+        },
+
+        // CATEGORY
+        {
+          productcategory: {
+            some: {
+              category: {
+                name: {
+                  contains: term,
+                },
               },
             },
           },
         },
-      },
-    ]);
+      ];
+    });
 
     const products = await prisma.product.findMany({
       where: {
         active: true,
-
         OR: conditions,
       },
 
@@ -79,7 +94,7 @@ export async function GET(req: Request) {
         },
       },
 
-      take: 40,
+      take: 80,
     });
 
     const scored = products
@@ -99,41 +114,67 @@ export async function GET(req: Request) {
         let score = 0;
 
         for (const term of terms) {
+          const compact = term.replace(/\s|-/g, "");
+
+          // NOME
           if (
             product.name &&
             normalize(product.name).includes(term)
           ) {
-            score += 20;
+            score += 30;
           }
 
+          // MATCH COMPACTO
+          if (
+            product.name &&
+            normalize(product.name)
+              .replace(/\s|-/g, "")
+              .includes(compact)
+          ) {
+            score += 25;
+          }
+
+          // MARCA
           if (
             product.brand &&
             normalize(product.brand).includes(term)
           ) {
-            score += 12;
+            score += 18;
           }
 
+          // SKU
+          if (
+            product.sku &&
+            normalize(product.sku).includes(term)
+          ) {
+            score += 20;
+          }
+
+          // SLUG
           if (
             product.slug &&
             normalize(product.slug).includes(term)
           ) {
-            score += 8;
+            score += 10;
           }
 
+          // DESCRIÇÃO
           if (
             product.description &&
             normalize(product.description).includes(term)
           ) {
-            score += 4;
+            score += 6;
           }
 
+          // MATCH GERAL
           if (searchable.includes(term)) {
-            score += 2;
+            score += 3;
           }
         }
 
+        // COMEÇA COM A BUSCA
         if (searchable.startsWith(q)) {
-          score += 50;
+          score += 60;
         }
 
         return {
@@ -141,6 +182,7 @@ export async function GET(req: Request) {
           score,
         };
       })
+      .filter((product) => product.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 8);
 
