@@ -16,21 +16,25 @@
 }
 
 .methods{
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-bottom: 14px;
+  width: 100%;
 }
 
 .methodBtn{
-  flex: 1;
-  height: 44px;
+  width: 100%;
+  min-height: 46px;
   border-radius: 12px;
   background: #fff;
   font-weight: 700;
   cursor: pointer;
   border: 1px solid #ddd;
   transition: .2s;
-  font-size: 13px;
+  font-size: 12px;
+  padding: 8px;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .active{
@@ -47,6 +51,7 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  width: 100%;
 }
 
 .cepRow .input{
@@ -56,6 +61,8 @@
 
 .input{
   flex: 1;
+  min-width: 0;
+  width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid #ddd;
@@ -119,23 +126,41 @@
     border-radius: 14px;
   }
 
-  .methods{
-    flex-direction: row;
-  }
+ .methods{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
 
-  .methodBtn{
-    font-size: 12px;
-    height: 42px;
-  }
+ .methodBtn{
+  width: 100%;
+  min-height: 46px;
+  border-radius: 12px;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  transition: .2s;
+  font-size: 13px;
+  padding: 8px;
+  text-align: center;
+}
 
   .row{
-    flex-direction: row;
+     flex-direction: column;
   }
 
-  .input{
-    min-width: 0;
-    font-size: 13px;
-  }
+ .input{
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+}
 
   .okBtn{
     padding: 12px 14px;
