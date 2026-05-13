@@ -94,6 +94,8 @@ if (!retiradaLoja && !customer.endereco) {
   customerCpf: customer.cpf,
   customerObs: customer.obs || "",
   paymentMethod: payment,
+  retiradaLoja:
+  sessionStorage.getItem("retiradaLoja") === "true",
   
   endereco: customer.endereco,
   numero: customer.numero // 🔥 AQUI

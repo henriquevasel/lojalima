@@ -36,7 +36,7 @@ const userId = await getUserId();
         customerCpf,
         customerObs,
         paymentMethod,
-        
+        retiradaLoja,
         endereco,
         numero,
         couponCode
@@ -47,7 +47,10 @@ const userId = await getUserId();
 
 
 
-    if (!endereco || !endereco.cep) {
+    if (
+  !retiradaLoja &&
+  (!endereco || !endereco.cep)
+){
   return NextResponse.json(
     { error: "Endereço não informado" },
     { status: 400 }
