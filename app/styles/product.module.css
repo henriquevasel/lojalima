@@ -20,6 +20,13 @@
   box-shadow: 0 6px 24px rgba(0,0,0,.05);
 }
 
+.imageWrap img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
 .title {
   font-size: 38px;
   font-weight: 900;
@@ -98,43 +105,58 @@
 @media (max-width: 768px) {
 
   .page{
-    padding: 32px 14px;
+    padding: 20px 12px 70px;
     overflow-x: hidden;
   }
 
   .grid{
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+  }
+
+  .imageWrap{
+    border-radius: 18px;
   }
 
   .title{
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1.2;
   }
 
   .price{
-    font-size: 30px;
+    font-size: 26px;
   }
 
   .benefits{
-    padding: 16px;
+    padding: 14px;
     font-size: 13px;
+    gap: 12px;
   }
 
   .whatsappBtn{
     width: 100%;
     font-size: 15px;
-    padding: 16px;
+    padding: 15px;
+    border-radius: 14px;
   }
 
   .description{
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
   }
 
   .trustBox{
     font-size: 13px;
-    padding: 16px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .relatedGrid{
+    grid-template-columns: 1fr;
+  }
+
+  .relatedImageWrap{
+    height: 220px;
   }
 
 }

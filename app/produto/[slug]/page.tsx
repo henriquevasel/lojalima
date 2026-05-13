@@ -114,16 +114,9 @@ const relacionados = await prisma.product.findMany({
 
         {/* INFORMAÇÕES */}
 
-        <div>
+        <div style={{ minWidth: 0 }}>
 
-          <h1
-            style={{
-              fontSize: 38,
-              fontWeight: 900,
-              marginBottom: 20,
-              lineHeight: 1.1,
-            }}
-          >
+         <h1 className={s.title}>
             {produto.name}
           </h1>
 
@@ -141,7 +134,7 @@ const relacionados = await prisma.product.findMany({
   </div>
 
   {/* preço atual */}
-  <div style={{ fontSize: 28, fontWeight: 900 }}>
+  <div className={s.price}>
     por{" "}
     <span style={{ color: "#111" }}>
       {preco.toLocaleString("pt-BR", {
@@ -293,30 +286,19 @@ const relacionados = await prisma.product.findMany({
 
           {/* BOTÃO WHATSAPP */}
 
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: "block",
-              textAlign: "center",
-              padding: "18px",
-              borderRadius: 18,
-              background: "#00A94F",
-              color: "#000",
-              fontWeight: 900,
-              textDecoration: "none",
-              fontSize: 16,
-              marginBottom: 40,
-            }}
-          >
-            Falar com especialista no WhatsApp
-          </a>
+         <a
+  href={WHATSAPP_LINK}
+  target="_blank"
+  rel="noreferrer"
+  className={s.whatsappBtn}
+>
+  Falar com especialista no WhatsApp
+</a>
 
 
           {/* DESCRIÇÃO */}
 
-          <div style={{ marginBottom: 40 }}>
+          <div className={s.description}>
 
             <h3 style={{ marginBottom: 10 }}>
               Descrição
