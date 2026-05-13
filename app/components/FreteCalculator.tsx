@@ -1,4 +1,8 @@
+
+
 "use client";
+
+import s from "./FreteCalculator.module.css";
 
 import { useState } from "react";
 
@@ -103,37 +107,15 @@ sessionStorage.setItem(
   }
 
   return (
-    <div style={{
-      marginTop: 25,
-      marginBottom: 20,
-      padding: 18,
-      borderRadius: 14,
-      border: "1px solid rgba(0,0,0,0.08)",
-      background: "#fff",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.04)"
-    }}>
+    <div className={s.wrapper}>
 
-      <div style={{
-        fontWeight: 700,
-        marginBottom: 12,
-        fontSize: 15
-      }}>
+     <div className={s.title}>
         Calcular frete e prazo
       </div>
 
-      <div style={{
-        display: "flex",
-        gap: 10,
-        alignItems: "center"
-      }}>
+      <div className={s.row}>
 
-        <div
-  style={{
-    marginTop: 14,
-    display: "flex",
-    gap: 10
-  }}
->
+        <div className={s.methods}>
 
   <button
     onClick={() => {
@@ -143,17 +125,7 @@ sessionStorage.setItem(
       sessionStorage.removeItem("retiradaLoja");
 
     }}
-    style={{
-      flex: 1,
-      height: 42,
-      borderRadius: 10,
-      border: !retirada
-        ? "2px solid #22c55e"
-        : "1px solid #ddd",
-      background: "#fff",
-      fontWeight: 700,
-      cursor: "pointer"
-    }}
+    className={`${s.methodBtn} ${!retirada ? s.active : ""}`}
   >
     🚚 Entrega
   </button>
@@ -181,19 +153,9 @@ sessionStorage.setItem(
       );
 
     }}
-    style={{
-      flex: 1,
-      height: 42,
-      borderRadius: 10,
-      border: retirada
-        ? "2px solid #22c55e"
-        : "1px solid #ddd",
-      background: "#fff",
-      fontWeight: 700,
-      cursor: "pointer"
-    }}
+    className={`${s.methodBtn} ${retirada ? s.active : ""}`}
   >
-    🏪 Retirar na loja
+    Retirar na loja
   </button>
 
 </div>
@@ -202,29 +164,13 @@ sessionStorage.setItem(
           placeholder="Digite seu CEP"
           value={cep}
           onChange={(e) => setCep(e.target.value)}
-          style={{
-            flex: 1,
-            padding: "12px 14px",
-            borderRadius: 10,
-            border: "1px solid #ddd",
-            fontSize: 14
-          }}
+         className={s.input}
         />
 
         <button
           onClick={calcularFrete}
           disabled={loading}
-          style={{
-            padding: "12px 16px",
-            borderRadius: 10,
-            background: "#22c55e",
-            color: "#fff",
-            border: "none",
-            fontWeight: 700,
-            fontSize: 14,
-            cursor: "pointer",
-            opacity: loading ? 0.7 : 1
-          }}
+          className={s.okBtn}
         >
           {loading ? "..." : "OK"}
         </button>
@@ -233,11 +179,7 @@ sessionStorage.setItem(
 
       {/* ENDEREÇO */}
       {endereco && !retirada && (
-        <div style={{
-          marginTop: 10,
-          fontSize: 13,
-          opacity: 0.8
-        }}>
+        <div className={s.address}>
           {endereco.logradouro} <br />
           {endereco.bairro} <br />
           {endereco.localidade} - {endereco.uf}
@@ -252,26 +194,11 @@ sessionStorage.setItem(
       setNumero(e.target.value);
       localStorage.setItem("numero", e.target.value);
     }}
-    style={{
-      marginTop: 10,
-      width: "100%",
-      padding: "12px 14px",
-      borderRadius: 10,
-      border: numero ? "1px solid #ddd" : "1px solid red", // 🔥 feedback visual
-      fontSize: 14
-    }}
+    className={`${s.input} ${s.houseInput}`}
   />
 )}
 {retirada && (
-  <div
-    style={{
-      marginTop: 14,
-      padding: 12,
-      borderRadius: 10,
-      background: "#ecfdf5",
-      border: "1px solid #22c55e"
-    }}
-  >
+  <div className={s.pickupBox}>
     <div
       style={{
         fontWeight: 700,
@@ -307,16 +234,10 @@ sessionStorage.setItem(
 
       {/* RESULTADO */}
       {frete !== null && (endereco || retirada) && (
-        <div style={{
-          marginTop: 12,
-          padding: 12,
-          borderRadius: 10,
-          background: "#ecfdf5",
-          border: "1px solid #22c55e",
-        }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className={s.resultBox}>
+          <div className={s.resultTop}>
             <span>🚚 {localStorage.getItem("freteNome")}</span>
-            <span style={{ fontWeight: 700 }}>
+            <span className={s.price}>
               R$ {(frete / 100).toFixed(2)}
             </span>
           </div>
