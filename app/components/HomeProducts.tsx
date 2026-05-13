@@ -10,7 +10,7 @@ import WhatsappCTA from "@/app/components/WhatsappCTA";
 export default function HomeProducts() {
 
   const params = useSearchParams();
-  const query = params.toString();
+  const query = new URLSearchParams(params).toString();
 
   const search = params.get("q");
   const category = params.get("category");
@@ -31,6 +31,7 @@ export default function HomeProducts() {
                 : `Categoria: ${category}`
             }
             endpoint={`/api/products?${query}`}
+key={query}
             itemsPerRow={4}
             insertEvery={2}
             insertComponent={<WhatsAppSection />}

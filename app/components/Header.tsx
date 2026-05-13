@@ -207,7 +207,14 @@ export default function Header() {
           </div>
 
           {/* ===== BUSCA ===== */}
-          <div className={s.search} ref={searchRef}>
+          <div
+  className={s.search}
+  ref={searchRef}
+  style={{
+    position: "relative",
+    zIndex: 999999,
+  }}
+>
             <div className={s.searchWrapper} ref={searchRef}>
               <div className={s.searchBox}>
                 <form onSubmit={buscar} autoComplete="off">
@@ -271,8 +278,9 @@ export default function Header() {
                     background: "#111",
                     borderRadius: 12,
                     marginTop: 8,
-                    overflow: "hidden",
-                    zIndex: 999,
+                    overflowY: "auto",
+                    maxHeight: "70vh",
+                    zIndex: 999999,
                     boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
                   }}
                 >
