@@ -68,11 +68,13 @@ async function finalizar(){
 
   
 
-  if (!customer.endereco) {
+const retiradaLoja =
+  sessionStorage.getItem("retiradaLoja") === "true";
+
+if (!retiradaLoja && !customer.endereco) {
   toast.error("Endereço não informado");
   return;
 }
-
 
   setLoading(true);
 
