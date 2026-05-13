@@ -60,15 +60,13 @@ const where: any = {
 },
 
   // 🔥 evita produtos baratos/genéricos
-  priceCents: {
-   gt: 100, // acima de R$100
-  },
+ 
 };
 
 where.productimage = {
   some: {
     url: {
-      notIn: ["", "/placeholder.png"],
+      not: "",
     },
   },
 };
@@ -83,7 +81,7 @@ if (search) {
     normalize(search)
   );
 
-  where.AND = [
+  where.OR = [
     ...(where.AND || []),
 
     ...terms.map((term) => ({
