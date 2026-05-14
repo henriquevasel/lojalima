@@ -98,7 +98,7 @@ csvProducts.forEach((p: any) => {
           brand: item.MARCA,
           ean: item.EAN,
 description:
-  csvProduct?.["Descricao Curta"] ||
+  csvProduct?.["Descrição Curta"] ||
   item.DESCRICAO,
 
           image:
@@ -184,7 +184,7 @@ else if (
   rawGroup.includes("video monitoramento")
 
 ) {
-  categoryName = "Câmeras";
+  categoryName = "CFTV";
 }
 
 // =========================
