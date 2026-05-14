@@ -14,6 +14,7 @@ function slugify(text: string) {
 
 export async function GET() {
   try {
+    console.log(process.env.DIGITALSAT_TOKEN);
 
     const response = await fetch(
       "https://api.digitalsat.com.br/reseller/v4/product",
@@ -25,7 +26,21 @@ export async function GET() {
       }
     );
 
-    const data = await response.json();
+    const text = await response.text();
+
+console.log("STATUS:", response.status);
+console.log("TEXT:", text);
+
+return NextResponse.json({
+  status: response.status,
+  text,
+});
+
+console.log(text);
+
+const data = JSON.parse(text);
+
+    console.log(JSON.stringify(data[0], null, 2));
 
     // =========================
     // AGRUPAR SKU
