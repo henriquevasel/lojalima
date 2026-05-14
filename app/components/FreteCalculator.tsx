@@ -117,7 +117,7 @@ sessionStorage.setItem(
 
         <div className={s.methods}>
 
-  <button
+<button
   onClick={() => {
 
     setRetirada(false);
@@ -127,44 +127,50 @@ sessionStorage.setItem(
   }}
   className={`${s.methodBtn} ${!retirada ? s.active : ""}`}
 >
-  <img
-    src="/icons/truck.png"
-    className={s.icon}
-  />
+  <div className={s.methodContent}>
+    <img
+      src="/icons/truck.png"
+      className={s.icon}
+    />
 
-  Entrega
+    <span>Entrega</span>
+  </div>
 </button>
 
-  <button
-    onClick={() => {
+<button
+  onClick={() => {
 
-      setRetirada(true);
+    setRetirada(true);
 
-      setFrete(0);
+    setFrete(0);
 
-      sessionStorage.setItem(
-        "freteCents",
-        "0"
-      );
+    sessionStorage.setItem(
+      "freteCents",
+      "0"
+    );
 
-      sessionStorage.setItem(
-        "retiradaLoja",
-        "true"
-      );
+    sessionStorage.setItem(
+      "retiradaLoja",
+      "true"
+    );
 
-      localStorage.setItem(
-        "freteNome",
-        "Retirada na loja"
-      );
+    localStorage.setItem(
+      "freteNome",
+      "Retirada na loja"
+    );
 
-    }}
-    className={`${s.methodBtn} ${retirada ? s.active : ""}`}
-  >
-    <div className={s.pickupTitle}>
-  <img src="/icons/store.png" className={s.icon} />
-  Retirada na loja
-</div>
-  </button>
+  }}
+  className={`${s.methodBtn} ${retirada ? s.active : ""}`}
+>
+  <div className={s.methodContent}>
+    <img
+      src="/icons/store.png"
+      className={s.icon}
+    />
+
+    <span>Retirada na loja</span>
+  </div>
+</button>
 
 </div>
 

@@ -17,10 +17,7 @@ const priceNumber =
     currency: "BRL",
   }).format(priceNumber);
 
-  const installment = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(priceNumber / 12);
+
 
   const description =
     typeof product?.description === "string"
@@ -96,9 +93,7 @@ const priceNumber =
             {price}
           </div>
 
-          <div className={styles.installments}>
-            ou 12x de {installment} no cartão
-          </div>
+          
 
         </div>
 

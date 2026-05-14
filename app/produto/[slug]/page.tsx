@@ -133,29 +133,51 @@ const relacionados = await prisma.product.findMany({
     })}
   </div>
 
-  {/* preço atual */}
-  <div className={s.price}>
-    por{" "}
-    <span style={{ color: "#111" }}>
-      {preco.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}
-    </span>
-  </div>
+  {/* preço original */}
+<div
+  style={{
+    color: "#777",
+    fontSize: 14,
+    marginBottom: 4,
+  }}
+>
+  DE{" "}
+  <span
+    style={{
+      textDecoration: "line-through",
+    }}
+  >
+    {preco.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </span>
+</div>
+
+{/* preço pix */}
+<div className={s.price}>
+  POR{" "}
+  <span style={{ color: "#111" }}>
+    {precoComDesconto.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </span>{" "}
+  no pix
+</div>
+
+<div
+  style={{
+    fontSize: 13,
+    color: "#16a34a",
+    fontWeight: 500,
+    marginTop: 4,
+  }}
+>
+  5% de desconto no pagamento via PIX
+</div>
 
   {/* parcelamento */}
-  <div style={{ fontSize: 13, marginTop: 4 }}>
-    até{" "}
-    <strong>
-      3x de{" "}
-      {(preco / 3).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}
-    </strong>{" "}
-    sem juros
-  </div>
 
   {/* BOX PAGAMENTOS */}
   <div

@@ -18,18 +18,7 @@ function slugify(text: string) {
 export async function GET(req: Request) {
   try {
 
-const authHeader =
-  req.headers.get("authorization");
 
-if (
-  authHeader !==
-  `Bearer ${process.env.CRON_SECRET}`
-) {
-  return NextResponse.json(
-    { error: "Unauthorized" },
-    { status: 401 }
-  );
-}
     const response = await fetch(
       "https://api.digitalsat.com.br/reseller/v4/product",
       {
@@ -47,7 +36,6 @@ if (
     // =========================
     const csvPath = path.join(
   process.cwd(),
-  "public",
   "data",
   "Produto.csv"
 );
@@ -510,19 +498,18 @@ const categorySlug =
         // =========================
         // CATEGORIA
         // =========================
- const alreadyExists =
-  existing.productcategory.some(
-    (pc) => pc.categoryId === category.id
-  );
+await prisma.productcategory.deleteMany({
+  where: {
+    productId: existing.id,
+  },
+});
 
-if (!alreadyExists) {
-  await prisma.productcategory.create({
-    data: {
-      productId: existing.id,
-      categoryId: category.id,
-    },
-  });
-}
+await prisma.productcategory.create({
+  data: {
+    productId: existing.id,
+    categoryId: category.id,
+  },
+});
       
 
         updated++;
