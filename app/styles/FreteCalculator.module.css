@@ -173,3 +173,57 @@
   }
 
 }
+
+
+.cepWrapper {
+  margin-top: 14px;
+}
+
+.cepLabel {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.pickupInfoText {
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+  padding-left: 2px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.iconSmall {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.methodBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pickupTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.resultLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

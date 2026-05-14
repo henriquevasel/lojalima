@@ -9,10 +9,8 @@ export default function ProductCard({ product }: any) {
   const image =
     product?.productimage?.[0]?.url;
 
-const basePrice =
+const priceNumber =
   Number(product?.priceCents || 0) / 100;
-
-const priceNumber = basePrice * 1.45;
 
   const price = new Intl.NumberFormat("pt-BR", {
     style: "currency",

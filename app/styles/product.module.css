@@ -294,21 +294,22 @@
 }
 
 
-.description img {
-  max-width: 100%;
-  height: auto;
-}
-
-.description table {
+.description {
   width: 100%;
-  overflow-x: auto;
-  display: block;
-}
-
-.description iframe {
-  max-width: 100%;
+  overflow: hidden;
 }
 
 .description * {
   max-width: 100%;
+}
+
+.description table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.description img {
+  max-width: 100%;
+  height: auto;
 }

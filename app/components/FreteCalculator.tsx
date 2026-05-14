@@ -118,17 +118,22 @@ sessionStorage.setItem(
         <div className={s.methods}>
 
   <button
-    onClick={() => {
+  onClick={() => {
 
-      setRetirada(false);
+    setRetirada(false);
 
-      sessionStorage.removeItem("retiradaLoja");
+    sessionStorage.removeItem("retiradaLoja");
 
-    }}
-    className={`${s.methodBtn} ${!retirada ? s.active : ""}`}
-  >
-    🚚 Entrega
-  </button>
+  }}
+  className={`${s.methodBtn} ${!retirada ? s.active : ""}`}
+>
+  <img
+    src="/icons/truck.png"
+    className={s.icon}
+  />
+
+  Entrega
+</button>
 
   <button
     onClick={() => {
@@ -155,27 +160,50 @@ sessionStorage.setItem(
     }}
     className={`${s.methodBtn} ${retirada ? s.active : ""}`}
   >
-    Retirar na loja
+    <div className={s.pickupTitle}>
+  <img src="/icons/store.png" className={s.icon} />
+  Retirada na loja
+</div>
   </button>
 
 </div>
 
-       <div className={s.cepRow}>
+       <div className={s.cepWrapper}>
 
-  <input
-    placeholder="Digite seu CEP"
-    value={cep}
-    onChange={(e) => setCep(e.target.value)}
-    className={s.input}
-  />
+  <div className={s.cepLabel}>
+    {retirada
+      ? "Informe seu CEP para validar a retirada"
+      : "Digite seu CEP para calcular a entrega"}
+  </div>
 
-  <button
-    onClick={calcularFrete}
-    disabled={loading}
-    className={s.okBtn}
-  >
-    {loading ? "..." : "OK"}
-  </button>
+  <div className={s.cepRow}>
+
+    <input
+      placeholder={
+        retirada
+          ? "CEP do cliente"
+          : "Digite seu CEP"
+      }
+      value={cep}
+      onChange={(e) => setCep(e.target.value)}
+      className={s.input}
+    />
+
+    <button
+      onClick={calcularFrete}
+      disabled={loading}
+      className={s.okBtn}
+    >
+      {loading ? "..." : "OK"}
+    </button>
+
+  </div>
+
+  {retirada && (
+    <div className={s.pickupInfoText}>
+      Necessário para validar disponibilidade da retirada.
+    </div>
+  )}
 
 </div>
 
@@ -203,36 +231,24 @@ sessionStorage.setItem(
 )}
 {retirada && (
   <div className={s.pickupBox}>
-    <div
-      style={{
-        fontWeight: 700,
-        marginBottom: 6
-      }}
-    >
-      🏪 Retirada na loja
-    </div>
+    <div className={s.pickupTitle}>
+  <img
+    src="/icons/store.png"
+    className={s.icon}
+  />
 
-    <div
-      style={{
-        fontSize: 13,
-        opacity: 0.8,
-        lineHeight: 1.5
-      }}
-    >
+  Retirada na loja
+</div>
+
+    <div className={s.pickupAddress}>
       Rua Presidente Epitácio Pessoa, 723 Sala 1
       <br />
       CEP: 89251-155
     </div>
 
-    <div
-      style={{
-        marginTop: 8,
-        color: "#22c55e",
-        fontWeight: 700
-      }}
-    >
-      Frete grátis
-    </div>
+    <div className={s.pickupFree}>
+  Frete grátis
+</div>
   </div>
 )}
 
@@ -240,7 +256,18 @@ sessionStorage.setItem(
       {frete !== null && (endereco || retirada) && (
         <div className={s.resultBox}>
           <div className={s.resultTop}>
-            <span>🚚 {localStorage.getItem("freteNome")}</span>
+            <span className={s.resultLabel}>
+  <img
+    src={
+      retirada
+        ? "/icons/store.png"
+        : "/icons/truck.png"
+    }
+    className={s.iconSmall}
+  />
+
+  {localStorage.getItem("freteNome")}
+</span>
             <span className={s.price}>
               R$ {(frete / 100).toFixed(2)}
             </span>

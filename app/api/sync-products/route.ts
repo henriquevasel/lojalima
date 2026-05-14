@@ -18,7 +18,7 @@ function slugify(text: string) {
 export async function GET(req: Request) {
   try {
 
-    const authHeader =
+const authHeader =
   req.headers.get("authorization");
 
 if (
@@ -30,7 +30,6 @@ if (
     { status: 401 }
   );
 }
-
     const response = await fetch(
       "https://api.digitalsat.com.br/reseller/v4/product",
       {
@@ -48,6 +47,8 @@ if (
     // =========================
     const csvPath = path.join(
   process.cwd(),
+  "public",
+  "data",
   "Produto.csv"
 );
 
@@ -68,6 +69,15 @@ const sheet =
 const csvProducts =
   XLSX.utils.sheet_to_json(sheet);
 
+  const csvMap = new Map();
+
+csvProducts.forEach((p: any) => {
+  csvMap.set(
+    String(p["Código"] || "").trim(),
+    p
+  );
+});
+
     const grouped = new Map();
 
     for (const item of data) {
@@ -79,23 +89,17 @@ const csvProducts =
         Number(item.RESERVADO || 0);
 
       if (!grouped.has(sku)) {
-        const csvProduct: any = csvProducts.find(
-  (p: any) =>
-    String(p["Código"] || "").trim() === sku
-);
+   const csvProduct: any =
+  csvMap.get(sku);
 
         grouped.set(sku, {
           sku,
           name: item.DESCRICAO,
           brand: item.MARCA,
           ean: item.EAN,
-          description: `
-${csvProduct?.["Descrição"] || ""}
-
-${csvProduct?.["Descrição técnica"] || ""}
-
-${csvProduct?.["Descricao Curta"] || ""}
-`,
+description:
+  csvProduct?.["Descricao Curta"] ||
+  item.DESCRICAO,
 
           image:
             item.URL_IMAGEM ||
@@ -124,7 +128,10 @@ ${csvProduct?.["Descricao Curta"] || ""}
     // LOOP PRODUTOS
     // =========================
 
-    for (const product of grouped.values()) {
+   const products =
+  Array.from(grouped.values());
+
+for (const product of products) {
 
       const slug = slugify(product.name);
 
@@ -440,6 +447,7 @@ const categorySlug =
             name: product.name,
             brand: product.brand,
             ean: product.ean,
+            description: product.description,
             priceCents: product.price,
           },
         });
@@ -502,18 +510,19 @@ const categorySlug =
         // =========================
         // CATEGORIA
         // =========================
-        await prisma.productcategory.deleteMany({
-  where: {
-    productId: existing.id,
-  },
-});
+ const alreadyExists =
+  existing.productcategory.some(
+    (pc) => pc.categoryId === category.id
+  );
 
-await prisma.productcategory.create({
-  data: {
-    productId: existing.id,
-    categoryId: category.id,
-  },
-});
+if (!alreadyExists) {
+  await prisma.productcategory.create({
+    data: {
+      productId: existing.id,
+      categoryId: category.id,
+    },
+  });
+}
       
 
         updated++;

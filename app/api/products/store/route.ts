@@ -201,5 +201,10 @@ export async function GET(req: Request) {
     skip,
   });
 
-  return NextResponse.json(products);
+  const adjustedProducts = products.map((product) => ({
+  ...product,
+  priceCents: Math.round(product.priceCents * 1.45),
+}));
+
+  return NextResponse.json(adjustedProducts);
 }
