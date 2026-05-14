@@ -86,6 +86,8 @@ csvProducts.forEach((p: any) => {
           brand: item.MARCA,
           ean: item.EAN,
 description:
+  csvProduct?.["Descrição"] ||
+  csvProduct?.["Descrição técnica"] ||
   csvProduct?.["Descrição Curta"] ||
   item.DESCRICAO,
 

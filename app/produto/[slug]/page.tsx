@@ -133,25 +133,19 @@ const relacionados = await prisma.product.findMany({
     })}
   </div>
 
-  {/* preço original */}
+{/* preço normal */}
 <div
   style={{
-    color: "#777",
-    fontSize: 14,
+    color: "#111",
+    fontSize: 20,
+    fontWeight: 500,
     marginBottom: 4,
   }}
 >
-  DE{" "}
-  <span
-    style={{
-      textDecoration: "line-through",
-    }}
-  >
-    {preco.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </span>
+  {preco.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  })}
 </div>
 
 {/* preço pix */}
