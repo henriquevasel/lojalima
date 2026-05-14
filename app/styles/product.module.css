@@ -292,3 +292,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.description img {
+  max-width: 100%;
+  height: auto;
+}
+
+.description table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+.description iframe {
+  max-width: 100%;
+}
+
+.description * {
+  max-width: 100%;
+}

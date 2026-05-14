@@ -1,5 +1,8 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
+import * as XLSX from "xlsx";
+import path from "path";
+import fs from "fs";
 
 function slugify(text: string) {
   return text
@@ -43,6 +46,27 @@ if (
     // =========================
     // AGRUPAR SKU
     // =========================
+    const csvPath = path.join(
+  process.cwd(),
+  "Produto.csv"
+);
+
+const fileBuffer =
+  fs.readFileSync(csvPath);
+
+const workbook =
+  XLSX.read(fileBuffer, {
+    type: "buffer",
+  });
+
+const sheetName =
+  workbook.SheetNames[0];
+
+const sheet =
+  workbook.Sheets[sheetName];
+
+const csvProducts =
+  XLSX.utils.sheet_to_json(sheet);
 
     const grouped = new Map();
 
@@ -55,12 +79,23 @@ if (
         Number(item.RESERVADO || 0);
 
       if (!grouped.has(sku)) {
+        const csvProduct: any = csvProducts.find(
+  (p: any) =>
+    String(p["Código"] || "").trim() === sku
+);
 
         grouped.set(sku, {
           sku,
           name: item.DESCRICAO,
           brand: item.MARCA,
           ean: item.EAN,
+          description: `
+${csvProduct?.["Descrição"] || ""}
+
+${csvProduct?.["Descrição técnica"] || ""}
+
+${csvProduct?.["Descricao Curta"] || ""}
+`,
 
           image:
             item.URL_IMAGEM ||
@@ -349,7 +384,7 @@ const categorySlug =
 
             supplier: "DigitalSat",
 
-            description: product.name,
+            description: product.description,
 
             priceCents: product.price,
 

@@ -111,6 +111,21 @@ const relacionados = await prisma.product.findMany({
 
         </div>
 
+           {/* DESCRIÇÃO */}
+
+          <div className={s.description}>
+
+            <h3 style={{ marginBottom: 10 }}>
+              Descrição
+            </h3>
+
+            <p style={{ opacity: 0.85, lineHeight: 1.7 }}>
+              {produto.description ||
+                "Produto profissional com alto desempenho, ideal para aplicações residenciais e comerciais. Excelente custo-benefício e fácil instalação."}
+            </p>
+
+          </div>
+
 
         {/* INFORMAÇÕES */}
 
@@ -296,20 +311,7 @@ const relacionados = await prisma.product.findMany({
 </a>
 
 
-          {/* DESCRIÇÃO */}
-
-          <div className={s.description}>
-
-            <h3 style={{ marginBottom: 10 }}>
-              Descrição
-            </h3>
-
-            <p style={{ opacity: 0.85, lineHeight: 1.7 }}>
-              {produto.description ||
-                "Produto profissional com alto desempenho, ideal para aplicações residenciais e comerciais. Excelente custo-benefício e fácil instalação."}
-            </p>
-
-          </div>
+       
 
 
           {/* BLOCO CONFIANÇA */}
