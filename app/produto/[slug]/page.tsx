@@ -165,6 +165,24 @@ const relacionados = await prisma.product.findMany({
   5% de desconto no pagamento via PIX
 </div>
 
+<div
+  style={{
+    fontSize: 14,
+    marginTop: 8,
+    color: "#444",
+  }}
+>
+  ou em até{" "}
+  <strong>
+    3x de{" "}
+    {(preco / 3).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </strong>{" "}
+  sem juros
+</div>
+
   {/* parcelamento */}
 
   {/* BOX PAGAMENTOS */}

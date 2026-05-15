@@ -16,6 +16,11 @@ const priceNumber =
     style: "currency",
     currency: "BRL",
   }).format(priceNumber);
+  
+  const installment = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+}).format(priceNumber / 3);
 
 
 
@@ -92,6 +97,10 @@ const priceNumber =
           <div className={styles.price}>
             {price}
           </div>
+
+          <div className={styles.installments}>
+  3x de {installment} sem juros
+</div>
 
           
 
