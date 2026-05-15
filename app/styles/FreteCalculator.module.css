@@ -8,6 +8,10 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
+.icon {
+  font-size: 18px;
+}
+
 .title{
   font-weight: 700;
   margin-bottom: 14px;

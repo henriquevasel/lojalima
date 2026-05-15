@@ -102,7 +102,10 @@ description: (
   ""
 )
 .replace(/<style[\s\S]*?<\/style>/gi, "")
-.replace(/nova-proxima/g, "")
+.replace(/<script[\s\S]*?<\/script>/gi, "")
+.replace(/<[^>]+>/g, " ")
+.replace(/&nbsp;/g, " ")
+.replace(/\s+/g, " ")
 .trim(),
 
           image:
@@ -133,7 +136,7 @@ description: (
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(0, 3547);
+  Array.from(grouped.values()).slice(3000, 3547);
  
 for (const product of products) {
 

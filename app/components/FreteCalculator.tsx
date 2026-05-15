@@ -3,6 +3,7 @@
 "use client";
 
 import s from "@/app/styles/FreteCalculator.module.css";
+import { FaTruck, FaStore } from "react-icons/fa";
 
 import { useState } from "react";
 
@@ -17,8 +18,61 @@ export default function FreteCalculator() {
   const [numero, setNumero] = useState("");
   const [retirada, setRetirada] = useState(false);
 
-  async function calcularFrete() {
-    const cepLimpo = cep.replace(/\D/g, "");
+ async function calcularFrete() {
+
+  const cepLimpo = cep.replace(/\D/g, "");
+
+  // 🔥 RETIRADA NA LOJA
+  if (retirada) {
+
+    if (cepLimpo.length !== 8) {
+      alert("CEP inválido");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+
+      const res = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
+      );
+
+      const data = await res.json();
+
+      if (data.erro) {
+        alert("CEP não encontrado");
+        return;
+      }
+
+      setEndereco(data);
+
+      setFrete(0);
+
+      localStorage.setItem(
+        "freteNome",
+        "Retirada na loja"
+      );
+
+      sessionStorage.setItem(
+        "freteCents",
+        "0"
+      );
+
+      return;
+
+    } catch {
+
+      alert("Erro ao validar CEP");
+
+      return;
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  }
 
     if (cepLimpo.length !== 8) {
       alert("CEP inválido");
@@ -128,12 +182,11 @@ sessionStorage.setItem(
   className={`${s.methodBtn} ${!retirada ? s.active : ""}`}
 >
   <div className={s.methodContent}>
-    <img
-      src="/icons/truck.png"
-      className={s.icon}
-    />
+   <div className={s.methodContent}>
+  <FaTruck className={s.icon} />
 
-    <span>Entrega</span>
+  <span>Entrega</span>
+</div>
   </div>
 </button>
 
@@ -163,12 +216,11 @@ sessionStorage.setItem(
   className={`${s.methodBtn} ${retirada ? s.active : ""}`}
 >
   <div className={s.methodContent}>
-    <img
-      src="/icons/store.png"
-      className={s.icon}
-    />
+   <div className={s.methodContent}>
+  <FaStore className={s.icon} />
 
-    <span>Retirada na loja</span>
+  <span>Retirada na loja</span>
+</div>
   </div>
 </button>
 
