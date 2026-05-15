@@ -83,10 +83,13 @@ body: {
 
   auto_return: "approved",
 
+  binary_mode: false,
+
   payment_methods: {
-    installments: 12,
-    default_installments: 1,
-  },
+  excluded_payment_methods: [],
+  excluded_payment_types: [],
+  installments: 12,
+},
 
   purpose: "wallet_purchase"
 }

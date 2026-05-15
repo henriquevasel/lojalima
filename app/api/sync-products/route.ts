@@ -56,12 +56,17 @@ const sheet =
 
 const csvProducts =
   XLSX.utils.sheet_to_json(sheet);
+console.log(csvProducts[0]);
+console.log(Object.keys(csvProducts[0]));
+
 
   const csvMap = new Map();
 
 csvProducts.forEach((p: any) => {
 csvMap.set(
-  String(Number(p["Código"] || 0)),
+  String(p["Código"] || "")
+    .trim()
+    .replace(".0", ""),
   p
 );
 });
@@ -70,7 +75,11 @@ csvMap.set(
 
     for (const item of data) {
 
-      const sku = String(Number(item.SKU));
+      const sku = String(item.SKU || "")
+
+      
+  .trim()
+  .replace(".0", "");
 
       const estoque =
         Number(item.ESTOQUE || 0) -
@@ -79,6 +88,15 @@ csvMap.set(
       if (!grouped.has(sku)) {
    const csvProduct: any =
   csvMap.get(sku);
+
+ if (!csvProduct) {
+  console.log("SKU NÃO ENCONTRADO:", sku);
+} else {
+  console.log("SKU OK:", sku);
+  console.log(
+    csvProduct["Descrição"]?.substring(0, 80)
+  );
+}
 
         grouped.set(sku, {
           sku,
@@ -119,7 +137,7 @@ description:
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(3000, 3547);
+  Array.from(grouped.values()).slice(0, 50);
 
 for (const product of products) {
 
