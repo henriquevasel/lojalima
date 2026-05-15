@@ -60,29 +60,36 @@ const total = totalCents / 100;
    const baseUrl = "https://loja-lima-gxcl-hw0yfc32n-henriquevasels-projects.vercel.app";
 
 const response = await preference.create({
-  body: {
-    items: [
-      {
-        id: orderId,
-        title: "Pedido Loja",
-        quantity: 1,
-        currency_id: "BRL",
-        unit_price: total
-      }
-    ],
+body: {
+  items: [
+    {
+      id: orderId,
+      title: "Pedido Loja",
+      quantity: 1,
+      currency_id: "BRL",
+      unit_price: total
+    }
+  ],
 
-    external_reference: orderId,
+  external_reference: orderId,
 
-    notification_url: `${baseUrl}/api/payment/webhook`,
+  notification_url: `${baseUrl}/api/payment/webhook`,
 
-    back_urls: {
-      success: `${baseUrl}/pagamento/retorno?orderId=${orderId}`,
-      failure: `${baseUrl}/pagamento/retorno?orderId=${orderId}`,
-      pending: `${baseUrl}/pagamento/retorno?orderId=${orderId}`
-    },
+  back_urls: {
+    success: `${baseUrl}/pagamento/retorno?orderId=${orderId}`,
+    failure: `${baseUrl}/pagamento/retorno?orderId=${orderId}`,
+    pending: `${baseUrl}/pagamento/retorno?orderId=${orderId}`
+  },
 
-    auto_return: "approved"
-  }
+  auto_return: "approved",
+
+  payment_methods: {
+    installments: 12,
+    default_installments: 1,
+  },
+
+  purpose: "wallet_purchase"
+}
 });
 
     return NextResponse.json({

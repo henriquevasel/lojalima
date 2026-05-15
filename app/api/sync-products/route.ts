@@ -60,17 +60,17 @@ const csvProducts =
   const csvMap = new Map();
 
 csvProducts.forEach((p: any) => {
-  csvMap.set(
-    String(p["Código"] || "").trim(),
-    p
-  );
+csvMap.set(
+  String(Number(p["Código"] || 0)),
+  p
+);
 });
 
     const grouped = new Map();
 
     for (const item of data) {
 
-      const sku = String(item.SKU);
+      const sku = String(Number(item.SKU));
 
       const estoque =
         Number(item.ESTOQUE || 0) -
@@ -118,8 +118,8 @@ description:
     // LOOP PRODUTOS
     // =========================
 
-   const products =
-  Array.from(grouped.values());
+const products =
+  Array.from(grouped.values()).slice(3000, 3547);
 
 for (const product of products) {
 
