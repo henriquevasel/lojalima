@@ -56,7 +56,7 @@ const sheet =
 
 const csvProducts =
   XLSX.utils.sheet_to_json(sheet);
-console.log(csvProducts[0]);
+
 
 
 
@@ -89,14 +89,7 @@ csvMap.set(
    const csvProduct: any =
   csvMap.get(sku);
 
- if (!csvProduct) {
-  console.log("SKU NÃO ENCONTRADO:", sku);
-} else {
-  console.log("SKU OK:", sku);
-  console.log(
-    csvProduct["Descrição"]?.substring(0, 80)
-  );
-}
+ 
 
         grouped.set(sku, {
           sku,
@@ -140,8 +133,8 @@ description: (
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(0, 3547)
-
+  Array.from(grouped.values()).slice(0, 3547);
+ 
 for (const product of products) {
 
       const slug = slugify(product.name);
@@ -521,14 +514,17 @@ const categorySlug =
         // =========================
         // CATEGORIA
         // =========================
-await prisma.productcategory.deleteMany({
-  where: {
-    productId: existing.id,
-  },
-});
 
-await prisma.productcategory.create({
-  data: {
+
+await prisma.productcategory.upsert({
+  where: {
+    productId_categoryId: {
+      productId: existing.id,
+      categoryId: category.id,
+    },
+  },
+  update: {},
+  create: {
     productId: existing.id,
     categoryId: category.id,
   },
