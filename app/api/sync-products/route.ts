@@ -57,7 +57,7 @@ const sheet =
 const csvProducts =
   XLSX.utils.sheet_to_json(sheet);
 console.log(csvProducts[0]);
-console.log(Object.keys(csvProducts[0]));
+
 
 
   const csvMap = new Map();
