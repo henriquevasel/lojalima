@@ -103,11 +103,14 @@ csvMap.set(
           name: item.DESCRICAO,
           brand: item.MARCA,
           ean: item.EAN,
-description:
+description: (
   csvProduct?.["Descrição"] ||
-  csvProduct?.["Descrição técnica"] ||
-  csvProduct?.["Descrição Curta"] ||
-  item.DESCRICAO,
+  item.DESCRICAO ||
+  ""
+)
+.replace(/<style[\s\S]*?<\/style>/gi, "")
+.replace(/nova-proxima/g, "")
+.trim(),
 
           image:
             item.URL_IMAGEM ||
@@ -137,7 +140,7 @@ description:
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(0, 50);
+  Array.from(grouped.values()).slice(0, 3547)
 
 for (const product of products) {
 

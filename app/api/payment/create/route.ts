@@ -91,7 +91,7 @@ body: {
   installments: 12,
 },
 
-  purpose: "wallet_purchase"
+  
 }
 });
 
