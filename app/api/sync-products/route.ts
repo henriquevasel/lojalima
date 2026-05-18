@@ -15,6 +15,74 @@ function slugify(text: string) {
     .trim();
 }
 
+function cleanDescription(html: string) {
+  return html
+
+    // remove style/script
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+
+    // remove atributos data-*
+    .replace(/\sdata-[^=]+="[^"]*"/gi, "")
+
+    // remove estilos inline
+    .replace(/\sstyle="[^"]*"/gi, "")
+
+    // remove atributos inúteis
+    .replace(/\s(class|id|width|height)="[^"]*"/gi, "")
+
+    // remove spans vazios
+    .replace(/<\/?span[^>]*>/gi, "")
+
+    // corrige entidades
+    .replace(/&ccedil;/g, "ç")
+    .replace(/&atilde;/g, "ã")
+    .replace(/&eacute;/g, "é")
+    .replace(/&nbsp;/g, " ")
+
+    // remove tags vazias
+    .replace(/<p>\s*<\/p>/gi, "")
+
+    // limpa espaços
+    .replace(/\s+/g, " ")
+
+    .trim();
+}
+
+function cleanDescription(html: string) {
+  return html
+
+    // remove style/script
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+
+    // remove atributos data-*
+    .replace(/\sdata-[^=]+="[^"]*"/gi, "")
+
+    // remove estilos inline
+    .replace(/\sstyle="[^"]*"/gi, "")
+
+    // remove atributos inúteis
+    .replace(/\s(class|id|width|height)="[^"]*"/gi, "")
+
+    // remove spans vazios
+    .replace(/<\/?span[^>]*>/gi, "")
+
+    // corrige entidades
+    .replace(/&ccedil;/g, "ç")
+    .replace(/&atilde;/g, "ã")
+    .replace(/&eacute;/g, "é")
+    .replace(/&nbsp;/g, " ")
+
+    // remove tags vazias
+    .replace(/<p>\s*<\/p>/gi, "")
+
+    // limpa espaços
+    .replace(/\s+/g, " ")
+
+    .trim();
+}
+
 export async function GET(req: Request) {
   try {
 
@@ -96,11 +164,13 @@ csvMap.set(
           name: item.DESCRICAO,
           brand: item.MARCA,
           ean: item.EAN,
-description: (
+description: cleanDescription(
   csvProduct?.["Descrição"] ||
   item.DESCRICAO ||
   ""
 )
+
+
 .replace(/<style[\s\S]*?<\/style>/gi, "")
 .replace(/<script[\s\S]*?<\/script>/gi, "")
 .replace(/<[^>]+>/g, " ")
