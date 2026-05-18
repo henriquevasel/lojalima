@@ -99,9 +99,9 @@ const csvProducts =
 
 csvProducts.forEach((p: any) => {
 csvMap.set(
-  String(p["Código"] || "")
-    .trim()
-    .replace(".0", ""),
+  String(p["Nome"] || "")
+    .toLowerCase()
+    .trim(),
   p
 );
 });
@@ -110,23 +110,29 @@ csvMap.set(
 
     for (const item of data) {
 
-      const sku = String(item.SKU || "")
-
-      
-  .trim()
+      const productName =
+  String(item.DESCRICAO || "")
+    .toLowerCase()
+    .trim()
   .replace(".0", "");
+
+  const sku =
+  String(item.SKU || "")
+    .trim();
 
       const estoque =
         Number(item.ESTOQUE || 0) -
         Number(item.RESERVADO || 0);
 
-      if (!grouped.has(sku)) {
+      if (!grouped.has(productName)) {
    const csvProduct: any =
-  csvMap.get(sku);
+  csvMap.get(productName);
 
  
 
-        grouped.set(sku, {
+        grouped.set(productName, {
+
+          
           sku,
           name: item.DESCRICAO,
           brand: item.MARCA,
@@ -136,6 +142,7 @@ description: cleanDescription(
   item.DESCRICAO ||
   ""
 )
+
 
 
 .replace(/<style[\s\S]*?<\/style>/gi, "")
@@ -160,7 +167,7 @@ description: cleanDescription(
 
       } else {
 
-        grouped.get(sku).stock += estoque;
+        grouped.get(productName).stock += estoque;
 
       }
     }
@@ -173,7 +180,7 @@ description: cleanDescription(
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(3000, 3547);
+  Array.from(grouped.values()).slice(3000, 3500);
  
 for (const product of products) {
 
