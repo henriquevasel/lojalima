@@ -15,6 +15,16 @@ function slugify(text: string) {
     .trim();
 }
 
+function normalize(text: string) {
+  return String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .replace(/\.0/g, "")
+    .trim();
+}
+
 function cleanDescription(html: string) {
   return html
 
@@ -64,7 +74,27 @@ export async function GET(req: Request) {
       }
     );
 
-  const data = await response.json();
+
+    if (!response.ok) {
+  throw new Error(
+    `Erro API: ${response.status}`
+  );
+}
+
+  const text = await response.text();
+
+
+const data = JSON.parse(text);
+
+fs.writeFileSync(
+  path.join(
+    process.cwd(),
+    "data",
+    "cache",
+    "products.json"
+  ),
+  JSON.stringify(data)
+);
 
     // =========================
     // AGRUPAR SKU
@@ -92,97 +122,95 @@ const sheet =
 const csvProducts =
   XLSX.utils.sheet_to_json(sheet);
 
+ 
 
 
 
   const csvMap = new Map();
 
 csvProducts.forEach((p: any) => {
-csvMap.set(
-  String(p["Nome"] || "")
-    .toLowerCase()
-    .trim(),
-  p
-);
+
+  const normalizedName =
+    normalize(p["Nome"]);
+
+  csvMap.set(normalizedName, p);
+
 });
 
-    const grouped = new Map();
+const grouped = new Map();
 
-    for (const item of data) {
+for (const item of data) {
 
-      const productName =
-  String(item.DESCRICAO || "")
-    .toLowerCase()
-    .trim()
-  .replace(".0", "");
+  const productName =
+    normalize(item.DESCRICAO);
 
   const sku =
-  String(item.SKU || "")
-    .trim();
+    String(item.SKU || "")
+      .trim();
 
-      const estoque =
-        Number(item.ESTOQUE || 0) -
-        Number(item.RESERVADO || 0);
+  const estoque =
+    Number(item.ESTOQUE || 0) -
+    Number(item.RESERVADO || 0);
 
-      if (!grouped.has(productName)) {
-   const csvProduct: any =
-  csvMap.get(productName);
+  if (!grouped.has(productName)) {
 
- 
+    const csvProduct: any =
+      csvMap.get(productName);
 
-        grouped.set(productName, {
+   
 
-          
-          sku,
-          name: item.DESCRICAO,
-          brand: item.MARCA,
-          ean: item.EAN,
-description: cleanDescription(
-  csvProduct?.["Descrição"] ||
-  item.DESCRICAO ||
-  ""
-)
+    grouped.set(productName, {
 
+      sku,
 
+      name: item.DESCRICAO,
 
-.replace(/<style[\s\S]*?<\/style>/gi, "")
-.replace(/<script[\s\S]*?<\/script>/gi, "")
-.replace(/<[^>]+>/g, " ")
-.replace(/&nbsp;/g, " ")
-.replace(/\s+/g, " ")
-.trim(),
+      brand: item.MARCA,
 
-          image:
-            item.URL_IMAGEM ||
-            "/produtos/placeholder.jpg",
+      ean: item.EAN,
 
-          group:
-            item.GRUPO ||
-            "Sem categoria",
+      description: cleanDescription(
+        csvProduct?.["DescriÃ§Ã£o"] ||
+        item.DESCRICAO ||
+        ""
+      ),
 
-          price: Math.round(Number(item.PRECO) * 100),
+      image:
+        item.URL_IMAGEM ||
+        "/produtos/placeholder.jpg",
 
-          stock: estoque,
-        });
+      group:
+        item.GRUPO ||
+        "Sem categoria",
 
-      } else {
+      price: Math.round(
+        Number(item.PRECO) * 100
+      ),
 
-        grouped.get(productName).stock += estoque;
+      stock: estoque,
 
-      }
-    }
+    });
 
-    let created = 0;
-    let updated = 0;
+  } else {
 
+    grouped.get(productName).stock += estoque;
+
+  }
+}
+
+let created = 0;
+let updated = 0;
     // =========================
     // LOOP PRODUTOS
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(3000, 3500);
+  Array.from(grouped.values()).slice(2300, 2700);
  
 for (const product of products) {
+  await new Promise(resolve =>
+  setTimeout(resolve, 150)
+);
 
       const slug = slugify(product.name);
 
@@ -414,11 +442,11 @@ const categorySlug =
           where: {
             sku: product.sku,
           },
-          include: {
-            stock: true,
-            productimage: true,
-            productcategory: true,
-          },
+         select: {
+  id: true,
+  stock: true,
+  productimage: true,
+},
         });
 
       // =========================
@@ -491,6 +519,7 @@ const categorySlug =
         // =========================
 
         await prisma.product.update({
+          
           where: {
             id: existing.id,
           },
@@ -502,6 +531,7 @@ const categorySlug =
             priceCents: product.price,
           },
         });
+        console.log("SALVOU:", existing.name);
 
         // =========================
         // UPDATE ESTOQUE
@@ -563,24 +593,31 @@ const categorySlug =
         // =========================
 
 
-await prisma.productcategory.upsert({
-  where: {
-    productId_categoryId: {
+const existingCategory =
+  await prisma.productcategory.findFirst({
+    where: {
       productId: existing.id,
       categoryId: category.id,
     },
-  },
-  update: {},
-  create: {
-    productId: existing.id,
-    categoryId: category.id,
-  },
-});
-      
+  });
+
+if (!existingCategory) {
+
+  await prisma.productcategory.create({
+    data: {
+      productId: existing.id,
+      categoryId: category.id,
+    },
+  });
+
+}
 
         updated++;
       }
     }
+
+    console.log("UPDATED:", updated);
+console.log("CREATED:", created);
 
     return NextResponse.json({
       success: true,

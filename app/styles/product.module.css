@@ -300,21 +300,28 @@
   color: #111;
 }
 
+/* TITULOS */
+.description h1,
 .description h2,
-.description h3 {
-  font-size: 30px;
+.description h3,
+.description h4 {
+  font-size: 32px;
   font-weight: 700;
-  margin: 50px 0 18px;
+  margin: 40px 0 20px;
   color: #111;
   text-align: center;
+  line-height: 1.3;
 }
 
+/* PARAGRAFOS */
 .description p {
   font-size: 16px;
-  line-height: 1.9;
+  line-height: 1.8;
   color: #444;
+  margin-bottom: 18px;
 }
 
+/* TEXTO */
 .description strong {
   color: #16a34a;
   font-weight: 700;
@@ -327,39 +334,58 @@
 /* IMAGENS */
 .description img {
   width: 100%;
-  max-width: 420px;
+  max-width: 500px;
   border-radius: 18px;
   object-fit: cover;
   display: block;
+  margin: 30px auto;
 }
 
-/* BLOCO COM TEXTO + IMAGEM */
-.description div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
+/* TABELAS */
+.description table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 30px 0;
+}
+
+.description td,
+.description th {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+/* LISTAS */
+.description ul,
+.description ol {
+  padding-left: 20px;
+  margin: 20px 0;
+}
+
+.description li {
+  margin-bottom: 10px;
+}
+
+/* SEÇÕES */
+.description section,
+.description article {
   margin: 60px auto;
-  max-width: 1200px;
 }
 
-/* TEXTO */
-.description div p {
-  flex: 1;
-  max-width: 500px;
+/* DIVS */
+.description div {
+  width: 100%;
+  margin: 30px 0;
 }
 
-/* IMAGEM */
-.description div img {
-  flex: 1;
+/* IFRAME / VIDEO */
+.description iframe,
+.description video {
+  width: 100%;
+  border-radius: 16px;
+  margin: 30px 0;
 }
 
-/* alterna lados */
-.description div:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-/* legenda */
+/* LEGENDA */
 .description em {
   display: block;
   text-align: center;
@@ -371,23 +397,29 @@
 /* MOBILE */
 @media (max-width: 768px) {
 
-  .description div,
-  .description div:nth-child(even) {
-    flex-direction: column;
-    gap: 24px;
-    margin: 40px auto;
+  .description {
+    overflow: hidden;
   }
 
-  .description img {
-    max-width: 100%;
-  }
-
+  .description h1,
   .description h2,
-  .description h3 {
+  .description h3,
+  .description h4 {
     font-size: 24px;
   }
 
   .description p {
-    text-align: center;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .description img {
+    max-width: 100%;
+    border-radius: 14px;
+  }
+
+  .description table {
+    display: block;
+    overflow-x: auto;
   }
 }
