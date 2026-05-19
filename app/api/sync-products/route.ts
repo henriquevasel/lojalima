@@ -205,7 +205,7 @@ let updated = 0;
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(2300, 2700);
+  Array.from(grouped.values()).slice(2700, 3100);
  
 for (const product of products) {
   await new Promise(resolve =>
