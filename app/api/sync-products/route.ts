@@ -44,6 +44,12 @@ function cleanDescription(html: string) {
     // remove spans vazios
     .replace(/<\/?span[^>]*>/gi, "")
 
+    .replace(/width="?[^"\s>]+"?/gi, "")
+.replace(/height="?[^"\s>]+"?/gi, "")
+.replace(/data-src=/gi, "src=")
+.replace(/<img[^>]+src=""/gi, "")
+.replace(/<img/gi, '<img loading="lazy"')
+
     // corrige entidades
     .replace(/&ccedil;/g, "ç")
     .replace(/&atilde;/g, "ã")
@@ -55,6 +61,18 @@ function cleanDescription(html: string) {
 
     // limpa espaços
     .replace(/\s+/g, " ")
+
+
+    .replace(/Ã§/g, "ç")
+.replace(/Ã£/g, "ã")
+.replace(/Ã¡/g, "á")
+.replace(/Ã©/g, "é")
+.replace(/Ãª/g, "ê")
+.replace(/Ã³/g, "ó")
+.replace(/Ãµ/g, "õ")
+.replace(/Ãº/g, "ú")
+.replace(/Â/g, "")
+
 
     .trim();
 }
@@ -173,6 +191,7 @@ for (const item of data) {
         csvProduct?.["DescriÃ§Ã£o"] ||
         item.DESCRICAO ||
         ""
+        .replace(/src="\/\//gi, 'src="https://')
       ),
 
       image:
@@ -205,7 +224,7 @@ let updated = 0;
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(2000, 2500);
+  Array.from(grouped.values()).slice(800, 1200);
  
 
 for (const product of products) {
@@ -445,6 +464,7 @@ const categorySlug =
           },
          select: {
   id: true,
+  name: true,
   stock: true,
   productimage: true,
 },
