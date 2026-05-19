@@ -2,11 +2,17 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const FROM_EMAIL = "Loja Lima e Lima <contato@lojalimaelima.com.br>";
+const ADMIN_EMAIL = "marketinglimaelima@gmail.com";
+
 // ================= EMAIL DE VERIFICAÇÃO =================
-export async function sendVerificationEmail(email: string, link: string) {
+export async function sendVerificationEmail(
+  email: string,
+  link: string
+) {
   try {
-    await resend.emails.send({
-      from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
+    const response = await resend.emails.send({
+      from: FROM_EMAIL,
       to: email,
       subject: "Confirme seu email",
       html: `
@@ -34,21 +40,34 @@ export async function sendVerificationEmail(email: string, link: string) {
     });
 
     console.log("📧 EMAIL VERIFICAÇÃO ENVIADO");
-  } catch (error) {
-    console.error("❌ ERRO AO ENVIAR EMAIL:", error);
+    console.log("✅ RESEND:", response);
+
+    return response;
+
+  } catch (error: any) {
+    console.error("❌ ERRO AO ENVIAR EMAIL VERIFICAÇÃO:");
+    console.error(error);
+
+    return null;
   }
 }
 
 // ================= EMAIL DE PEDIDO =================
 export async function sendOrderEmail(order: any) {
   try {
+    if (!order) {
+      console.error("❌ Pedido inválido");
+      return null;
+    }
+
     const produtosHTML = order.orderitem
-      .map(
+      ?.map(
         (item: any) => `
         <tr>
           <td style="padding:10px 0;border-bottom:1px solid #eee;">
             ${item.name}
           </td>
+
           <td style="padding:10px 0;border-bottom:1px solid #eee;text-align:center;">
             ${item.qty}
           </td>
@@ -57,15 +76,21 @@ export async function sendOrderEmail(order: any) {
       )
       .join("");
 
-    await resend.emails.send({
-      from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
-     to: [ "marketinglimaelima@gmail.com",order.customerEmail],
+    const response = await resend.emails.send({
+      from: FROM_EMAIL,
+
+      to: [
+        ADMIN_EMAIL,
+        order.customerEmail,
+      ],
+
       subject: `🛒 Pedido confirmado #${order.id.slice(0, 8)}`,
+
       html: `
       <div style="background:#f6f6f6;padding:30px 0;">
         <div style="max-width:600px;margin:auto;background:#fff;border-radius:10px;overflow:hidden;font-family:Arial,sans-serif;color:#333;">
 
-          <!-- HEADER COM LOGO -->
+          <!-- HEADER -->
           <div style="background:#000;padding:20px;text-align:center;">
             <img 
               src="https://lojalimaelima.com.br/produtos/logo.png"
@@ -77,17 +102,34 @@ export async function sendOrderEmail(order: any) {
           <!-- CONTEÚDO -->
           <div style="padding:20px;">
 
-            <h3 style="margin-top:0;">🧾 Pedido #${order.id.slice(0, 8)}</h3>
+            <h3 style="margin-top:0;">
+              🧾 Pedido #${order.id.slice(0, 8)}
+            </h3>
 
             <!-- CLIENTE -->
             <h4>👤 Dados do Cliente</h4>
-            <p><strong>Nome:</strong> ${order.customerName}</p>
-            <p><strong>Whats:</strong> ${order.customerWhats}</p>
-            <p><strong>Email:</strong> ${order.customerEmail}</p>
-            <p><strong>CPF:</strong> ${order.customerCpf || "-"}</p>
+
+            <p>
+              <strong>Nome:</strong> ${order.customerName}
+            </p>
+
+            <p>
+              <strong>Whats:</strong> ${order.customerWhats}
+            </p>
+
+            <p>
+              <strong>Email:</strong> ${order.customerEmail}
+            </p>
+
+            <p>
+              <strong>CPF:</strong> ${order.customerCpf || "-"}
+            </p>
 
             <!-- ENDEREÇO -->
-            <h4 style="margin-top:20px;">📍 Endereço de Entrega</h4>
+            <h4 style="margin-top:20px;">
+              📍 Endereço de Entrega
+            </h4>
+
             <p>
               ${order.street || ""}, ${order.number || ""}<br/>
               ${order.neighborhood || ""}<br/>
@@ -96,23 +138,57 @@ export async function sendOrderEmail(order: any) {
             </p>
 
             <!-- PRODUTOS -->
-            <h4 style="margin-top:20px;">🛒 Produtos</h4>
+            <h4 style="margin-top:20px;">
+              🛒 Produtos
+            </h4>
 
-            <table width="100%" style="border-collapse:collapse;font-size:14px;">
+            <table 
+              width="100%" 
+              style="border-collapse:collapse;font-size:14px;"
+            >
               <thead>
-                <tr style="text-align:left;border-bottom:2px solid #000;">
-                  <th style="padding:8px 0;">Produto</th>
-                  <th style="padding:8px 0;text-align:center;">Qtd</th>
+                <tr 
+                  style="
+                    text-align:left;
+                    border-bottom:2px solid #000;
+                  "
+                >
+                  <th style="padding:8px 0;">
+                    Produto
+                  </th>
+
+                  <th 
+                    style="
+                      padding:8px 0;
+                      text-align:center;
+                    "
+                  >
+                    Qtd
+                  </th>
                 </tr>
               </thead>
+
               <tbody>
                 ${produtosHTML}
               </tbody>
             </table>
 
             <!-- TOTAL -->
-            <div style="margin-top:20px;padding:15px;background:#f1f1f1;border-radius:8px;text-align:right;">
-              <span style="font-size:14px;">Total:</span><br/>
+            <div 
+              style="
+                margin-top:20px;
+                padding:15px;
+                background:#f1f1f1;
+                border-radius:8px;
+                text-align:right;
+              "
+            >
+              <span style="font-size:14px;">
+                Total:
+              </span>
+
+              <br/>
+
               <strong style="font-size:20px;">
                 R$ ${(order.totalCents / 100).toFixed(2)}
               </strong>
@@ -121,9 +197,22 @@ export async function sendOrderEmail(order: any) {
           </div>
 
           <!-- FOOTER -->
-          <div style="background:#fafafa;padding:15px;text-align:center;font-size:12px;color:#777;">
-            <p>Este é um email automático.</p>
-            <p>Loja Lima e Lima © ${new Date().getFullYear()}</p>
+          <div 
+            style="
+              background:#fafafa;
+              padding:15px;
+              text-align:center;
+              font-size:12px;
+              color:#777;
+            "
+          >
+            <p>
+              Este é um email automático.
+            </p>
+
+            <p>
+              Loja Lima e Lima © ${new Date().getFullYear()}
+            </p>
           </div>
 
         </div>
@@ -131,25 +220,43 @@ export async function sendOrderEmail(order: any) {
       `,
     });
 
-    console.log("📧 EMAIL DE PEDIDO ENVIADO (BONITO)");
-  } catch (error) {
-    console.error("❌ ERRO AO ENVIAR EMAIL DE PEDIDO:", error);
+    console.log("📧 EMAIL DE PEDIDO ENVIADO");
+    console.log("✅ RESPOSTA RESEND:", response);
+
+    return response;
+
+  } catch (error: any) {
+    console.error("❌ ERRO AO ENVIAR EMAIL DE PEDIDO:");
+    console.error(error);
+
+    return null;
   }
 }
 
 // ================= RESET DE SENHA =================
-export async function sendResetEmail(email: string, link: string) {
+export async function sendResetEmail(
+  email: string,
+  link: string
+) {
   try {
-    await resend.emails.send({
-      from: "Loja Lima e Lima <contato@lojalimaelima.com.br>",
+    const response = await resend.emails.send({
+      from: FROM_EMAIL,
       to: email,
       subject: "Redefinição de senha",
+
       html: `
         <div style="font-family:Arial,sans-serif;text-align:center;padding:20px">
-          <h2>Redefinir senha</h2>
-          <p>Clique no botão abaixo para criar uma nova senha:</p>
 
-          <a href="${link}" 
+          <h2>
+            Redefinir senha
+          </h2>
+
+          <p>
+            Clique no botão abaixo para criar uma nova senha:
+          </p>
+
+          <a 
+            href="${link}" 
             style="
               display:inline-block;
               padding:12px 20px;
@@ -157,20 +264,38 @@ export async function sendResetEmail(email: string, link: string) {
               color:#fff;
               border-radius:8px;
               text-decoration:none;
-            ">
+            "
+          >
             Redefinir senha
           </a>
 
-          <p style="margin-top:20px;font-size:12px;color:#666;">
-            Esse link expira em alguns minutos.<br/>
-            Se não funcionar:<br/> ${link}
+          <p 
+            style="
+              margin-top:20px;
+              font-size:12px;
+              color:#666;
+            "
+          >
+            Esse link expira em alguns minutos.
+            <br/>
+            Se não funcionar:
+            <br/>
+            ${link}
           </p>
+
         </div>
       `,
     });
 
     console.log("📧 EMAIL RESET ENVIADO");
-  } catch (error) {
-    console.error("❌ ERRO AO ENVIAR RESET:", error);
+    console.log("✅ RESPOSTA RESEND:", response);
+
+    return response;
+
+  } catch (error: any) {
+    console.error("❌ ERRO AO ENVIAR RESET:");
+    console.error(error);
+
+    return null;
   }
 }
