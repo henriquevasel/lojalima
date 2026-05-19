@@ -224,7 +224,7 @@ let updated = 0;
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(800, 1200);
+  Array.from(grouped.values()).slice(2400, 2800);
  
 
 for (const product of products) {
