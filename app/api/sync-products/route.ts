@@ -207,6 +207,7 @@ let updated = 0;
 const products =
   Array.from(grouped.values()).slice(2000, 2500);
  
+
 for (const product of products) {
   await new Promise(resolve =>
   setTimeout(resolve, 150)
@@ -531,7 +532,7 @@ const categorySlug =
             priceCents: product.price,
           },
         });
-        console.log("SALVOU:", existing.name);
+        
 
         // =========================
         // UPDATE ESTOQUE
