@@ -303,15 +303,42 @@
   box-sizing: border-box;
 }
 
-/* TITULOS */
+/* REMOVE DIVS MALUCAS */
+.description div {
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* CADA BLOCO */
+.description [data-content-type="row"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  gap: 70px !important;
+
+  margin-bottom: 90px !important;
+}
+
+/* LINHAS PARES INVERTIDAS */
+.description [data-content-type="row"]:nth-child(even) {
+  flex-direction: row-reverse !important;
+}
+
+/* TEXTO */
 .description h1,
 .description h2,
 .description h3,
 .description h4,
 .description h5 {
-  color: #5ed44c !important;
+  color: #63d84f !important;
+
   font-size: 26px !important;
+
   font-weight: 600 !important;
+
   line-height: 1.2 !important;
 
   margin: 0 0 14px 0 !important;
@@ -319,56 +346,43 @@
   text-align: left !important;
 }
 
-/* PARAGRAFOS */
 .description p {
   font-size: 13px !important;
+
   line-height: 1.7 !important;
+
   color: #666 !important;
 
   margin: 0 !important;
 
-  max-width: 420px !important;
+  max-width: 430px !important;
 
   text-align: left !important;
 }
 
+/* BLOCO TEXTO */
+.description [data-content-type="text"] {
+  flex: 1 !important;
+}
+
 /* IMAGEM */
 .description img {
-  width: 420px !important;
-  max-width: 420px !important;
+  width: 430px !important;
 
-  display: inline-block !important;
-  vertical-align: middle !important;
+  max-width: 430px !important;
 
-  margin: 0 70px 70px 0 !important;
+  height: auto !important;
+
+  object-fit: cover !important;
 
   border-radius: 2px !important;
-}
 
-/* TEXTO AO LADO */
-.description img + h1,
-.description img + h2,
-.description img + h3,
-.description img + h4,
-.description img + h5,
-.description img + p {
-  display: inline-block !important;
-  vertical-align: middle !important;
-  width: 420px !important;
-}
-
-/* ESPAÇO ENTRE BLOCOS */
-.description h1,
-.description h2,
-.description h3,
-.description h4,
-.description h5 {
-  margin-top: 0 !important;
+  display: block !important;
 }
 
 /* REMOVE BR */
 .description br {
-  display: none;
+  display: none !important;
 }
 
 /* MOBILE */
@@ -378,20 +392,21 @@
     padding: 0 14px;
   }
 
-  .description img,
-  .description img + h1,
-  .description img + h2,
-  .description img + h3,
-  .description img + h4,
-  .description img + h5,
-  .description img + p {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
+  .description [data-content-type="row"],
+  .description [data-content-type="row"]:nth-child(even) {
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+
+    gap: 24px !important;
+
+    margin-bottom: 60px !important;
   }
 
   .description img {
-    margin: 0 0 20px 0 !important;
+    width: 100% !important;
+
+    max-width: 100% !important;
   }
 
   .description h1,
@@ -403,6 +418,6 @@
   }
 
   .description p {
-    margin-bottom: 40px !important;
+    max-width: 100% !important;
   }
 }
