@@ -293,7 +293,7 @@
   }
 }
 .description {
-  max-width: 1100px;
+  max-width: 900px;
   margin: 40px auto;
   padding: 0 20px;
 }
@@ -303,51 +303,20 @@
   box-sizing: border-box;
 }
 
-/* REMOVE BR */
+/* REMOVE BR EXAGERADO */
 .description br {
-  display: none !important;
+  display: none;
 }
 
-/* REMOVE WRAPPERS MALUCOS DO MAGENTO */
+/* REMOVE WRAPPERS MALUCOS */
+.description div,
+.description .text,
 .description .mt2,
 .description .mb2,
-.description .text,
-.description .block-template,
-.description div {
+.description .block-template {
   margin: 0 !important;
   padding: 0 !important;
-}
-
-/* BLOCO PRINCIPAL */
-.description p:has(img) {
-  display: grid !important;
-
-  grid-template-columns: 430px 1fr !important;
-
-  align-items: center !important;
-
-  gap: 70px !important;
-
-  margin-bottom: 90px !important;
-
-  max-width: 100% !important;
-}
-
-/* IMAGENS */
-.description img {
-  width: 430px !important;
-
-  max-width: 430px !important;
-
-  height: auto !important;
-
-  display: block !important;
-
-  margin: 0 !important;
-
-  border-radius: 2px !important;
-
-  object-fit: cover !important;
+  width: 100% !important;
 }
 
 /* TITULOS */
@@ -356,40 +325,62 @@
 .description h3,
 .description h4,
 .description h5 {
-  color: #63d44f !important;
+  color: #4ade50 !important;
 
   font-size: 28px !important;
 
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 
   line-height: 1.2 !important;
 
-  text-align: left !important;
+  margin-top: 40px !important;
 
-  margin: 0 0 14px 0 !important;
+  margin-bottom: 14px !important;
+
+  text-align: left !important;
 }
 
 /* PARAGRAFOS */
-.description p:not(:has(img)),
-.description .text p {
+.description p {
   color: #666 !important;
 
-  font-size: 13px !important;
+  font-size: 14px !important;
 
   line-height: 1.7 !important;
 
   text-align: left !important;
 
-  margin: 0 0 14px 0 !important;
+  margin-bottom: 14px !important;
 
-  max-width: 430px !important;
+  max-width: 700px !important;
+}
+
+/* IMAGENS */
+.description img {
+  width: 100% !important;
+
+  max-width: 520px !important;
+
+  display: block !important;
+
+  margin-top: 18px !important;
+
+  margin-bottom: 24px !important;
+
+  border-radius: 2px !important;
+
+  object-fit: cover !important;
+}
+
+/* IMAGEM + TEXTO AGRUPADOS */
+.description p:has(img) {
+  margin-bottom: 20px !important;
 }
 
 /* LISTAS */
 .description ul,
 .description ol {
   padding-left: 18px;
-
   margin: 10px 0 18px;
 }
 
@@ -403,22 +394,16 @@
 /* TABELAS */
 .description table {
   width: 100% !important;
-
   border-collapse: collapse;
-
   margin: 20px 0 !important;
-
-  display: block;
-
   overflow-x: auto;
+  display: block;
 }
 
 .description td,
 .description th {
   border: 1px solid #ddd;
-
   padding: 10px;
-
   font-size: 13px;
 }
 
@@ -429,20 +414,6 @@
     padding: 0 14px;
   }
 
-  .description p:has(img) {
-    grid-template-columns: 1fr !important;
-
-    gap: 20px !important;
-
-    margin-bottom: 60px !important;
-  }
-
-  .description img {
-    width: 100% !important;
-
-    max-width: 100% !important;
-  }
-
   .description h1,
   .description h2,
   .description h3,
@@ -451,10 +422,11 @@
     font-size: 22px !important;
   }
 
-  .description p:not(:has(img)),
-  .description .text p {
+  .description p {
     max-width: 100% !important;
+  }
 
-    font-size: 14px !important;
+  .description img {
+    max-width: 100% !important;
   }
 }
