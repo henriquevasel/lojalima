@@ -298,92 +298,149 @@
   padding: 0 20px;
 }
 
-/* LIMPA */
+/* RESET */
+.description * {
+  box-sizing: border-box;
+}
+
+/* REMOVE BR */
 .description br {
   display: none !important;
 }
 
-.description p {
+/* REMOVE WRAPPERS MALUCOS DO MAGENTO */
+.description .mt2,
+.description .mb2,
+.description .text,
+.description .block-template,
+.description div {
   margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* BLOCO PRINCIPAL */
+.description p:has(img) {
+  display: grid !important;
+
+  grid-template-columns: 430px 1fr !important;
+
+  align-items: center !important;
+
+  gap: 70px !important;
+
+  margin-bottom: 90px !important;
+
+  max-width: 100% !important;
 }
 
 /* IMAGENS */
 .description img {
   width: 430px !important;
+
   max-width: 430px !important;
 
-  display: inline-block !important;
-  vertical-align: top !important;
+  height: auto !important;
 
-  margin-right: 70px !important;
-  margin-bottom: 80px !important;
+  display: block !important;
+
+  margin: 0 !important;
+
+  border-radius: 2px !important;
+
+  object-fit: cover !important;
 }
 
-/* TITULO */
+/* TITULOS */
 .description h1,
 .description h2,
 .description h3,
 .description h4,
 .description h5 {
-  display: inline-block !important;
-
-  width: calc(100% - 520px) !important;
-
-  vertical-align: top !important;
-
-  color: #66d44e !important;
+  color: #63d44f !important;
 
   font-size: 28px !important;
 
+  font-weight: 600 !important;
+
   line-height: 1.2 !important;
+
+  text-align: left !important;
 
   margin: 0 0 14px 0 !important;
 }
 
-/* TEXTO */
-.description .text,
+/* PARAGRAFOS */
+.description p:not(:has(img)),
 .description .text p {
-  display: inline-block !important;
-
-  width: calc(100% - 520px) !important;
-
-  vertical-align: top !important;
-
   color: #666 !important;
 
   font-size: 13px !important;
 
   line-height: 1.7 !important;
+
+  text-align: left !important;
+
+  margin: 0 0 14px 0 !important;
+
+  max-width: 430px !important;
 }
 
-/* REMOVE WRAPPERS */
-.description .mt2,
-.description .mb2,
-.description .block-template {
-  display: contents !important;
+/* LISTAS */
+.description ul,
+.description ol {
+  padding-left: 18px;
+
+  margin: 10px 0 18px;
+}
+
+.description li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+/* TABELAS */
+.description table {
+  width: 100% !important;
+
+  border-collapse: collapse;
+
+  margin: 20px 0 !important;
+
+  display: block;
+
+  overflow-x: auto;
+}
+
+.description td,
+.description th {
+  border: 1px solid #ddd;
+
+  padding: 10px;
+
+  font-size: 13px;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
 
-  .description img,
-  .description h1,
-  .description h2,
-  .description h3,
-  .description h4,
-  .description h5,
-  .description .text,
-  .description .text p {
-    display: block !important;
+  .description {
+    padding: 0 14px;
+  }
 
-    width: 100% !important;
+  .description p:has(img) {
+    grid-template-columns: 1fr !important;
 
-    max-width: 100% !important;
+    gap: 20px !important;
+
+    margin-bottom: 60px !important;
   }
 
   .description img {
-    margin-right: 0 !important;
-    margin-bottom: 20px !important;
+    width: 100% !important;
+
+    max-width: 100% !important;
   }
 
   .description h1,
@@ -392,11 +449,12 @@
   .description h4,
   .description h5 {
     font-size: 22px !important;
-
-    margin-bottom: 14px !important;
   }
 
+  .description p:not(:has(img)),
   .description .text p {
-    margin-bottom: 50px !important;
+    max-width: 100% !important;
+
+    font-size: 14px !important;
   }
 }
