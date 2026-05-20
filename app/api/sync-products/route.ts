@@ -26,7 +26,8 @@ function normalize(text: string) {
 }
 
 function cleanDescription(html: string) {
-  return html
+
+  return String(html || "")
 
     // remove style/script
     .replace(/<style[\s\S]*?<\/style>/gi, "")
@@ -41,40 +42,99 @@ function cleanDescription(html: string) {
     // remove atributos inúteis
     .replace(/\s(class|id|width|height)="[^"]*"/gi, "")
 
-    // remove spans vazios
+    // remove spans
     .replace(/<\/?span[^>]*>/gi, "")
 
-    .replace(/width="?[^"\s>]+"?/gi, "")
-.replace(/height="?[^"\s>]+"?/gi, "")
-.replace(/data-src=/gi, "src=")
-.replace(/<img[^>]+src=""/gi, "")
-.replace(/<img/gi, '<img loading="lazy"')
+    // corrige lazyload
+    .replace(/data-src=/gi, "src=")
 
-    // corrige entidades
+    // corrige URLs quebradas
+    .replace(/src="\/\//gi, 'src="https://')
+
+    // remove width/height quebrados
+    .replace(/width="?[^"\s>]+"?/gi, "")
+    .replace(/height="?[^"\s>]+"?/gi, "")
+
+    // remove imagens inválidas
+    .replace(
+      /<img[^>]*src="[^"]*"\s*\/?>/gi,
+      (img) => {
+
+        if (
+          img.includes("undefined") ||
+          img.includes('src=""') ||
+          img.includes("base64")
+        ) {
+          return "";
+        }
+
+        return img;
+      }
+    )
+
+    // loading lazy
+    .replace(
+      /<img/gi,
+      '<img loading="lazy"'
+    )
+
+    // entidades HTML
     .replace(/&ccedil;/g, "ç")
     .replace(/&atilde;/g, "ã")
+    .replace(/&aacute;/g, "á")
+    .replace(/&agrave;/g, "à")
+    .replace(/&acirc;/g, "â")
     .replace(/&eacute;/g, "é")
+    .replace(/&ecirc;/g, "ê")
+    .replace(/&iacute;/g, "í")
+    .replace(/&oacute;/g, "ó")
+    .replace(/&ocirc;/g, "ô")
+    .replace(/&otilde;/g, "õ")
+    .replace(/&uacute;/g, "ú")
     .replace(/&nbsp;/g, " ")
 
-    // remove tags vazias
+    // remove parágrafos vazios
     .replace(/<p>\s*<\/p>/gi, "")
+
+    // remove pontos soltos
+    .replace(/<p>\s*\.\s*<\/p>/gi, "")
+
+    // corrige UTF quebrado
+    .replace(/Ã§/g, "ç")
+    .replace(/Ã£/g, "ã")
+    .replace(/Ã¡/g, "á")
+    .replace(/Ã /g, "à")
+    .replace(/Ã¢/g, "â")
+    .replace(/Ã©/g, "é")
+    .replace(/Ãª/g, "ê")
+    .replace(/Ã­/g, "í")
+    .replace(/Ã³/g, "ó")
+    .replace(/Ã´/g, "ô")
+    .replace(/Ãµ/g, "õ")
+    .replace(/Ãº/g, "ú")
+    .replace(/Ã¼/g, "ü")
+    .replace(/Ã/g, "à")
+    .replace(/Â/g, "")
+    .replace(/Ã/g, "Á")
+.replace(/Ã‰/g, "É")
+.replace(/Ã“/g, "Ó")
+.replace(/Ãš/g, "Ú")
+.replace(/ÃÍ/g, "Í")
+.replace(/Ã€/g, "À")
+.replace(/â€œ/g, '"')
+.replace(/â€/g, '"')
+.replace(/â€"/g, "-")
+.replace(/â€™/g, "'")
+.replace(/â¢/g, "• ")
+.replace(/â€“/g, "-")
+.replace(/â€”/g, "—")
+.replace(/â€¦/g, "...")
 
     // limpa espaços
     .replace(/\s+/g, " ")
 
-
-    .replace(/Ã§/g, "ç")
-.replace(/Ã£/g, "ã")
-.replace(/Ã¡/g, "á")
-.replace(/Ã©/g, "é")
-.replace(/Ãª/g, "ê")
-.replace(/Ã³/g, "ó")
-.replace(/Ãµ/g, "õ")
-.replace(/Ãº/g, "ú")
-.replace(/Â/g, "")
-
-
     .trim();
+
 }
 
 
@@ -224,7 +284,7 @@ let updated = 0;
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(3200, 3527);
+  Array.from(grouped.values()).slice(0, 500);
  
 
 for (const product of products) {
@@ -637,8 +697,7 @@ if (!existingCategory) {
       }
     }
 
-    console.log("UPDATED:", updated);
-console.log("CREATED:", created);
+
 
     return NextResponse.json({
       success: true,

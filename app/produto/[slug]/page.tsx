@@ -86,6 +86,9 @@ const relacionados = await prisma.product.findMany({
       `Olá! Quero informações sobre o produto: ${produto.name}`
     );
 
+    const descricaoLimpa = (produto.description || "")
+  .replace(/(<br\s*\/?>\s*){3,}/gi, "<br><br>");
+
   return (
     <div className="lightTheme">
     <div className={s.page}>
@@ -357,13 +360,13 @@ const relacionados = await prisma.product.findMany({
   <div
     style={{
       opacity: 0.9,
-      lineHeight: 1.7,
+      
     }}
-    dangerouslySetInnerHTML={{
-      __html:
-        produto.description ||
-        "Produto profissional com alto desempenho.",
-    }}
+   dangerouslySetInnerHTML={{
+  __html:
+    descricaoLimpa ||
+    "Produto profissional com alto desempenho.",
+}}
   />
 
 </div>
