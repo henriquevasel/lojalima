@@ -220,29 +220,32 @@ const precoPix =
   </div>
 )}
 
-<div
-  style={{
-    fontSize: 14,
-    color: "#666",
-    marginTop: 6,
-    marginBottom: 10,
-  }}
->
-  De{" "}
-  <strong>
-    {preco.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </strong>{" "}
-  por{" "}
-  <strong>
-    {precoFinal.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </strong>
-</div>
+{hasPromotion && (
+  <div
+    style={{
+      fontSize: 14,
+      color: "#666",
+      marginTop: 6,
+      marginBottom: 10,
+    }}
+  >
+    De{" "}
+    <strong>
+      {preco.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </strong>{" "}
+    por{" "}
+    <strong>
+      {precoFinal.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </strong>
+  </div>
+)}
+  
 
   {/* parcelamento */}
 
@@ -326,6 +329,23 @@ const precoPix =
         </div>
       </div>
     </div>
+    <div
+  style={{
+    fontSize: 14,
+    marginTop: 8,
+    color: "#444",
+  }}
+>
+  ou em até{" "}
+  <strong>
+    3x de{" "}
+    {(precoFinal / 3).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </strong>{" "}
+  sem juros
+</div>
 
   </div>
 
