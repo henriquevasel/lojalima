@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "@/app/styles/productCard.module.css";
 
 export default function ProductCard({ product }: any) {
+  console.log(product);
 
   // imagem principal
   const image =
