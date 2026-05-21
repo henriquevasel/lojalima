@@ -35,10 +35,10 @@ const originalPrice = new Intl.NumberFormat(
 ).format(originalPriceNumber);
 
 
-  const description =
-    typeof product?.description === "string"
-      ? product.description.slice(0, 60) + "..."
-      : "Produto profissional com alto desempenho.";
+const description =
+  typeof product?.shortDescription === "string"
+    ? product.shortDescription.slice(0, 60) + "..."
+    : "Produto profissional com alto desempenho.";
 
   return (
     <Link

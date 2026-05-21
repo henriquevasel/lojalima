@@ -25,7 +25,21 @@ function normalize(text: string) {
     .trim();
 }
 
+function stripHtml(html: string) {
+
+  return String(html || "")
+
+    .replace(/<[^>]*>/g, " ")
+
+    .replace(/\s+/g, " ")
+
+    .trim();
+
+}
+
 function cleanDescription(html: string) {
+
+  
 
   return String(html || "")
 
@@ -129,6 +143,36 @@ function cleanDescription(html: string) {
 .replace(/â€“/g, "-")
 .replace(/â€”/g, "—")
 .replace(/â€¦/g, "...")
+
+// remove \n \t literais
+.replace(/\\n/g, " ")
+.replace(/\\t/g, " ")
+
+// remove excesso de barras
+.replace(/\\\\/g, "")
+
+// corrige tags quebradas
+.replace(/<\./g, "<")
+.replace(/\.<\//g, "</")
+
+// remove iframes/youtube
+.replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
+
+// remove embeds
+.replace(/<object[\s\S]*?<\/object>/gi, "")
+.replace(/<embed[\s\S]*?>/gi, "")
+
+// remove scripts inline restantes
+.replace(/javascript:/gi, "")
+
+// corrige UTF restante
+.replace(/Ã´/g, "ô")
+
+// remove lixo repetido
+.replace(/(\s|\\n|\\t){3,}/g, " ")
+
+.replace(/data-content-type="[^"]*"/gi, "")
+.replace(/data-appearance="[^"]*"/gi, "")
 
     // limpa espaços
     .replace(/\s+/g, " ")
@@ -568,6 +612,11 @@ const categorySlug =
 
             description: product.description,
 
+
+shortDescription:
+  stripHtml(product.description)
+    .slice(0, 180),
+
             priceCents: product.price,
 
             active: true,
@@ -624,6 +673,10 @@ const categorySlug =
             brand: product.brand,
             ean: product.ean,
             description: product.description,
+
+shortDescription:
+  stripHtml(product.description)
+    .slice(0, 180),
             priceCents: product.price,
           },
         });
