@@ -2,6 +2,7 @@ import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import { expandTerms, normalize } from "@/app/lib/search";
+import { getFinalPrice } from "@/app/lib/price";
 
 
 export async function GET(req: Request) {
@@ -170,6 +171,8 @@ const products = await prisma.product.findMany({
   where,
 
   include: {
+    promotion: true,
+
     productimage: {
       orderBy: {
         sortOrder: "asc",
@@ -180,16 +183,35 @@ const products = await prisma.product.findMany({
 
   orderBy,
 
-  skip: (page - 1) * limit, // 🔥 PAGINAÇÃO
-  take: limit,              // 🔥 LIMITE
+  skip: (page - 1) * limit,
+  take: limit,
 });
 
 
-const productsWithPrice = products.map((p) => ({
-  ...p,
-  priceCentsOriginal: p.priceCents,
-  priceCents: calcularPrecoVenda(p.priceCents),
-}));
+const productsWithPrice = products.map((p) => {
+
+  const originalPrice =
+    calcularPrecoVenda(p.priceCents);
+
+  const promotionalPrice =
+    getFinalPrice({
+      ...p,
+      priceCents: originalPrice,
+    });
+
+  return {
+    ...p,
+
+    priceCentsOriginal: originalPrice,
+
+    priceCents:
+      promotionalPrice,
+
+    hasPromotion:
+      promotionalPrice <
+      originalPrice,
+  };
+});
 
 return NextResponse.json(productsWithPrice);
 

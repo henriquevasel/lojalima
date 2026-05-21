@@ -430,3 +430,15 @@
     max-width: 100% !important;
   }
 }
+
+.priceArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.oldPrice {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 14px;
+}

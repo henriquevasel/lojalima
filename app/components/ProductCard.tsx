@@ -12,6 +12,9 @@ export default function ProductCard({ product }: any) {
 const priceNumber =
   Number(product?.priceCents || 0) / 100;
 
+const originalPriceNumber =
+  Number(product?.priceCentsOriginal || 0) / 100;
+
   const price = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -22,6 +25,13 @@ const priceNumber =
   currency: "BRL",
 }).format(priceNumber / 3);
 
+const originalPrice = new Intl.NumberFormat(
+  "pt-BR",
+  {
+    style: "currency",
+    currency: "BRL",
+  }
+).format(originalPriceNumber);
 
 
   const description =
@@ -94,9 +104,19 @@ const priceNumber =
             {description}
           </div>
 
-          <div className={styles.price}>
-            {price}
-          </div>
+          <div className={styles.priceArea}>
+
+  {product?.hasPromotion && (
+    <div className={styles.oldPrice}>
+      {originalPrice}
+    </div>
+  )}
+
+  <div className={styles.price}>
+    {price}
+  </div>
+
+</div>
 
           <div className={styles.installments}>
   3x de {installment} sem juros

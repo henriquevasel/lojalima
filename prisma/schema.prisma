@@ -98,21 +98,30 @@ model payment {
 }
 
 model product {
-  id              Int               @id @default(autoincrement())
-  name            String
-  slug            String            @unique(map: "Product_slug_key")
-  description     String?
-  priceCents      Int
-  active          Boolean           @default(true)
-  featured        Boolean           @default(false)
-  brand           String?
-  sku             String?           @unique(map: "Product_sku_key")
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  highlight       Boolean           @default(false)
-  priority        Int               @default(0)
-  ean             String?
-  supplier        String?
+  id          Int     @id @default(autoincrement())
+  name        String
+  slug        String  @unique(map: "Product_slug_key")
+  description String?
+  priceCents  Int
+
+  promotionId String?
+  promotion   Promotion? @relation(fields: [promotionId], references: [id])
+
+  active   Boolean @default(true)
+  featured Boolean @default(false)
+
+  brand String?
+  sku   String? @unique(map: "Product_sku_key")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  highlight Boolean @default(false)
+  priority  Int     @default(0)
+
+  ean      String?
+  supplier String?
+
   cartitem        cartitem[]
   orderitem       orderitem[]
   productcategory productcategory[]
@@ -203,7 +212,27 @@ model Coupon {
   usage_limit  Int?
   used_count   Int?      @default(0)
   created_at   DateTime? @default(now()) @db.Timestamp(6)
+
   @@map("coupons")
+}
+
+model Promotion {
+  id String @id @default(cuid())
+
+  title  String
+  active Boolean @default(true)
+
+  discountType String
+  // percentage | fixed
+
+  discountValue Float
+
+  startsAt DateTime?
+  endsAt   DateTime?
+
+  products product[]
+
+  createdAt DateTime @default(now())
 }
 
 enum order_status {
