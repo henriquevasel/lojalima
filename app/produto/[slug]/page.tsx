@@ -196,7 +196,7 @@ const precoPix =
       fontWeight: 500,
     }}
   >
-    no pix
+    à vista
   </span>
 </div>
 
@@ -222,31 +222,26 @@ const precoPix =
 
 <div
   style={{
-    fontSize: 13,
-    color: "#16a34a",
-    fontWeight: 500,
-    marginTop: 4,
-  }}
->
-  5% de desconto no pagamento via PIX
-</div>
-
-<div
-  style={{
     fontSize: 14,
-    marginTop: 8,
-    color: "#444",
+    color: "#666",
+    marginTop: 6,
+    marginBottom: 10,
   }}
 >
-  ou em até{" "}
+  De{" "}
   <strong>
-    3x de{" "}
-    {(precoFinal / 3).toLocaleString("pt-BR", {
+    {preco.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     })}
   </strong>{" "}
-  sem juros
+  por{" "}
+  <strong>
+    {precoFinal.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </strong>
 </div>
 
   {/* parcelamento */}
@@ -327,7 +322,7 @@ const precoPix =
           </span>
         </div>
         <div style={{ fontSize: 12, color: "#555" }}>
-          Pagamento instantâneo
+          5% OFF adicional no PIX
         </div>
       </div>
     </div>
