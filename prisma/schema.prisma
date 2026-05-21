@@ -101,7 +101,10 @@ model product {
   id          Int     @id @default(autoincrement())
   name        String
   slug        String  @unique(map: "Product_slug_key")
-  description String?
+
+  description      String?
+  shortDescription String? @db.Text
+
   priceCents  Int
 
   promotionId String?
