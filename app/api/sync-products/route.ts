@@ -127,7 +127,6 @@ function cleanDescription(html: string) {
     .replace(/Ãµ/g, "õ")
     .replace(/Ãº/g, "ú")
     .replace(/Ã¼/g, "ü")
-    .replace(/Ã/g, "à")
     .replace(/Â/g, "")
     .replace(/Ã/g, "Á")
 .replace(/Ã‰/g, "É")
@@ -310,7 +309,7 @@ for (const item of data) {
         csvProduct?.["DescriÃ§Ã£o"] ||
         item.DESCRICAO ||
         ""
-        .replace(/src="\/\//gi, 'src="https://')
+        
       ),
 
       image:
