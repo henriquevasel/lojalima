@@ -182,7 +182,7 @@ const precoPix =
   }}
 >
   <span style={{ color: "#111" }}>
-    {precoPix.toLocaleString("pt-BR", {
+    {precoFinal.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     })}
