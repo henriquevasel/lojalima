@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { getUserId } from "@/app/lib/getUserId";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import { sendOrderEmail } from "@/app/lib/email";
+import { getFinalPrice } from "@/app/lib/price";
 
 export async function POST(req: Request) {
 
@@ -79,8 +80,9 @@ const userId = await getUserId();
     const cartItems = await prisma.cartitem.findMany({
       where: { userId },
       include: {
-        product: {
+       product: {
   include: {
+    promotion: true,
     productimage: true,
     stock: true
   }
@@ -185,13 +187,20 @@ if (stockQty < item.qty) {
   );
 }
 
-    const basePrice =
+   const basePrice =
   item.productvariant?.priceCents ??
   item.product.priceCents;
 
-const price = calcularPrecoVenda(basePrice);
+const originalPrice =
+  calcularPrecoVenda(basePrice);
 
-totalCents += price * item.qty;
+const finalPrice =
+  getFinalPrice({
+    ...item.product,
+    priceCents: originalPrice,
+  });
+
+totalCents += finalPrice * item.qty;
 
     }
 
@@ -296,10 +305,13 @@ if (paymentMethod === "pix") {
               variantId: item.variantId,
               slug: item.product.slug,
               name: item.product.name,
-         priceCents: calcularPrecoVenda(
-  item.productvariant?.priceCents ??
-  item.product.priceCents
-),
+        priceCents: getFinalPrice({
+  ...item.product,
+  priceCents: calcularPrecoVenda(
+    item.productvariant?.priceCents ??
+    item.product.priceCents
+  ),
+}),
               qty: item.qty,
               imageUrl: item.product.productimage[0]?.url || ""
             }))
@@ -346,10 +358,13 @@ const preferenceData = await preference.create({
     quantity: item.qty,
 
     unit_price:
-      calcularPrecoVenda(
-        item.productvariant?.priceCents ??
-        item.product.priceCents
-      ) / 100,
+  getFinalPrice({
+    ...item.product,
+    priceCents: calcularPrecoVenda(
+      item.productvariant?.priceCents ??
+      item.product.priceCents
+    ),
+  }) / 100,
 
     currency_id: "BRL"
   })),

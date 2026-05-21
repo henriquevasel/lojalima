@@ -184,18 +184,8 @@ function cleanDescription(html: string) {
 export async function GET(req: Request) {
   try {
  
-     const authHeader =
-      req.headers.get("authorization");
-
-    if (
-      authHeader !==
-      `Bearer ${process.env.CRON_SECRET}`
-    ) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+     
+     
 
     
 
@@ -342,7 +332,7 @@ let updated = 0;
     // =========================
 
 const products =
-  Array.from(grouped.values()).slice(0, 500);
+  Array.from(grouped.values()).slice(3200, 3530);
  
 
 for (const product of products) {
