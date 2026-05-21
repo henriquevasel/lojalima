@@ -1,5 +1,7 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
+import { calcularPrecoVenda } from "@/app/lib/pricing";
+import { getFinalPrice } from "@/app/lib/price";
 
 export async function GET(req: Request) {
 
@@ -31,8 +33,6 @@ export async function GET(req: Request) {
       },
     },
 
-
-
     // 🔥 somente produtos com imagem
     productimage: {
       some: {
@@ -47,81 +47,81 @@ export async function GET(req: Request) {
   BUSCA
   ========================= */
 
- if (smartHome) {
+  if (smartHome) {
 
-  where.OR = [
+    where.OR = [
 
-    // automatizadores
-    {
-      productcategory: {
-        some: {
-          category: {
-            slug: {
-              contains: "automat",
-            },
-          },
-        },
-      },
-    },
-
-    // EWS
-    {
-      name: {
-        contains: "EWS",
-      },
-    },
-
-    // SMART
-    {
-      name: {
-        contains: "SMART",
-      },
-    },
-
-  ];
-
-} else if (search) {
-
-  const terms = search
-    .split(" ")
-    .filter(t => t.length > 1);
-
-  where.AND = [
-    ...(where.AND || []),
-
-    ...terms.map(term => ({
-      OR: [
-        {
-          name: {
-            contains: term,
-          },
-        },
-        {
-          slug: {
-            contains: term,
-          },
-        },
-        {
-          brand: {
-            contains: term,
-          },
-        },
-        {
-          productcategory: {
-            some: {
-              category: {
-                name: {
-                  contains: term,
-                },
+      // automatizadores
+      {
+        productcategory: {
+          some: {
+            category: {
+              slug: {
+                contains: "automat",
               },
             },
           },
         },
-      ],
-    })),
-  ];
+      },
 
-}
+      // EWS
+      {
+        name: {
+          contains: "EWS",
+        },
+      },
+
+      // SMART
+      {
+        name: {
+          contains: "SMART",
+        },
+      },
+
+    ];
+
+  } else if (search) {
+
+    const terms = search
+      .split(" ")
+      .filter(t => t.length > 1);
+
+    where.AND = [
+      ...(where.AND || []),
+
+      ...terms.map(term => ({
+        OR: [
+          {
+            name: {
+              contains: term,
+            },
+          },
+          {
+            slug: {
+              contains: term,
+            },
+          },
+          {
+            brand: {
+              contains: term,
+            },
+          },
+          {
+            productcategory: {
+              some: {
+                category: {
+                  name: {
+                    contains: term,
+                  },
+                },
+              },
+            },
+          },
+        ],
+      })),
+    ];
+
+  }
 
   /* =========================
   CATEGORIA
@@ -188,6 +188,9 @@ export async function GET(req: Request) {
     where,
 
     include: {
+
+      promotion: true,
+
       productimage: {
         orderBy: {
           sortOrder: "asc",
@@ -201,10 +204,40 @@ export async function GET(req: Request) {
     skip,
   });
 
-  const adjustedProducts = products.map((product) => ({
-  ...product,
-  priceCents: Math.round(product.priceCents * 1.45),
-}));
+  /* =========================
+  PREÇOS
+  ========================= */
+
+  const adjustedProducts = products.map((product) => {
+
+    // preço original da tua lógica
+    const originalPrice =
+      calcularPrecoVenda(product.priceCents);
+
+    // aplica promoção SOMENTE se existir
+    const promotionalPrice =
+      getFinalPrice({
+        ...product,
+        priceCents: originalPrice,
+      });
+
+    return {
+      ...product,
+
+      // preço original
+      priceCentsOriginal:
+        originalPrice,
+
+      // preço final
+      priceCents:
+        promotionalPrice,
+
+      // controla frontend
+      hasPromotion:
+        promotionalPrice <
+        originalPrice,
+    };
+  });
 
   return NextResponse.json(adjustedProducts);
 }

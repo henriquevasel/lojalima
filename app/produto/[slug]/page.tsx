@@ -6,6 +6,7 @@ import ProductGallery from "@/app/components/ProductGallery";
 import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
+import { getFinalPrice } from "@/app/lib/price";
 
 
 import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
@@ -16,14 +17,18 @@ export default async function ProdutoPage({ params }: any) {
 
  const produto = await prisma.product.findUnique({
   where: { slug },
-  include: {
-    productimage: {
-      orderBy: {
-        sortOrder: "asc"
-      }
-    },
-    productcategory: true
-  }
+include: {
+
+  promotion: true,
+
+  productimage: {
+    orderBy: {
+      sortOrder: "asc"
+    }
+  },
+
+  productcategory: true
+}
 });
 
   if (!produto) {
@@ -74,11 +79,30 @@ const relacionados = await prisma.product.findMany({
   take: 4,
 });
 
-  const precoCents = calcularPrecoVenda(produto.priceCents);
-  const preco = precoCents / 100;
-  const precoParcelado = (preco / 12).toFixed(2);
-  const desconto = Math.round(preco * 0.05 * 100) / 100;
-  const precoComDesconto = preco - desconto;
+const precoOriginalCents =
+  calcularPrecoVenda(produto.priceCents);
+
+const precoFinalCents =
+  getFinalPrice({
+    ...produto,
+    priceCents: precoOriginalCents,
+  });
+
+const hasPromotion =
+  precoFinalCents < precoOriginalCents;
+
+const preco =
+  precoOriginalCents / 100;
+
+const precoFinal =
+  precoFinalCents / 100;
+
+// desconto PIX
+const descontoPix =
+  Math.round(precoFinal * 0.05 * 100) / 100;
+
+const precoPix =
+  precoFinal - descontoPix;
 
   const WHATSAPP_LINK =
     "https://wa.me/554738423235?text=" +
@@ -130,32 +154,71 @@ const relacionados = await prisma.product.findMany({
 
  
 
-{/* preço normal */}
-<div
-  style={{
-    color: "#111",
-    fontSize: 20,
-    fontWeight: 500,
-    marginBottom: 4,
-  }}
->
-  {preco.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  })}
-</div>
-
-{/* preço pix */}
-<div className={s.price}>
-  POR{" "}
-  <span style={{ color: "#111" }}>
-    {precoComDesconto.toLocaleString("pt-BR", {
+{/* preço antigo */}
+{hasPromotion && (
+  <div
+    style={{
+      color: "#999",
+      fontSize: 20,
+      textDecoration: "line-through",
+      marginBottom: 6,
+      fontWeight: 500,
+    }}
+  >
+    {preco.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     })}
-  </span>{" "}
-  no pix
+  </div>
+)}
+
+{/* preço principal */}
+<div
+  style={{
+    fontSize: 48,
+    fontWeight: 800,
+    lineHeight: 1,
+    marginBottom: 6,
+  }}
+>
+  <span style={{ color: "#111" }}>
+    {precoPix.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </span>
+
+  <span
+    style={{
+      fontSize: 18,
+      marginLeft: 8,
+      color: "#555",
+      fontWeight: 500,
+    }}
+  >
+    no pix
+  </span>
 </div>
+
+{/* badge OFF */}
+{hasPromotion && produto.promotion && (
+  <div
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 6,
+      background: "#16a34a",
+      color: "#fff",
+      padding: "6px 12px",
+      borderRadius: 999,
+      fontSize: 13,
+      fontWeight: 700,
+      marginBottom: 10,
+    }}
+  >
+    {produto.promotion.discountValue}% OFF
+  </div>
+)}
 
 <div
   style={{
@@ -178,7 +241,7 @@ const relacionados = await prisma.product.findMany({
   ou em até{" "}
   <strong>
     3x de{" "}
-    {(preco / 3).toLocaleString("pt-BR", {
+    {(precoFinal / 3).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     })}
@@ -213,7 +276,7 @@ const relacionados = await prisma.product.findMany({
 
       <div style={{ lineHeight: 1.2 }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: "#2e7d32" }}>
-          {precoComDesconto.toLocaleString("pt-BR", {
+          {precoPix.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}{" "}
@@ -221,7 +284,7 @@ const relacionados = await prisma.product.findMany({
         </div>
         <div style={{ fontSize: 12, color: "#555" }}>
           Economize{" "}
-          {desconto.toLocaleString("pt-BR", {
+          {descontoPix.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}
@@ -244,7 +307,7 @@ const relacionados = await prisma.product.findMany({
 
       <div style={{ lineHeight: 1.2 }}>
         <div style={{ fontSize: 14, fontWeight: 600 }}>
-          {precoComDesconto.toLocaleString("pt-BR", {
+          {precoPix.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}{" "}
