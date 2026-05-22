@@ -54,16 +54,9 @@ const description =
 
   return (
     <Link
-  href={`/produto/${product.slug}`}
-  className={styles.link}
-  scroll={false}
-  onClick={() => {
-    sessionStorage.setItem(
-      "home-scroll",
-      String(window.scrollY)
-    );
-  }}
->
+      href={`/produto/${product.slug}`}
+      className={styles.link}
+    >
 
       <div className={styles.card}>
 
