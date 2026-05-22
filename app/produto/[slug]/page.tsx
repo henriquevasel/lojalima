@@ -509,12 +509,13 @@ const img =
 
   <div
     style={{
-      fontSize: 12,
-      color: "#9ca3af",
-      textTransform: "uppercase",
-      marginBottom: 8,
-      fontWeight: 600,
-    }}
+  fontSize: 12,
+  color: "#6b7280",
+  textTransform: "uppercase",
+  marginBottom: 6,
+  fontWeight: 700,
+  letterSpacing: ".5px",
+}}
   >
     INTELBRAS
   </div>
@@ -525,12 +526,13 @@ const img =
 
   <div
     style={{
-      fontSize: 14,
-      color: "#666",
-      marginTop: 8,
-      lineHeight: 1.5,
-      minHeight: 30,
-    }}
+  fontSize: 14,
+  color: "#4b5563",
+  marginTop: 6,
+  lineHeight: 1.35,
+  fontWeight: 500,
+  minHeight: 34,
+}}
   >
     {(p.description || "Produto profissional de alta qualidade.")
       .replace(/<[^>]+>/g, "")
