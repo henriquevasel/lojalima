@@ -467,43 +467,43 @@ const img =
   p.productimage?.[0]?.url ||
   "/produtos/placeholder.jpg";
 
-      return (
-        <Link
-          key={p.id}
-          href={`/produto/${p.slug}`}
-          style={{ textDecoration: "none" }}
-        >
-         <div
-  className={s.relatedCard}
-  style={{
-    padding: 12,
-    borderRadius: 16,
-    minHeight: 250,
-    maxWidth: 220,
-    display: "flex",
-    flexDirection: "column",
-  }}
->
+return (
+  <Link
+    key={p.id}
+    href={`/produto/${p.slug}`}
+    style={{ textDecoration: "none" }}
+  >
+    <div
+      className={s.relatedCard}
+      style={{
+        padding: 0,
+        borderRadius: 18,
+        maxWidth: 230,
+        overflow: "hidden",
+      }}
+    >
 
-<div
-  className={s.relatedImageWrap}
- style={{
-  height: 80,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}}
->
-  <img
-    src={img}
-    alt={p.name}
-    className={s.relatedImage}
-    style={{
-  maxHeight: 900,
-  objectFit: "contain",
-}}
-  />
-</div>
+      <div
+        className={s.relatedImageWrap}
+        style={{
+          height: 95,
+          padding: 8,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src={img}
+          alt={p.name}
+          className={s.relatedImage}
+          style={{
+            maxHeight: 85,
+            width: "auto",
+            objectFit: "contain",
+          }}
+        />
+      </div>
 
 <div className={s.relatedContent}>
 
