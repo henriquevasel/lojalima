@@ -357,14 +357,29 @@ const preferenceData = await preference.create({
     title: item.product.name,
     quantity: item.qty,
 
-    unit_price:
-  getFinalPrice({
-    ...item.product,
-    priceCents: calcularPrecoVenda(
-      item.productvariant?.priceCents ??
-      item.product.priceCents
-    ),
-  }) / 100,
+unit_price:
+  (
+    paymentMethod === "pix"
+
+      ? Math.round(
+          getFinalPrice({
+            ...item.product,
+            priceCents: calcularPrecoVenda(
+              item.productvariant?.priceCents ??
+              item.product.priceCents
+            ),
+          }) * 0.95
+        )
+
+      : getFinalPrice({
+          ...item.product,
+          priceCents: calcularPrecoVenda(
+            item.productvariant?.priceCents ??
+            item.product.priceCents
+          ),
+        })
+
+  ) / 100,
 
     currency_id: "BRL"
   })),
