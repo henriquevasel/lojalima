@@ -1,10 +1,11 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import s from "@/app/styles/home.module.css";
 import CategoriesSection from "@/app/components/CategoriesSection";
 import HomeProducts from "@/app/components/HomeProducts";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
-"use client";
+
 
 import { useEffect, Suspense } from "react";
 
