@@ -7,7 +7,7 @@ import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
 import { getFinalPrice } from "@/app/lib/price";
-import ScrollTop from "@/app/components/ScrollTop";
+
 
 
 import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
@@ -116,7 +116,7 @@ const precoPix =
 
   return (
     <div className="lightTheme">
-      <ScrollTop />
+      
     <div className={s.page}>
 
       <div className={s.grid}>

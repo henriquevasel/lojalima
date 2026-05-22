@@ -4,7 +4,9 @@ import s from "@/app/styles/home.module.css";
 import CategoriesSection from "@/app/components/CategoriesSection";
 import HomeProducts from "@/app/components/HomeProducts";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
-import { Suspense } from "react";
+"use client";
+
+import { useEffect, Suspense } from "react";
 
 
 
@@ -73,8 +75,15 @@ const HIGHLIGHTS = [
 
 
 // Componente principal da página Home
-export default function HomePage() { 
+export default function HomePage() {
 
+  useEffect(() => {
+    const savedScroll = sessionStorage.getItem("home-scroll");
+
+    if (savedScroll) {
+      window.scrollTo(0, Number(savedScroll));
+    }
+  }, []);
   return (
 
     // Elemento principal da página
