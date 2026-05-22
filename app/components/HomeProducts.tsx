@@ -43,6 +43,15 @@ key={query}
       {!isResults && (
         <>
 
+
+        {/* CAMERAS WIFI */}
+          <div className="homeSection">
+            <ProductsCarousel
+              title="Câmeras Wi-Fi"
+              endpoint="/api/products/store?category=cameras-wifi&limit=10"
+            />
+          </div>
+
          
 
           {/* CFTV */}
