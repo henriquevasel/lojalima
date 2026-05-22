@@ -473,7 +473,17 @@ const img =
           href={`/produto/${p.slug}`}
           style={{ textDecoration: "none" }}
         >
-          <div className={s.relatedCard}>
+          <div
+  className={s.relatedCard}
+  style={{
+    padding: 18,
+    borderRadius: 22,
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  }}
+>
 
   <div className={s.relatedImageWrap}>
     <img
@@ -483,17 +493,75 @@ const img =
     />
   </div>
 
-  <div className={s.relatedContent}>
+<div className={s.relatedContent}>
 
-    <div className={s.relatedTitle}>
-      {p.name}
-    </div>
-
-    <div className={s.relatedPrice}>
-      R$ {(calcularPrecoVenda(p.priceCents) / 100).toFixed(2)}
-    </div>
-
+  <div
+    style={{
+      fontSize: 12,
+      color: "#9ca3af",
+      textTransform: "uppercase",
+      marginBottom: 8,
+      fontWeight: 600,
+    }}
+  >
+    INTELBRAS
   </div>
+
+  <div className={s.relatedTitle}>
+    {p.name}
+  </div>
+
+  <div
+    style={{
+      fontSize: 14,
+      color: "#666",
+      marginTop: 8,
+      lineHeight: 1.5,
+      minHeight: 42,
+    }}
+  >
+    {(p.description || "Produto profissional de alta qualidade.")
+      .replace(/<[^>]+>/g, "")
+      .slice(0, 70)}
+    ...
+  </div>
+
+  <div
+    style={{
+      color: "#16a34a",
+      fontSize: 34,
+      fontWeight: 800,
+      marginTop: 16,
+    }}
+  >
+    {(
+      calcularPrecoVenda(p.priceCents) / 100
+    ).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </div>
+
+  <div
+    style={{
+      marginTop: 6,
+      color: "#888",
+      fontSize: 14,
+    }}
+  >
+    3x de{" "}
+    {(
+      calcularPrecoVenda(p.priceCents) /
+      100 /
+      3
+    ).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}{" "}
+    sem juros
+  </div>
+
+</div>
 
 </div>
         </Link>
