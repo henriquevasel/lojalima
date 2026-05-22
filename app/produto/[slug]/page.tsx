@@ -201,12 +201,11 @@ const precoPix =
   no PIX com 5% OFF
 </div>
 
-{/* preço normal */}
-<div
+  <div
   style={{
-    fontSize: 16,
-    color: "#555",
-    marginBottom: 8,
+    fontSize: 14,
+    marginTop: 4,
+    color: "#444",
   }}
 >
   ou{" "}
@@ -215,8 +214,11 @@ const precoPix =
       style: "currency",
       currency: "BRL",
     })}
-  </strong>
+  </strong>{" "}
+  em até 3x sem juros
 </div>
+
+
 {/* badge OFF */}
 {hasPromotion && produto.promotion && (
   <div
@@ -346,22 +348,7 @@ const precoPix =
         </div>
       </div>
     </div>
-    <div
-  style={{
-    fontSize: 14,
-    marginTop: 8,
-    color: "#444",
-  }}
->
-  ou{" "}
-<strong>
-  {precoFinal.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  })}
-</strong>{" "}
-em até 3x sem juros
-</div>
+
 
   </div>
 

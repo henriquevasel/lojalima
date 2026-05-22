@@ -149,10 +149,9 @@ const description =
 
 </div>
 
-          <div className={styles.installments}>
-  3x de {installment} sem juros
+      <div className={styles.installments}>
+  3x sem juros
 </div>
-
           
 
         </div>
