@@ -7,6 +7,7 @@ import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
 import { getFinalPrice } from "@/app/lib/price";
+import ScrollTop from "@/app/components/ScrollTop";
 
 
 import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
@@ -115,6 +116,7 @@ const precoPix =
 
   return (
     <div className="lightTheme">
+      <ScrollTop />
     <div className={s.page}>
 
       <div className={s.grid}>
@@ -172,34 +174,49 @@ const precoPix =
   </div>
 )}
 
-{/* preço principal */}
+{/* preço PIX destaque */}
 <div
   style={{
     fontSize: 48,
     fontWeight: 800,
     lineHeight: 1,
-    marginBottom: 6,
+    marginBottom: 4,
+    color: "#111",
   }}
 >
-  <span style={{ color: "#111" }}>
+  {precoPix.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  })}
+</div>
+
+<div
+  style={{
+    fontSize: 14,
+    color: "#16a34a",
+    fontWeight: 700,
+    marginBottom: 12,
+  }}
+>
+  no PIX com 5% OFF
+</div>
+
+{/* preço normal */}
+<div
+  style={{
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 8,
+  }}
+>
+  ou{" "}
+  <strong>
     {precoFinal.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     })}
-  </span>
-
-  <span
-    style={{
-      fontSize: 18,
-      marginLeft: 8,
-      color: "#555",
-      fontWeight: 500,
-    }}
-  >
-    à vista
-  </span>
+  </strong>
 </div>
-
 {/* badge OFF */}
 {hasPromotion && produto.promotion && (
   <div
