@@ -353,15 +353,14 @@ const precoPix =
     color: "#444",
   }}
 >
-  ou em até{" "}
-  <strong>
-    3x de{" "}
-    {(precoFinal / 3).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </strong>{" "}
-  sem juros
+  ou{" "}
+<strong>
+  {precoFinal.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  })}
+</strong>{" "}
+em até 3x sem juros
 </div>
 
   </div>
