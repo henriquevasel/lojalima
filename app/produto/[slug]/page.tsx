@@ -478,7 +478,8 @@ const img =
   style={{
     padding: 14,
     borderRadius: 18,
-    minHeight: 420,
+    minHeight: 320,
+    maxWidth: 260,
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -486,13 +487,25 @@ const img =
   }}
 >
 
-  <div className={s.relatedImageWrap}>
-    <img
-      src={img}
-      alt={p.name}
-      className={s.relatedImage}
-    />
-  </div>
+<div
+  className={s.relatedImageWrap}
+  style={{
+    height: 180,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <img
+    src={img}
+    alt={p.name}
+    className={s.relatedImage}
+    style={{
+      maxHeight: 160,
+      objectFit: "contain",
+    }}
+  />
+</div>
 
 <div className={s.relatedContent}>
 
@@ -530,9 +543,9 @@ const img =
   <div
     style={{
       color: "#16a34a",
-      fontSize: 22,
+      fontSize: 20,
       fontWeight: 800,
-      marginTop: 16,
+      marginTop: 14,
     }}
   >
     {(
