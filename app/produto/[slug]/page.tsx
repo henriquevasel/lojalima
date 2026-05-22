@@ -476,34 +476,32 @@ const img =
           <div
   className={s.relatedCard}
   style={{
-    padding: 14,
-    borderRadius: 18,
-    minHeight: 320,
-    maxWidth: 260,
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  }}
+  padding: 12,
+  borderRadius: 16,
+  maxWidth: 220,
+  minHeight: 0,
+  display: "flex",
+  flexDirection: "column",
+}}
 >
 
 <div
   className={s.relatedImageWrap}
-  style={{
-    height: 180,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
+ style={{
+  height: 120,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}}
 >
   <img
     src={img}
     alt={p.name}
     className={s.relatedImage}
     style={{
-      maxHeight: 160,
-      objectFit: "contain",
-    }}
+  maxHeight: 100,
+  objectFit: "contain",
+}}
   />
 </div>
 
@@ -531,7 +529,7 @@ const img =
       color: "#666",
       marginTop: 8,
       lineHeight: 1.5,
-      minHeight: 42,
+      minHeight: 30,
     }}
   >
     {(p.description || "Produto profissional de alta qualidade.")
