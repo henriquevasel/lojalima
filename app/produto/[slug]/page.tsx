@@ -473,22 +473,22 @@ const img =
           href={`/produto/${p.slug}`}
           style={{ textDecoration: "none" }}
         >
-          <div
+         <div
   className={s.relatedCard}
   style={{
-  padding: 12,
-  borderRadius: 16,
-  maxWidth: 220,
-  minHeight: 0,
-  display: "flex",
-  flexDirection: "column",
-}}
+    padding: 12,
+    borderRadius: 16,
+    minHeight: 250,
+    maxWidth: 220,
+    display: "flex",
+    flexDirection: "column",
+  }}
 >
 
 <div
   className={s.relatedImageWrap}
  style={{
-  height: 120,
+  height: 80,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -499,7 +499,7 @@ const img =
     alt={p.name}
     className={s.relatedImage}
     style={{
-  maxHeight: 100,
+  maxHeight: 900,
   objectFit: "contain",
 }}
   />
