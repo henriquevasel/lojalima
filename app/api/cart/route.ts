@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import { getUserId } from "@/app/lib/getUserId";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
-
+import { getFinalPrice } from "@/app/lib/price";
 // ==========================
 // GET - Buscar carrinho
 // ==========================
@@ -20,7 +20,12 @@ export async function GET() {
     const cartItems = await prisma.cartitem.findMany({
       where: { userId },
       include: {
-        product: { include: { productimage: true } },
+        product: {
+  include: {
+    promotion: true,
+    productimage: true
+  }
+},
         productvariant: true,
       },
     });
@@ -30,7 +35,14 @@ export async function GET() {
       const basePrice =
   item.productvariant?.priceCents ?? item.product.priceCents;
 
-      const priceCents = calcularPrecoVenda(basePrice);
+      const originalPrice =
+  calcularPrecoVenda(basePrice);
+
+const priceCents =
+  getFinalPrice({
+    ...item.product,
+    priceCents: originalPrice,
+  });
 
       return {
         ...item,
@@ -43,7 +55,12 @@ export async function GET() {
   ...item.product,
   sku: item.product.sku,
   images: item.product.productimage, // ✅ ESSA LINHA NOVA
-  priceCents: calcularPrecoVenda(item.product.priceCents),
+  priceCents: getFinalPrice({
+  ...item.product,
+  priceCents: calcularPrecoVenda(
+    item.product.priceCents
+  ),
+}),
 },
 
         // variante (se existir)
