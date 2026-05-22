@@ -67,7 +67,12 @@ const priceCents =
       productvariant: item.productvariant
   ? {
       ...item.productvariant,
-      priceCents: calcularPrecoVenda(item.productvariant.priceCents ?? 0),
+      priceCents: getFinalPrice({
+  ...item.product,
+  priceCents: calcularPrecoVenda(
+    item.productvariant.priceCents ?? 0
+  ),
+}),
     }
   : null,
       };
