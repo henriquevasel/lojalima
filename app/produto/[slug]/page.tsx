@@ -476,8 +476,9 @@ const img =
           <div
   className={s.relatedCard}
   style={{
-    padding: 18,
-    borderRadius: 22,
+    padding: 14,
+    borderRadius: 18,
+    minHeight: 420,
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -529,7 +530,7 @@ const img =
   <div
     style={{
       color: "#16a34a",
-      fontSize: 34,
+      fontSize: 22,
       fontWeight: 800,
       marginTop: 16,
     }}
