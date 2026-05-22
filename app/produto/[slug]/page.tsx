@@ -477,7 +477,7 @@ PRODUTOS RELACIONADOS
             style={{
               padding: 0,
               borderRadius: 18,
-              maxWidth: 230,
+          
               overflow: "hidden",
             }}
           >
