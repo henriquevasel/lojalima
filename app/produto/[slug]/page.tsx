@@ -450,142 +450,162 @@ const precoPix =
 </div>
 
 
-      {/* =========================
-      PRODUTOS RELACIONADOS
-      ========================= */}
+ {/* =========================
+PRODUTOS RELACIONADOS
+========================= */}
 
-      
 <div className={s.relatedSection}>
   <h2 className={s.relatedTitle}>
     Você também pode gostar
   </h2>
 
-  <div className={s.relatedGrid} >
+  <div className={s.relatedGrid}>
     {relacionados.map((p) => {
 
-const img =
-  p.productimage?.[0]?.url ||
-  "/produtos/placeholder.jpg";
+      const img =
+        p.productimage?.[0]?.url ||
+        "/produtos/placeholder.jpg";
 
-return (
-  <Link
-    key={p.id}
-    href={`/produto/${p.slug}`}
-    style={{ textDecoration: "none" }}
-  >
-    <div
-      className={s.relatedCard}
-      style={{
-        padding: 0,
-        borderRadius: 18,
-        maxWidth: 230,
-        overflow: "hidden",
-      }}
-    >
+      return (
+        <Link
+          key={p.id}
+          href={`/produto/${p.slug}`}
+          style={{ textDecoration: "none" }}
+        >
+          <div
+            className={s.relatedCard}
+            style={{
+              padding: 0,
+              borderRadius: 18,
+              maxWidth: 230,
+              overflow: "hidden",
+            }}
+          >
 
-      <div
-        className={s.relatedImageWrap}
-        style={{
-          height: 95,
-          padding: 8,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <img
-          src={img}
-          alt={p.name}
-          className={s.relatedImage}
-          style={{
-            maxHeight: 85,
-            width: "auto",
-            objectFit: "contain",
-          }}
-        />
-      </div>
+            {/* IMAGEM */}
+            <div
+              className={s.relatedImageWrap}
+              style={{
+                height: 140,
+                padding: 12,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                src={img}
+                alt={p.name}
+                className={s.relatedImage}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
 
-<div className={s.relatedContent}>
+            {/* CONTEÚDO */}
+            <div
+              className={s.relatedContent}
+              style={{
+                padding: 14,
+                display: "flex",
+                flexDirection: "column",
+                gap: 6,
+              }}
+            >
 
-  <div
-    style={{
-  fontSize: 12,
-  color: "#6b7280",
-  textTransform: "uppercase",
-  marginBottom: 6,
-  fontWeight: 700,
-  letterSpacing: ".5px",
-}}
-  >
-    INTELBRAS
-  </div>
+              {/* MARCA */}
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "#6b7280",
+                  textTransform: "uppercase",
+                  marginBottom: 2,
+                  fontWeight: 700,
+                  letterSpacing: ".5px",
+                }}
+              >
+                INTELBRAS
+              </div>
 
-  <div className={s.relatedTitle}>
-    {p.name}
-  </div>
+              {/* TÍTULO */}
+              <div
+                className={s.relatedTitle}
+                style={{
+                  fontSize: 15,
+                  lineHeight: 1.35,
+                  fontWeight: 500,
+                  color: "#222",
+                  minHeight: 50,
+                }}
+              >
+                {p.name}
+              </div>
 
-  <div
-    style={{
-  fontSize: 14,
-  color: "#4b5563",
-  marginTop: 6,
-  lineHeight: 1.35,
-  fontWeight: 500,
-  minHeight: 34,
-}}
-  >
-    {(p.description || "Produto profissional de alta qualidade.")
-      .replace(/<[^>]+>/g, "")
-      .slice(0, 70)}
-    ...
-  </div>
+              {/* DESCRIÇÃO */}
+              <div
+                style={{
+                  fontSize: 13,
+                  color: "#4b5563",
+                  marginTop: 2,
+                  lineHeight: 1.4,
+                  fontWeight: 500,
+                }}
+              >
+                {(p.description || "Produto profissional de alta qualidade.")
+                  .replace(/<[^>]+>/g, "")
+                  .slice(0, 58)}
+                ...
+              </div>
 
-  <div
-    style={{
-      color: "#16a34a",
-      fontSize: 20,
-      fontWeight: 800,
-      marginTop: 14,
-    }}
-  >
-    {(
-      calcularPrecoVenda(p.priceCents) / 100
-    ).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </div>
+              {/* PREÇO */}
+              <div
+                style={{
+                  color: "#16a34a",
+                  fontSize: 18,
+                  fontWeight: 800,
+                  marginTop: 8,
+                }}
+              >
+                {(
+                  calcularPrecoVenda(p.priceCents) / 100
+                ).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </div>
 
-  <div
-    style={{
-      marginTop: 6,
-      color: "#888",
-      fontSize: 14,
-    }}
-  >
-    3x de{" "}
-    {(
-      calcularPrecoVenda(p.priceCents) /
-      100 /
-      3
-    ).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}{" "}
-    sem juros
-  </div>
+              {/* PARCELAMENTO */}
+              <div
+                style={{
+                  marginTop: 0,
+                  color: "#9ca3af",
+                  fontSize: 13,
+                }}
+              >
+                3x de{" "}
+                {(
+                  calcularPrecoVenda(p.priceCents) /
+                  100 /
+                  3
+                ).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}{" "}
+                sem juros
+              </div>
 
-</div>
-
-</div>
+            </div>
+          </div>
         </Link>
       );
     })}
-  </div>
+   </div>
 </div>
 
     </div>
   </div>
-  );
-
+);
 }
