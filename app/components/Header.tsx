@@ -430,7 +430,7 @@ export default function Header() {
                 <FaUserCircle />
               </button>
 
-          ```tsx
+          
 {openUserMenu && (
   <div
     style={{
