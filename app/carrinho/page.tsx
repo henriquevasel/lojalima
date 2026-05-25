@@ -473,7 +473,7 @@ onMouseLeave={(e)=>(
 
   </div>
   
-  <FreteCalculator />
+  <FreteCalculator dark />
   {/* FRETE */}
   
 

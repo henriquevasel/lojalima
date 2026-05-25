@@ -7,7 +7,13 @@ import { FaTruck, FaStore } from "react-icons/fa";
 
 import { useState } from "react";
 
-export default function FreteCalculator() {
+type Props = {
+  dark?: boolean;
+};
+
+export default function FreteCalculator({
+  dark = false
+}: Props) {
 
   const [cep, setCep] = useState("");
   const [frete, setFrete] = useState<number | null>(null);
@@ -161,7 +167,11 @@ sessionStorage.setItem(
   }
 
   return (
-    <div className={s.wrapper}>
+    <div
+  className={`${s.wrapper} ${
+    dark ? s.dark : ""
+  }`}
+>
 
      <div className={s.title}>
         Calcular frete e prazo
