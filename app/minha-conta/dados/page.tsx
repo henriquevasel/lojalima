@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import s from "@/app/styles/account.module.css";
 
 export default function DadosPage() {
   const [name, setName] = useState("");
@@ -50,45 +51,26 @@ export default function DadosPage() {
   }
 
   if (loading) {
-    return (
-      <div
-        style={{
-          minHeight: "70vh",
-          background: "#050505",
-          color: "#fff",
-          padding: 40,
-        }}
-      >
-        Carregando...
-      </div>
-    );
+    return <div>Carregando...</div>;
   }
 
   return (
-    <div
-      style={{
-        minHeight: "70vh",
-        background: "#050505",
-        color: "#fff",
-        padding: 40,
-      }}
-    >
-      <h1
-        style={{
-          fontSize: 32,
-          marginBottom: 30,
-        }}
-      >
+    <div>
+      <h1 className={s.title}>
         Meus dados
       </h1>
+
+      <p className={s.subtitle}>
+        Atualize suas informações pessoais.
+      </p>
 
       <form
         onSubmit={handleSave}
         style={{
-          maxWidth: 500,
+          maxWidth: 600,
           display: "flex",
           flexDirection: "column",
-          gap: 20,
+          gap: 24,
         }}
       >
         <div>
@@ -97,16 +79,7 @@ export default function DadosPage() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{
-              width: "100%",
-              height: 50,
-              borderRadius: 12,
-              border: "1px solid #222",
-              background: "#111",
-              color: "#fff",
-              padding: "0 15px",
-              marginTop: 8,
-            }}
+            className={s.input}
           />
         </div>
 
@@ -116,31 +89,14 @@ export default function DadosPage() {
           <input
             value={email}
             disabled
-            style={{
-              width: "100%",
-              height: 50,
-              borderRadius: 12,
-              border: "1px solid #222",
-              background: "#1a1a1a",
-              color: "#777",
-              padding: "0 15px",
-              marginTop: 8,
-            }}
+            className={s.input}
           />
         </div>
 
         <button
           type="submit"
           disabled={saving}
-          style={{
-            height: 50,
-            borderRadius: 12,
-            border: "none",
-            background: "#00c853",
-            color: "#fff",
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
+          className={s.button}
         >
           {saving ? "Salvando..." : "Salvar alterações"}
         </button>
@@ -148,4 +104,3 @@ export default function DadosPage() {
     </div>
   );
 }
-
