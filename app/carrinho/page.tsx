@@ -317,13 +317,20 @@ if (!retirada && !frete) {
             </p>
           </div>
 
+           
+
           {/* QTD */}
+
+          
           <div style={{
             display:"flex",
             alignItems:"center",
             gap:10,
             marginTop:10
           }}>
+
+
+            
 
             <button
               onClick={()=>updateQty(item.id,item.qty-1)}
@@ -348,6 +355,8 @@ if (!retirada && !frete) {
         </div>
 
         </Link>
+
+        
 
         {/* PREÇO + REMOVE */}
         <div style={{
