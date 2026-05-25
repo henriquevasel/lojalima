@@ -1,4 +1,4 @@
-```tsx
+
 import Link from "next/link";
 import s from "@/app/styles/account.module.css";
 
@@ -53,4 +53,4 @@ export default function MinhaContaLayout({
     </div>
   );
 }
-```
+
