@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import FreteCalculator from "@/app/components/FreteCalculator";
 
+
 type CartItem = {
   id: number;
   qty: number;
@@ -26,6 +27,7 @@ const [discount,setDiscount] = useState(0);
 const [couponLoading,setCouponLoading] = useState(false);
 const [couponCode,setCouponCode] = useState("");
 const [isMobile, setIsMobile] = useState(false);
+const [frete, setFrete] = useState(0);
 
   const qtyBtnStyle = {
   width:32,
@@ -36,6 +38,17 @@ const [isMobile, setIsMobile] = useState(false);
   color:"#fff",
   cursor:"pointer"
 };
+
+useEffect(() => {
+
+  const saved =
+    sessionStorage.getItem("freteCents");
+
+  if (saved) {
+    setFrete(Number(saved));
+  }
+
+}, []);
 
   async function fetchCart() {
 
@@ -182,13 +195,8 @@ sessionStorage.setItem(
     0
   );
 
-const freteAtual =
-  Number(
-    sessionStorage.getItem("freteCents") || 0
-  );
-
 const totalFinal = Math.max(
-  total + (freteAtual / 100) - discount,
+  total + (frete / 100) - discount,
   0
 );
 
