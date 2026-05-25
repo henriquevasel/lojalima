@@ -149,6 +149,10 @@ sessionStorage.setItem(
   String(valor)
 );
 
+window.dispatchEvent(
+  new Event("freteUpdated")
+);
+
      
 
       // 🔥 SALVA
@@ -184,9 +188,17 @@ sessionStorage.setItem(
 <button
   onClick={() => {
 
-    setRetirada(false);
+   setRetirada(false);
 
-    sessionStorage.removeItem("retiradaLoja");
+sessionStorage.removeItem("retiradaLoja");
+
+sessionStorage.removeItem("freteCents");
+
+setFrete(null);
+
+window.dispatchEvent(
+  new Event("freteUpdated")
+);
 
   }}
   className={`${s.methodBtn} ${!retirada ? s.active : ""}`}

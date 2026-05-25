@@ -222,13 +222,15 @@ const totalFinal = Math.max(
       alert("Seu carrinho está vazio");
       return;
     }
-    const retirada =
+ const retirada =
   sessionStorage.getItem("retiradaLoja") === "true";
 
 const frete =
-  sessionStorage.getItem("freteCents");
+  Number(
+    sessionStorage.getItem("freteCents") || 0
+  );
 
-if (!retirada && !frete) {
+if (!retirada && frete <= 0) {
 
   alert(
     "Calcule o frete ou selecione retirada"
