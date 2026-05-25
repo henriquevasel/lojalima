@@ -55,12 +55,19 @@ function getCategorySlug(name: string) {
   ) return "audio";
 
   const acessoriosTerms = [
-    "cabo", "conector", "plug", "adaptador",
-    "extensao", "extensão", "patch",
-    "cord", "keystone", "rj45"
+    "cabo",
+    "conector",
+    "plug",
+    "adaptador",
+    "extensao",
+    "extensão",
+    "patch",
+    "cord",
+    "keystone",
+    "rj45",
   ];
 
-  if (acessoriosTerms.some(term => n.includes(term))) {
+  if (acessoriosTerms.some((term) => n.includes(term))) {
     return "acessorios";
   }
 
@@ -71,9 +78,30 @@ function getCategorySlug(name: string) {
 IMPORTAÇÃO VIA UPLOAD
 ========================= */
 export async function POST(req: Request) {
+
+  /* =========================
+  🔒 AUTENTICAÇÃO
+  ========================= */
+  const authHeader = req.headers.get("authorization");
+
+  if (
+    authHeader !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   try {
+
     const formData = await req.formData();
+
     const file = formData.get("file") as File;
+
+    /* =========================
+    📁 VALIDAÇÕES
+    ========================= */
 
     if (!file) {
       return NextResponse.json(
@@ -82,26 +110,79 @@ export async function POST(req: Request) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    // limite 5MB
+    if (file.size > 5 * 1024 * 1024) {
+      return NextResponse.json(
+        { error: "Arquivo muito grande" },
+        { status: 400 }
+      );
+    }
 
-    const workbook = xlsx.read(buffer, { type: "buffer" });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const data: any[] = xlsx.utils.sheet_to_json(sheet);
+    // valida extensão
+    if (
+      !file.name.endsWith(".xlsx") &&
+      !file.name.endsWith(".xls")
+    ) {
+      return NextResponse.json(
+        { error: "Formato inválido" },
+        { status: 400 }
+      );
+    }
 
-    // 🔥 CACHE DE CATEGORIAS (evita milhares de queries)
-    const categoryCache = new Map<string, any>();
+    const buffer = Buffer.from(
+      await file.arrayBuffer()
+    );
 
-    // 🔥 LOTE CONTROLADO (não estoura conexão)
+    const workbook = xlsx.read(buffer, {
+      type: "buffer",
+    });
+
+    const sheet =
+      workbook.Sheets[
+        workbook.SheetNames[0]
+      ];
+
+    const data: any[] =
+      xlsx.utils.sheet_to_json(sheet);
+
+    /* =========================
+    🔥 CACHE DE CATEGORIAS
+    ========================= */
+    const categoryCache = new Map<
+      string,
+      any
+    >();
+
+    /* =========================
+    🔥 LOTE CONTROLADO
+    ========================= */
     const BATCH_SIZE = 2;
 
-    for (let i = 0; i < data.length; i += BATCH_SIZE) {
-      const batch = data.slice(i, i + BATCH_SIZE);
+    for (
+      let i = 0;
+      i < data.length;
+      i += BATCH_SIZE
+    ) {
+
+      const batch = data.slice(
+        i,
+        i + BATCH_SIZE
+      );
 
       for (const item of batch) {
-        if (!item.CODPROD || !item.DESCRPROD) continue;
 
-        const name = item.DESCRPROD;
-        const sku = String(item.CODPROD);
+        if (
+          !item.CODPROD ||
+          !item.DESCRPROD
+        ) continue;
+
+        const name = String(
+          item.DESCRPROD
+        ).trim();
+
+        const sku = String(
+          item.CODPROD
+        ).trim();
 
         const baseSlug = name
           .toLowerCase()
@@ -111,75 +192,146 @@ export async function POST(req: Request) {
           .replace(/(^-|-$)/g, "");
 
         const slug = `${baseSlug}-${sku}`;
-        const categorySlug = getCategorySlug(name);
 
-        // 🔥 USA CACHE
-        let category = categoryCache.get(categorySlug);
+        const categorySlug =
+          getCategorySlug(name);
+
+        /* =========================
+        🔥 CACHE CATEGORY
+        ========================= */
+        let category =
+          categoryCache.get(
+            categorySlug
+          );
 
         if (!category) {
-          category = await prisma.category.upsert({
-            where: { slug: categorySlug },
-            update: {},
-            create: {
-              name: categorySlug,
-              slug: categorySlug,
-              active: true,
-            },
-          });
 
-          categoryCache.set(categorySlug, category);
+          category =
+            await prisma.category.upsert({
+              where: {
+                slug: categorySlug,
+              },
+
+              update: {},
+
+              create: {
+                name: categorySlug,
+                slug: categorySlug,
+                active: true,
+              },
+            });
+
+          categoryCache.set(
+            categorySlug,
+            category
+          );
         }
 
-        const price = parseFloat(
-          String(item.PRECO || "0").replace(",", ".")
+        /* =========================
+        💰 PREÇO
+        ========================= */
+        const price = Number(
+          String(
+            item.PRECO || "0"
+          ).replace(",", ".")
         );
 
-        const priceCents = Math.round(price * 100);
+        // evita NaN
+        if (isNaN(price)) continue;
 
+        const priceCents = Math.round(
+          price * 100
+        );
+
+        /* =========================
+        🚀 UPSERT PRODUTO
+        ========================= */
         await prisma.product.upsert({
+
           where: { sku },
 
           update: {
             name,
             slug,
             priceCents,
+
             brand: item.MARCA,
-            active: item.FORA_LINHA !== "S",
+
+            active:
+              item.FORA_LINHA !== "S",
 
             productcategory: {
               deleteMany: {},
-              create: [{ categoryId: category.id }],
+
+              create: [
+                {
+                  categoryId:
+                    category.id,
+                },
+              ],
             },
           },
 
           create: {
             name,
             slug,
+
             description: name,
+
             priceCents,
+
             brand: item.MARCA,
+
             sku,
+
             active: true,
 
             productcategory: {
-              create: [{ categoryId: category.id }],
+              create: [
+                {
+                  categoryId:
+                    category.id,
+                },
+              ],
             },
           },
         });
       }
 
-      console.log(`✅ Lote ${i} - ${i + BATCH_SIZE}`);
+      /* =========================
+      🪵 LOGS
+      ========================= */
+      if (
+        process.env.NODE_ENV !==
+        "production"
+      ) {
+        console.log(
+          `✅ Lote ${i} - ${
+            i + BATCH_SIZE
+          }`
+        );
+      }
     }
 
     return NextResponse.json({
-      message: "Importação concluída 🚀",
+      success: true,
+      message:
+        "Importação concluída 🚀",
     });
 
   } catch (error: any) {
-    console.error("ERRO REAL:", error);
+
+    console.error(
+      "ERRO REAL:",
+      error
+    );
 
     return NextResponse.json(
-      { error: error.message || "Erro ao importar" },
+      {
+        error:
+          error.message ||
+          "Erro ao importar",
+      },
       { status: 500 }
     );
   }

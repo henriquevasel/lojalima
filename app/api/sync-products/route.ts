@@ -186,11 +186,24 @@ export async function GET(req: Request) {
  
      
      
+const authHeader =
+  req.headers.get("authorization");
 
+if (
+  authHeader !==
+  `Bearer ${process.env.CRON_SECRET}`
+) {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
     
 
 
     const response = await fetch(
+
+      
       "https://api.digitalsat.com.br/reseller/v4/product",
       {
         headers: {
@@ -210,8 +223,15 @@ export async function GET(req: Request) {
   const text = await response.text();
 
 
-const data = JSON.parse(text);
+let data = [];
 
+try {
+  data = JSON.parse(text);
+} catch {
+  throw new Error("JSON inválido da API");
+}
+
+try {
 fs.writeFileSync(
   path.join(
     process.cwd(),
@@ -221,6 +241,9 @@ fs.writeFileSync(
   ),
   JSON.stringify(data)
 );
+} catch (err) {  
+  console.log("Cache não salvo");
+}
 
     // =========================
     // AGRUPAR SKU
