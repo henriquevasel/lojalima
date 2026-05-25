@@ -41,12 +41,29 @@ const [frete, setFrete] = useState(0);
 
 useEffect(() => {
 
-  const saved =
-    sessionStorage.getItem("freteCents");
+  function updateFrete() {
 
-  if (saved) {
-    setFrete(Number(saved));
+    const saved =
+      sessionStorage.getItem("freteCents");
+
+    setFrete(Number(saved || 0));
   }
+
+  updateFrete();
+
+  window.addEventListener(
+    "freteUpdated",
+    updateFrete
+  );
+
+  return () => {
+
+    window.removeEventListener(
+      "freteUpdated",
+      updateFrete
+    );
+
+  };
 
 }, []);
 
@@ -269,15 +286,9 @@ if (!retirada && !frete) {
         }}
       >
 
-  <Link
-  href={`/produto/${item.product.slug}`}
-  style={{
-    display:"flex",
-    gap:20,
-    flex:1,
-    textDecoration:"none"
-  }}
->
+
+
+<Link href={`/produto/${item.product.slug}`}>
 
 <img
   src={
@@ -294,12 +305,20 @@ if (!retirada && !frete) {
   padding:8
   }}
 />
+</Link>
 
         {/* INFO */}
         <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
 
           <div>
-            <h3 style={{
+            <Link
+  href={`/produto/${item.product.slug}`}
+  style={{
+    textDecoration:"none"
+  }}
+>
+
+<h3 style={{
               color:"#fff",
               margin:0,
               fontSize:16,
@@ -307,6 +326,7 @@ if (!retirada && !frete) {
             }}>
               {item.product.name}
             </h3>
+            </Link>
 
             <p style={{
               color:"#9ca3af",
@@ -354,7 +374,7 @@ if (!retirada && !frete) {
 
         </div>
 
-        </Link>
+        
 
         
 

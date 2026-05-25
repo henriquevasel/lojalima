@@ -212,6 +212,10 @@ sessionStorage.setItem(
       "0"
     );
 
+    window.dispatchEvent(
+  new Event("freteUpdated")
+);
+
     sessionStorage.setItem(
       "retiradaLoja",
       "true"
