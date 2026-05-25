@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -31,7 +30,7 @@ export default function DadosPage() {
 
     setSaving(true);
 
-    const res = await fetch("/api/account/update", {
+    const res = await fetch("/api/update-user", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

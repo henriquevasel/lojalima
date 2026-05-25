@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 
 export async function PUT(req: Request) {
   try {
+    // COOKIE
     const cookieStore = await cookies();
 
     const token = cookieStore.get("token")?.value;
@@ -17,14 +18,17 @@ export async function PUT(req: Request) {
       );
     }
 
+    // JWT
     const JWT_SECRET = process.env.JWT_SECRET!;
 
     const decoded: any = jwt.verify(token, JWT_SECRET);
 
+    // BODY
     const body = await req.json();
 
     const { name } = body;
 
+    // UPDATE USER
     await prisma.user.update({
       where: {
         id: decoded.userId,
@@ -42,8 +46,9 @@ export async function PUT(req: Request) {
     console.error(error);
 
     return NextResponse.json(
-      { error: "Erro ao atualizar" },
+      { error: "Erro ao atualizar usuário" },
       { status: 500 }
     );
   }
 }
+
