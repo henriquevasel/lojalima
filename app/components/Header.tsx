@@ -430,85 +430,110 @@ export default function Header() {
                 <FaUserCircle />
               </button>
 
-              {openUserMenu && (
+          ```tsx
+{openUserMenu && (
   <div
     style={{
       position: "absolute",
-      top: "40px",
+      top: "50px",
       right: 0,
-      background: "#111",
-      borderRadius: 10,
-      padding: 10,
-      minWidth: 160,
+      background: "#0f0f0f",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: 18,
+      minWidth: 240,
+      overflow: "hidden",
       zIndex: 999,
-      boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+      boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+      backdropFilter: "blur(10px)",
     }}
   >
-    {!loadingUser && (
-      user ? (
+    {!loadingUser &&
+      (user ? (
         <>
-          <div style={{ padding: 8, color: "#aaa", fontSize: 13 }}>
+          {/* HEADER */}
+          <div
+            style={{
+              padding: "16px 18px",
+              borderBottom: "1px solid rgba(255,255,255,0.05)",
+              color: "#fff",
+              fontWeight: 600,
+              fontSize: 15,
+            }}
+          >
             Olá, {user.name}
           </div>
 
-          <Link
-            href="/meus-pedidos"
+          {/* LINKS */}
+          <div
             style={{
-              display: "block",
+              display: "flex",
+              flexDirection: "column",
               padding: 8,
-              color: "#fff",
-              cursor: "pointer",
             }}
           >
-            Meus pedidos
-          </Link>
+            <Link
+              href="/minha-conta"
+              className={s.userMenuItem}
+            >
+              Minha conta
+            </Link>
 
-          <button
-            onClick={handleLogout}
-            style={{
-              display: "block",
-              padding: 8,
-              width: "100%",
-              textAlign: "left",
-              background: "transparent",
-              border: "none",
-              color: "#fff",
-              cursor: "pointer",
-            }}
-          >
-            Sair
-          </button>
+            <Link
+              href="/meus-pedidos"
+              className={s.userMenuItem}
+            >
+              Meus pedidos
+            </Link>
+
+            <Link
+              href="/minha-conta/dados"
+              className={s.userMenuItem}
+            >
+              Meus dados
+            </Link>
+
+            <Link
+              href="/minha-conta/seguranca"
+              className={s.userMenuItem}
+            >
+              Segurança
+            </Link>
+
+            <button
+              onClick={handleLogout}
+              className={s.userMenuLogout}
+            >
+              Sair
+            </button>
+          </div>
         </>
       ) : (
-        <>
+        <div
+          style={{
+            padding: 10,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Link
             href="/login"
-            style={{
-              display: "block",
-              padding: 8,
-              color: "#fff",
-              cursor: "pointer",
-            }}
-                  >
-                  Login
-                  </Link>
+            className={s.userMenuItem}
+          >
+            Login
+          </Link>
 
-                   <Link
-                      href="/registro"
-                      style={{
-                              display: "block",
-                              padding: 8,
-                              color: "#fff",
-                              cursor: "pointer",
-                            }}
-                           >
-                           Criar conta
-                    </Link>
-                             </>
-                             )
-                          )}
-                    </div>
-                  )}
+          <Link
+            href="/registro"
+            className={s.userMenuItem}
+          >
+            Criar conta
+          </Link>
+        </div>
+      ))}
+  </div>
+)}
+```
+
             </div>
           </div>
         </div>

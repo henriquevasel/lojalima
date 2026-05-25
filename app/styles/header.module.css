@@ -561,3 +561,41 @@ border-radius:50%;
   }
 
 }
+
+
+.userMenuItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.userMenuItem:hover {
+  background: rgba(255,255,255,0.05);
+  color: #00c853;
+}
+
+.userMenuLogout {
+  margin-top: 6px;
+  border: none;
+  background: transparent;
+  color: #ff4d4d;
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.userMenuLogout:hover {
+  background: rgba(255,0,0,0.08);
+}
+
+
+
+
