@@ -617,7 +617,7 @@ onMouseLeave={(e)=>(
         lineHeight:1
       }}
     >
-      R$ {(totalFinal * 0.95).toFixed(2)}
+      R$ {((total - discount) * 0.95 + (frete / 100)).toFixed(2)}
     </div>
 
     <div
