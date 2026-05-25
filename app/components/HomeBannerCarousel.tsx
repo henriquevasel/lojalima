@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import s from "@/app/styles/home.module.css";
 
 const banners = [
-  "/produtos/banner-1.avif",
+  
   "/produtos/banner-2.avif",
   "/produtos/banner-3.avif",
   "/produtos/banner-4.avif",
