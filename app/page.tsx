@@ -196,6 +196,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* BOTÃO FLUTUANTE */}
+<a
+  href="https://wa.me/554738423235"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="floatingWhats"
+>
+  WhatsApp
+</a>
+
     </main>
   );
 }
