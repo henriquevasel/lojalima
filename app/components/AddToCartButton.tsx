@@ -17,53 +17,8 @@ export default function AddToCartButton({
 
   async function handleAdd() {
 
-    // 🔥 RETIRADA?
-    const retirada =
-      sessionStorage.getItem("retiradaLoja") === "true";
-
-    // 🔥 PEGA FRETE
-    const freteSalvo =
-      sessionStorage.getItem("freteCents") ||
-      localStorage.getItem("frete");
-
-    // 🔴 SEM FRETE
-    if (!freteSalvo) {
-
-      toast.error(
-        retirada
-          ? "Selecione retirada na loja"
-          : "Calcule o frete antes de adicionar"
-      );
-
-      document
-        .querySelector("#frete")
-        ?.scrollIntoView({
-          behavior: "smooth"
-        });
-
-      return;
-    }
-
-    // 🔥 PEGA NÚMERO
-    const numero =
-      localStorage.getItem("numero");
-
-    // 🔴 VALIDA NÚMERO SÓ EM ENTREGA
-    if (
-      !retirada &&
-      (!numero || numero.trim() === "")
-    ) {
-
-      toast.error("Informe o número da casa");
-
-      document
-        .querySelector("#numero-casa")
-        ?.scrollIntoView({
-          behavior: "smooth"
-        });
-
-      return;
-    }
+   const retirada =
+  sessionStorage.getItem("retiradaLoja") === "true";
 
     try {
 
@@ -119,11 +74,7 @@ export default function AddToCartButton({
         new Event("cartUpdated")
       );
 
-      toast.success(
-        retirada
-          ? "Produto reservado para retirada!"
-          : "Adicionado ao carrinho!"
-      );
+      toast.success("Adicionado ao carrinho!");
 
     } catch (error) {
 

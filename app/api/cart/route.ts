@@ -77,6 +77,8 @@ export async function GET() {
           product: {
             ...item.product,
 
+            slug: item.product.slug,
+
             sku:
               item.product.sku,
 

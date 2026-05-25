@@ -2,22 +2,25 @@
 
 import s from "@/app/styles/form.module.css";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import FreteCalculator from "@/app/components/FreteCalculator";
 
 type CartItem = {
   id: number;
   qty: number;
-  product: {
-    name: string;
-    priceCents: number;
-    sku: string;
-    images?: { url: string }[];
-  }
+product: {
+  name: string;
+  slug: string;
+  priceCents: number;
+  sku: string;
+  images?: { url: string }[];
+}
 };
 
 export default function CarrinhoPage() {
 
   const [items, setItems] = useState<CartItem[]>([]);
-  const [frete, setFrete] = useState(0);
+  
   const [coupon,setCoupon] = useState("");
 const [discount,setDiscount] = useState(0);
 const [couponLoading,setCouponLoading] = useState(false);
@@ -56,11 +59,7 @@ const [isMobile, setIsMobile] = useState(false);
 
   // 🔥 pega frete do localStorage
   useEffect(() => {
-    const saved = sessionStorage.getItem("freteCents");
-    if (saved) {
-      setFrete(Number(saved));
-    }
-
+    
     const savedCoupon =
   sessionStorage.getItem("coupon");
 
@@ -183,8 +182,13 @@ sessionStorage.setItem(
     0
   );
 
+const freteAtual =
+  Number(
+    sessionStorage.getItem("freteCents") || 0
+  );
+
 const totalFinal = Math.max(
-  total + (frete / 100) - discount,
+  total + (freteAtual / 100) - discount,
   0
 );
 
@@ -193,6 +197,22 @@ const totalFinal = Math.max(
       alert("Seu carrinho está vazio");
       return;
     }
+    const retirada =
+  sessionStorage.getItem("retiradaLoja") === "true";
+
+const frete =
+  sessionStorage.getItem("freteCents");
+
+if (!retirada && !frete) {
+
+  alert(
+    "Calcule o frete ou selecione retirada"
+  );
+
+  return;
+}
+
+
 
     window.location.href = "/checkout";
   }
@@ -240,6 +260,16 @@ const totalFinal = Math.max(
           transition:"0.2s"
         }}
       >
+
+  <Link
+  href={`/produto/${item.product.slug}`}
+  style={{
+    display:"flex",
+    gap:20,
+    flex:1,
+    textDecoration:"none"
+  }}
+>
 
 <img
   src={
@@ -308,6 +338,8 @@ const totalFinal = Math.max(
           </div>
 
         </div>
+
+        </Link>
 
         {/* PREÇO + REMOVE */}
         <div style={{
@@ -432,31 +464,11 @@ onMouseLeave={(e)=>(
     )}
 
   </div>
-
+  
+  <FreteCalculator />
   {/* FRETE */}
   
-{frete > 0 && (
-  <div
-    style={{
-      display:"flex",
-      justifyContent:"space-between",
-      marginBottom:8,
-      color:"#9ca3af",
-      fontSize:14
-    }}
-  >
-    <span>
-      Frete
-      {localStorage.getItem("freteNome")
-        ? ` (${localStorage.getItem("freteNome")})`
-        : ""}
-    </span>
 
-    <span style={{ color:"#fff" }}>
-      R$ {(frete / 100).toFixed(2)}
-    </span>
-  </div>
-)}
 
   {/* SUBTOTAL */}
   <div
