@@ -41,123 +41,214 @@ export default function MeusPedidos() {
         <h1 className={s.title}>Meus Pedidos</h1>
 
         {loading && (
-          <div className={s.card}>Carregando pedidos...</div>
+          <div className={s.card}>
+            Carregando pedidos...
+          </div>
         )}
 
         {!loading && orders.length === 0 && (
           <div className={s.card}>
-            <p>Você ainda não fez nenhum pedido.</p>
-            <button
-              onClick={() => router.push("/")}
-              className={s.button}
-            >
-              Começar a comprar
-            </button>
+            <div className={s.empty}>
+              <p>Você ainda não fez nenhum pedido.</p>
+
+              <button
+                onClick={() => router.push("/")}
+                className={s.button}
+              >
+                Começar a comprar
+              </button>
+            </div>
           </div>
         )}
 
         {orders.map((order) => (
           <div key={order.id} className={s.card}>
-            
-            {/* HEADER */}
-            <div className={s.header}>
-              <div>
-                <h2>Pedido #{order.id.slice(0, 8)}</h2>
-                <span className={s.date}>
+
+            {/* TOPO */}
+            <div className={s.topCard}>
+
+              <div className={s.leftSide}>
+
+                <div className={s.orderNumber}>
+                  Pedido #{order.id.slice(0, 8)}
+                </div>
+
+                <div className={s.orderDate}>
                   {new Date(order.createdAt).toLocaleDateString("pt-BR")}
-                </span>
+                </div>
+
+                <div className={s.topBadges}>
+
+                  <span className={`${s.status} ${s[order.status]}`}>
+                    {order.status === "pending"
+                      ? "Pendente"
+                      : order.status === "paid"
+                      ? "Pago"
+                      : order.status === "shipped"
+                      ? "Enviado"
+                      : order.status === "completed"
+                      ? "Entregue"
+                      : order.status}
+                  </span>
+
+                  <span className={s.itemsCount}>
+                    {order.orderitem?.length || 0} itens
+                  </span>
+
+                </div>
               </div>
 
-              <button
-                onClick={() => router.push(`/meus-pedidos/${order.id}`)}
-                className={s.detailsBtn}
-              >
-                Ver detalhes
-              </button>
-            </div>
+              <div className={s.rightSide}>
 
-            {/* INFO */}
-            <div className={s.info}>
-              <span className={`${s.status} ${s[order.status]}`}>
-                {order.status === "pending"
-                  ? "Pendente"
-                  : order.status === "paid"
-                  ? "Pago"
-                  : order.status === "shipped"
-                  ? "Enviado"
-                  : order.status === "completed"
-                  ? "Entregue"
-                  : order.status}
-              </span>
-
-              <span>
-                {order.orderitem?.length || 0} itens
-              </span>
-
-            <div style={{ textAlign: "right" }}>
-  {order.shippingCents > 0 && (
-    <div style={{ fontSize: 12, opacity: 0.7 }}>
-      Frete: {(order.shippingCents / 100).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}
-    </div>
-  )}
-
-  <div style={{ fontWeight: 700 }}>
-    {(order.totalCents / 100).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </div>
-</div>
-            </div>
-
-
-            <div style={{
-  marginTop: 12,
-  padding: 12,
-  borderRadius: 10,
-  background: "#f9fafb",
-  border: "1px solid #eee",
-  fontSize: 13,
-  color: "#111"
-}}>
- <strong>📍 Entrega</strong><br />
-{order.street || "-"}, {order.number || "-"}<br />
-{order.neighborhood || "-"}<br />
-{order.city || "-"} - {order.state || "-"}<br />
-CEP: {order.cep || "-"}
-</div>
-
-         <div className={s.address}>
-  <div className={s.addressTitle}>📍 Endereço de entrega</div>
-
-  <div className={s.addressText}>
-    {order.street}, {order.number}<br/>
-    {order.neighborhood}<br/>
-    {order.city} - {order.state}<br/>
-    CEP: {order.cep}
-  </div>
-</div>
-            {/* ITENS */}
-            <div className={s.items}>
-              {(order.orderitem || []).map((item: any) => (
-                <div key={item.id} className={s.item}>
-                  <div className={s.product}>
-                    <b>{item.name}</b>
-                    <span>Qtd: {item.qty}</span>
-                  </div>
-
-                  <div className={s.price}>
-                    {(item.priceCents / 100).toLocaleString("pt-BR", {
+                {order.shippingCents > 0 && (
+                  <div className={s.shipping}>
+                    Frete:{" "}
+                    {(order.shippingCents / 100).toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",
                     })}
                   </div>
+                )}
+
+                <div className={s.totalPrice}>
+                  {(order.totalCents / 100).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
                 </div>
-              ))}
+
+                <button
+                  onClick={() =>
+                    router.push(`/meus-pedidos/${order.id}`)
+                  }
+                  className={s.detailsBtn}
+                >
+                  Ver detalhes
+                </button>
+
+              </div>
             </div>
+
+            {/* TIMELINE */}
+            <div className={s.timeline}>
+
+              <div className={`${s.step} ${s.active}`}>
+                <div className={s.stepCircle}>✓</div>
+                <div className={s.stepLabel}>Pedido</div>
+              </div>
+
+              <div
+                className={`${s.step} ${
+                  order.status !== "pending"
+                    ? s.active
+                    : ""
+                }`}
+              >
+                <div className={s.stepCircle}>✓</div>
+                <div className={s.stepLabel}>Pago</div>
+              </div>
+
+              <div
+                className={`${s.step} ${
+                  order.status === "shipped" ||
+                  order.status === "completed"
+                    ? s.active
+                    : ""
+                }`}
+              >
+                <div className={s.stepCircle}>✓</div>
+                <div className={s.stepLabel}>Enviado</div>
+              </div>
+
+              <div
+                className={`${s.step} ${
+                  order.status === "completed"
+                    ? s.active
+                    : ""
+                }`}
+              >
+                <div className={s.stepCircle}>✓</div>
+                <div className={s.stepLabel}>Entregue</div>
+              </div>
+
+            </div>
+
+            {/* ENDEREÇO */}
+            <div className={s.address}>
+              <div className={s.addressTitle}>
+                📍 Endereço de entrega
+              </div>
+
+              <div className={s.addressText}>
+                {order.street || "-"},{" "}
+                {order.number || "-"}
+                <br />
+
+                {order.neighborhood || "-"}
+                <br />
+
+                {order.city || "-"} -{" "}
+                {order.state || "-"}
+                <br />
+
+                CEP: {order.cep || "-"}
+              </div>
+            </div>
+
+            {/* ITENS */}
+            <div className={s.items}>
+
+              {(order.orderitem || []).map((item: any) => (
+
+                <div
+                  key={item.id}
+                  className={s.productCard}
+                >
+
+                  {/* IMAGEM */}
+                  <div className={s.productImage}>
+
+                    <img
+                      src={
+                        item.image ||
+                        item.imagem ||
+                        "/placeholder.png"
+                      }
+                      alt={item.name}
+                    />
+
+                  </div>
+
+                  {/* INFO */}
+                  <div className={s.productInfo}>
+
+                    <div className={s.productName}>
+                      {item.name}
+                    </div>
+
+                    <div className={s.productMeta}>
+                      Quantidade: {item.qty}
+                    </div>
+
+                  </div>
+
+                  {/* PREÇO */}
+                  <div className={s.productPrice}>
+                    {(item.priceCents / 100).toLocaleString(
+                      "pt-BR",
+                      {
+                        style: "currency",
+                        currency: "BRL",
+                      }
+                    )}
+                  </div>
+
+                </div>
+
+              ))}
+
+            </div>
+
           </div>
         ))}
       </div>
