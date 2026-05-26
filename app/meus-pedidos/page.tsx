@@ -130,38 +130,16 @@ export default function MeusPedidos() {
 CEP: {order.cep || "-"}
 </div>
 
-            {/* TIMELINE */}
-            <div className={s.timeline}>
-              <div className={`${s.step} ${s.active}`}>Pedido</div>
+         <div className={s.address}>
+  <div className={s.addressTitle}>📍 Endereço de entrega</div>
 
-              <div
-                className={`${s.step} ${
-                  order.status !== "pending" ? s.active : ""
-                }`}
-              >
-                Pago
-              </div>
-
-              <div
-                className={`${s.step} ${
-                  order.status === "shipped" ||
-                  order.status === "completed"
-                    ? s.active
-                    : ""
-                }`}
-              >
-                Enviado
-              </div>
-
-              <div
-                className={`${s.step} ${
-                  order.status === "completed" ? s.active : ""
-                }`}
-              >
-                Entregue
-              </div>
-            </div>
-
+  <div className={s.addressText}>
+    {order.street}, {order.number}<br/>
+    {order.neighborhood}<br/>
+    {order.city} - {order.state}<br/>
+    CEP: {order.cep}
+  </div>
+</div>
             {/* ITENS */}
             <div className={s.items}>
               {(order.orderitem || []).map((item: any) => (
