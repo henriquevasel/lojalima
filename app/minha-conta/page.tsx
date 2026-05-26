@@ -1,89 +1,56 @@
+import Link from "next/link";
+import s from "@/app/styles/account.module.css";
 
 export default function MinhaContaPage() {
   return (
-    <div
-      style={{
-        minHeight: "70vh",
-        background: "#050505",
-        color: "#fff",
-        padding: "40px",
-      }}
-    >
-      <h1
-        style={{
-          fontSize: 32,
-          marginBottom: 10,
-        }}
-      >
+    <div>
+      <h1 className={s.title}>
         Minha conta
       </h1>
 
-      <p
-        style={{
-          color: "#999",
-          marginBottom: 30,
-        }}
-      >
+      <p className={s.subtitle}>
         Gerencie seus dados e acompanhe seus pedidos.
       </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-          gap: 20,
-        }}
-      >
-        <a
+      <div className={s.grid}>
+        <Link
           href="/meus-pedidos"
-          style={{
-            background: "#111",
-            borderRadius: 20,
-            padding: 25,
-            textDecoration: "none",
-            color: "#fff",
-            border: "1px solid #1f1f1f",
-          }}
+          className={s.card}
         >
-          <h3>Meus pedidos</h3>
-          <p style={{ color: "#888" }}>
-            Veja todos os seus pedidos
-          </p>
-        </a>
+          <h3 className={s.cardTitle}>
+            Meus pedidos
+          </h3>
 
-        <a
+          <p className={s.cardText}>
+            Acompanhe pedidos, entregas e histórico.
+          </p>
+        </Link>
+
+        <Link
           href="/minha-conta/dados"
-          style={{
-            background: "#111",
-            borderRadius: 20,
-            padding: 25,
-            textDecoration: "none",
-            color: "#fff",
-            border: "1px solid #1f1f1f",
-          }}
+          className={s.card}
         >
-          <h3>Meus dados</h3>
-          <p style={{ color: "#888" }}>
-            Atualize suas informações
-          </p>
-        </a>
+          <h3 className={s.cardTitle}>
+            Meus dados
+          </h3>
 
-        <a
-          href="/minha-conta/seguranca"
-          style={{
-            background: "#111",
-            borderRadius: 20,
-            padding: 25,
-            textDecoration: "none",
-            color: "#fff",
-            border: "1px solid #1f1f1f",
-          }}
-        >
-          <h3>Segurança</h3>
-          <p style={{ color: "#888" }}>
-            Altere sua senha
+          <p className={s.cardText}>
+            Atualize suas informações pessoais.
           </p>
-        </a>
+        </Link>
+
+        <Link
+          href="/minha-conta/seguranca"
+          className={s.card}
+        >
+          <h3 className={s.cardTitle}>
+            Segurança
+          </h3>
+
+          <p className={s.cardText}>
+            Altere sua senha e proteja sua conta.
+          </p>
+        </Link>
       </div>
     </div>
   );

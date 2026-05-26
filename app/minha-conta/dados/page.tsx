@@ -65,16 +65,13 @@ export default function DadosPage() {
       </p>
 
       <form
-        onSubmit={handleSave}
-        style={{
-          maxWidth: 600,
-          display: "flex",
-          flexDirection: "column",
-          gap: 24,
-        }}
-      >
-        <div>
-          <label>Nome</label>
+  onSubmit={handleSave}
+  className={s.form}
+>
+        <div className={s.field}>
+  <label className={s.label}>
+    Nome
+  </label>
 
           <input
             value={name}
