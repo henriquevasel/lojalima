@@ -210,10 +210,9 @@ export default function MeusPedidos() {
 
                     <img
                       src={
-                        item.image ||
-                        item.imagem ||
-                        "/placeholder.png"
-                      }
+  item.imageUrl ||
+  "/placeholder.png"
+}
                       alt={item.name}
                     />
 
