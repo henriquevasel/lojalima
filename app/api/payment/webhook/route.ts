@@ -34,20 +34,15 @@ function mapPayment_status(
 
 export async function POST(req: Request) {
 
-  try {
+try {
 
-    if (
-      process.env.NODE_ENV !==
-      "production"
-    ) {
-      console.log(
-        "🔥 WEBHOOK CHEGOU"
-      );
+  console.log(
+    "🔥 WEBHOOK CHEGOU"
+  );
 
-      console.log(
-        "🚀 NOVO WEBHOOK V2"
-      );
-    }
+  console.log(
+    "🚀 NOVO WEBHOOK V2"
+  );
 
     /* =========================
     🔒 RAW BODY
@@ -65,34 +60,12 @@ export async function POST(req: Request) {
       rawBody
     );
 
-    if (
-      process.env.NODE_ENV !==
-      "production"
-    ) {
-      console.log(
-        "📦 BODY:",
-        body
-      );
-    }
+     
+await processWebhook(body);
 
-    const response =
-      NextResponse.json({
-        ok: true,
-      });
-
-    /* =========================
-    🚀 PROCESSA EM BACKGROUND
-    ========================= */
-    processWebhook(body).catch(
-      (err) => {
-        console.error(
-          "❌ ERRO BACKGROUND:",
-          err
-        );
-      }
-    );
-
-    return response;
+return NextResponse.json({
+  ok: true,
+});
 
   } catch (error) {
 
@@ -170,20 +143,15 @@ async function processWebhook(
       return;
     }
 
-    if (
-      process.env.NODE_ENV !==
-      "production"
-    ) {
-      console.log(
-        "📌 STATUS:",
-        payment.status
-      );
+   console.log(
+  "📌 STATUS:",
+  payment.status
+);
 
-      console.log(
-        "🧾 EXTERNAL REF:",
-        payment.external_reference
-      );
-    }
+console.log(
+  "🧾 EXTERNAL REF:",
+  payment.external_reference
+);
 
     const orderId =
       payment.external_reference;
@@ -385,9 +353,13 @@ async function processWebhook(
           "📧 Enviando email..."
         );
 
-        await sendOrderEmail(
-          fullOrder
-        );
+        const emailResult =
+  await sendOrderEmail(fullOrder);
+
+console.log(
+  "📧 RESULTADO EMAIL:",
+  emailResult
+);
 
       } else {
 
