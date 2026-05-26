@@ -25,6 +25,7 @@ const userId = await getUserId();
   );
 }
 
+    
 
     // ================= BODY =================
 
@@ -173,6 +174,8 @@ freteCents = Math.round(
     let discountCents = 0;
     let totalCents = 0;
 
+    
+
     for (const item of cartItems) {
 
       const stockQty =
@@ -203,6 +206,8 @@ const finalPrice =
 totalCents += finalPrice * item.qty;
 
     }
+
+    const subtotalCents = totalCents;
 
     totalCents += freteCents || 0;
 
@@ -272,7 +277,15 @@ totalCents += finalPrice * item.qty;
 
   // 🔥 DESCONTO PIX
 if (paymentMethod === "pix") {
-  totalCents = Math.round(totalCents * 0.95);
+
+  const subtotalComDesconto =
+    Math.round(
+      (subtotalCents - discountCents) * 0.95
+    );
+
+  totalCents =
+    subtotalComDesconto + freteCents;
+
 }
 
     // ================= TRANSACTION =================
@@ -404,6 +417,10 @@ unit_price:
 
    
 ],
+
+shipments: {
+  cost: (freteCents || 0) / 100
+},
 
   payer: {
   email: customerEmail,
