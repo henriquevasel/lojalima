@@ -138,300 +138,299 @@ const precoPix =
   name={produto.name}
 />
 
-    {/* BOTÃO WHATSAPP */}
+  {/* COLUNA ESQUERDA */}
+<div>
 
-         <a
-  href={WHATSAPP_LINK}
-  target="_blank"
-  rel="noreferrer"
-  className={s.whatsappBtn}
->
-  Falar com especialista no WhatsApp
-</a>
+  {/* IMAGEM */}
+  <div className={s.imageWrap}>
+
+    <ProductGallery
+      images={
+        produto.productimage.length > 0
+          ? produto.productimage
+          : [
+              {
+                url: "/produtos/placeholder.jpg",
+              },
+            ]
+      }
+      name={produto.name}
+    />
+
+  </div>
+
+  {/* BOTÃO WHATSAPP */}
+  <a
+    href={WHATSAPP_LINK}
+    target="_blank"
+    rel="noreferrer"
+    className={s.whatsappBtn}
+  >
+    Falar com especialista no WhatsApp
+  </a>
+
+  {/* BLOCO CONFIANÇA */}
+  <div className={s.trustBox}>
+    🔒 Compra 100% segura <br />
+    🚚 Entrega rápida <br />
+    🛠 Instalação profissional disponível
+  </div>
+
+</div>
 
 
-       
+{/* INFORMAÇÕES */}
 
+<div style={{ minWidth: 0 }}>
 
-          {/* BLOCO CONFIANÇA */}
-
-          <div
-            style={{
-              padding: 20,
-              borderRadius: 20,
-              background: "rgba(34,197,94,0.08)",
-              border: "1px solid rgba(34,197,94,0.3)",
-              fontSize: 14,
-            }}
-          >
-            🔒 Compra 100% segura <br />
-            🚚 Entrega rápida <br />
-            🛠 Instalação profissional disponível
-          </div>
-
-        </div>
-
-
-        {/* INFORMAÇÕES */}
-
-        <div style={{ minWidth: 0 }}>
-
-         <h1 className={s.title}>
-            {produto.name}
-          </h1>
+ <h1 className={s.title}>
+    {produto.name}
+  </h1>
 
 
 {/* PREÇO + PAGAMENTO */}
 
 <div style={{ marginBottom: 20 }}>
 
- 
+
 
 {/* preço antigo */}
 {hasPromotion && (
-  <div
-    style={{
-      color: "#999",
-      fontSize: 20,
-      textDecoration: "line-through",
-      marginBottom: 6,
-      fontWeight: 500,
-    }}
-  >
-    {preco.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </div>
-)}
-
-{/* preço PIX destaque */}
 <div
   style={{
-    fontSize: 48,
-    fontWeight: 800,
-    lineHeight: 1,
-    marginBottom: 4,
-    color: "#111",
+    color: "#999",
+    fontSize: 20,
+    textDecoration: "line-through",
+    marginBottom: 6,
+    fontWeight: 500,
   }}
 >
-  {precoPix.toLocaleString("pt-BR", {
+  {preco.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
   })}
 </div>
+)}
 
+{/* preço PIX destaque */}
 <div
-  style={{
-    fontSize: 14,
-    color: "#16a34a",
-    fontWeight: 700,
-    marginBottom: 12,
-  }}
+style={{
+  fontSize: 48,
+  fontWeight: 800,
+  lineHeight: 1,
+  marginBottom: 4,
+  color: "#111",
+}}
 >
-  no PIX com 5% OFF
+{precoPix.toLocaleString("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+})}
 </div>
 
-  <div
-  style={{
-    fontSize: 14,
-    marginTop: 4,
-    color: "#444",
-  }}
+<div
+style={{
+  fontSize: 14,
+  color: "#16a34a",
+  fontWeight: 700,
+  marginBottom: 12,
+}}
 >
-  ou{" "}
-  <strong>
-    {precoFinal.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </strong>{" "}
-  em até 3x sem juros
+no PIX com 5% OFF
+</div>
+
+<div
+style={{
+  fontSize: 14,
+  marginTop: 4,
+  color: "#444",
+}}
+>
+ou{" "}
+<strong>
+  {precoFinal.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  })}
+</strong>{" "}
+em até 3x sem juros
 </div>
 
 
 {/* badge OFF */}
 {hasPromotion && produto.promotion && (
-  <div
-    style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 6,
-      background: "#16a34a",
-      color: "#fff",
-      padding: "6px 12px",
-      borderRadius: 999,
-      fontSize: 13,
-      fontWeight: 700,
-      marginBottom: 10,
-    }}
-  >
-    {produto.promotion.discountValue}% OFF
-  </div>
+<div
+  style={{
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 6,
+    background: "#16a34a",
+    color: "#fff",
+    padding: "6px 12px",
+    borderRadius: 999,
+    fontSize: 13,
+    fontWeight: 700,
+    marginBottom: 10,
+  }}
+>
+  {produto.promotion.discountValue}% OFF
+</div>
 )}
 
 {hasPromotion && (
-  <div
-    style={{
-      fontSize: 14,
-      color: "#666",
-      marginTop: 6,
-      marginBottom: 10,
-    }}
-  >
-    De{" "}
-    <strong>
-      {preco.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}
-    </strong>{" "}
-    por{" "}
-    <strong>
-      {precoFinal.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}
-    </strong>
-  </div>
+<div
+  style={{
+    fontSize: 14,
+    color: "#666",
+    marginTop: 6,
+    marginBottom: 10,
+  }}
+>
+  De{" "}
+  <strong>
+    {preco.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </strong>{" "}
+  por{" "}
+  <strong>
+    {precoFinal.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}
+  </strong>
+</div>
 )}
-  
 
-  {/* parcelamento */}
 
-  {/* BOX PAGAMENTOS */}
-  <div
-    style={{
-      marginTop: 12,
-      display: "flex",
-      flexDirection: "column",
-      gap: 8,
-    }}
-  >
+/* parcelamento */
 
-    {/* boleto */}
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        background: "#eaf7ef",
-        padding: "10px 12px",
-        borderRadius: 8,
-      }}
-    >
-      <CreditCard size={18} color="#2e7d32" />
+/* BOX PAGAMENTOS */
+<div
+style={{
+  marginTop: 12,
+  display: "flex",
+  flexDirection: "column",
+  gap: 8,
+}}
+>
 
-      <div style={{ lineHeight: 1.2 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#2e7d32" }}>
-          {precoPix.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}{" "}
-          no boleto
-        </div>
-        <div style={{ fontSize: 12, color: "#555" }}>
-          Economize{" "}
-          {descontoPix.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </div>
-      </div>
+{/* boleto */}
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    background: "#eaf7ef",
+    padding: "10px 12px",
+    borderRadius: 8,
+  }}
+>
+  <CreditCard size={18} color="#2e7d32" />
+
+  <div style={{ lineHeight: 1.2 }}>
+    <div style={{ fontSize: 14, fontWeight: 600, color: "#2e7d32" }}>
+      {precoPix.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}{" "}
+      no boleto
     </div>
-
-    {/* pix */}
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        background: "#f4f6f8",
-        padding: "10px 12px",
-        borderRadius: 8,
-      }}
-    >
-      <QrCode size={18} color="#22c55e" />
-
-      <div style={{ lineHeight: 1.2 }}>
-        <div style={{ fontSize: 14, fontWeight: 600 }}>
-          {precoPix.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}{" "}
-          no pix
-          <span
-            style={{
-              marginLeft: 6,
-              background: "#22c55e",
-              color: "#fff",
-              fontSize: 10,
-              padding: "2px 6px",
-              borderRadius: 4,
-              fontWeight: 700,
-            }}
-          >
-            5% OFF
-          </span>
-        </div>
-        <div style={{ fontSize: 12, color: "#555" }}>
-          5% OFF adicional no PIX
-        </div>
-      </div>
+    <div style={{ fontSize: 12, color: "#555" }}>
+      Economize{" "}
+      {descontoPix.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
     </div>
-
-
   </div>
+</div>
+
+{/* pix */}
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    background: "#f4f6f8",
+    padding: "10px 12px",
+    borderRadius: 8,
+  }}
+>
+  <QrCode size={18} color="#22c55e" />
+
+  <div style={{ lineHeight: 1.2 }}>
+    <div style={{ fontSize: 14, fontWeight: 600 }}>
+      {precoPix.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}{" "}
+      no pix
+      <span
+        style={{
+          marginLeft: 6,
+          background: "#22c55e",
+          color: "#fff",
+          fontSize: 10,
+          padding: "2px 6px",
+          borderRadius: 4,
+          fontWeight: 700,
+        }}
+      >
+        5% OFF
+      </span>
+    </div>
+    <div style={{ fontSize: 12, color: "#555" }}>
+      5% OFF adicional no PIX
+    </div>
+  </div>
+</div>
+
+</div>
 
 </div>
 
 {/* BENEFÍCIOS MELHORADOS */}
 
 <div
-  style={{
-    margin: "20px 0",
-    padding: 16,
-    borderRadius: 12,
-    background: "var(--soft)",
-    border: "1px solid var(--border)",
-    display: "grid",
-    gap: 8,
-    fontSize: 13,
-  }}
+style={{
+  margin: "20px 0",
+  padding: 16,
+  borderRadius: 12,
+  background: "var(--soft)",
+  border: "1px solid var(--border)",
+  display: "grid",
+  gap: 8,
+  fontSize: 13,
+}}
 >
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <BadgeCheck size={16} /> Produto original com nota fiscal
-  </div>
-
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <ShieldCheck size={16} /> Garantia de 12 meses
-  </div>
-
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <BadgeCheck size={16} /> Suporte especializado
-  </div>
-
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <Truck size={16} /> Envio rápido e seguro
-  </div>
+<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  <BadgeCheck size={16} /> Produto original com nota fiscal
 </div>
 
+<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  <ShieldCheck size={16} /> Garantia de 12 meses
+</div>
 
+<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  <BadgeCheck size={16} /> Suporte especializado
+</div>
 
-          {/* BOTÃO COMPRAR */}
+<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  <Truck size={16} /> Envio rápido e seguro
+</div>
+</div>
 
-          <div style={{ marginBottom: 20 }}>
-            <AddToCartButton productId={produto.id} />
-          </div>
+{/* BOTÃO COMPRAR */}
 
-            <FreteCalculator />
-            
+<div style={{ marginBottom: 20 }}>
+  <AddToCartButton productId={produto.id} />
+</div>
 
-      
+<FreteCalculator />
 
-        </div>
-
-      </div>
+</div>
 
          {/* DESCRIÇÃO */}
 <div className={s.description}>
