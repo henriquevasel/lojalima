@@ -9,10 +9,12 @@ import { useState } from "react";
 
 type Props = {
   dark?: boolean;
+  saveToCart?: boolean;
 };
 
 export default function FreteCalculator({
-  dark = false
+  dark = false,
+  saveToCart = false
 }: Props) {
 
   const [cep, setCep] = useState("");
@@ -60,10 +62,18 @@ export default function FreteCalculator({
         "Retirada na loja"
       );
 
-      sessionStorage.setItem(
-        "freteCents",
-        "0"
-      );
+      if (saveToCart) {
+
+  sessionStorage.setItem(
+    "freteCents",
+    "0"
+  );
+
+  window.dispatchEvent(
+    new Event("freteUpdated")
+  );
+
+}
 
       return;
 
@@ -143,15 +153,18 @@ localStorage.setItem(
   "freteNome",
   melhorOpcao.name
 );
+if (saveToCart) {
 
-sessionStorage.setItem(
-  "freteCents",
-  String(valor)
-);
+  sessionStorage.setItem(
+    "freteCents",
+    String(valor)
+  );
 
-window.dispatchEvent(
-  new Event("freteUpdated")
-);
+  window.dispatchEvent(
+    new Event("freteUpdated")
+  );
+
+}
 
      
 
