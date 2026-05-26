@@ -290,47 +290,125 @@ if (paymentMethod === "pix") {
 
     // ================= TRANSACTION =================
 
-    const result = await prisma.$transaction(async (tx) => {
+   const result = await prisma.$transaction(async (tx) => {
 
-      const order = await tx.order.create({
-     data: {
-  userId,
-  status: "pending",
-  totalCents,
-  shippingCents: freteCents || 0,
-  customerName,
-  customerEmail: customerEmail || "",
-  customerWhats,
-  customerCpf,
-  customerObs: customerObs || "",
+  const orderItemsData = [];
 
-  // 🔥 ENDEREÇO (aqui embaixo, organizado)
-  cep: endereco?.cep || "",
-  city: endereco?.cidade || "",
-  state: endereco?.uf || "",
-  street: endereco?.logradouro || "",
-  neighborhood: endereco?.bairro || "",
-  number: numero || "",
+  for (const item of cartItems) {
 
-          orderitem: {
-            create: cartItems.map(item => ({
-              productId: item.productId,
-              variantId: item.variantId,
-              slug: item.product.slug,
-              name: item.product.name,
-        priceCents: getFinalPrice({
-  ...item.product,
-  priceCents: calcularPrecoVenda(
-    item.productvariant?.priceCents ??
-    item.product.priceCents
-  ),
-}),
-              qty: item.qty,
-              imageUrl: item.product.productimage[0]?.url || ""
-            }))
+    const fullProduct = await tx.product.findUnique({
+      where: {
+        id: item.productId
+      },
+
+      include: {
+        kitItems: {
+          include: {
+            product: {
+              include: {
+                productimage: true
+              }
+            }
           }
         }
+      }
+    });
+
+    // 🔥 KIT
+    if (
+      fullProduct?.isKit &&
+      fullProduct.kitItems.length > 0
+    ) {
+
+      for (const kitItem of fullProduct.kitItems) {
+
+        orderItemsData.push({
+
+          productId: kitItem.product.id,
+
+          variantId: null,
+
+          slug: kitItem.product.slug,
+
+          name: kitItem.product.name,
+
+          priceCents: Math.round(
+            item.product.priceCents /
+            fullProduct.kitItems.length
+          ),
+
+          qty:
+            kitItem.quantity *
+            item.qty,
+
+          imageUrl:
+            kitItem.product.productimage[0]?.url || ""
+        });
+      }
+
+    }
+
+    // 🔥 NORMAL
+    else {
+
+      orderItemsData.push({
+
+        productId: item.productId,
+
+        variantId: item.variantId,
+
+        slug: item.product.slug,
+
+        name: item.product.name,
+
+        priceCents: getFinalPrice({
+          ...item.product,
+
+          priceCents:
+            calcularPrecoVenda(
+              item.productvariant?.priceCents ??
+              item.product.priceCents
+            ),
+        }),
+
+        qty: item.qty,
+
+        imageUrl:
+          item.product.productimage[0]?.url || ""
       });
+    }
+  }
+
+  const order = await tx.order.create({
+    data: {
+
+      userId,
+      status: "pending",
+      totalCents,
+      shippingCents: freteCents || 0,
+
+      customerName,
+      customerEmail: customerEmail || "",
+
+      customerWhats,
+      customerCpf,
+
+      customerObs: customerObs || "",
+
+      // 🔥 ENDEREÇO
+      cep: endereco?.cep || "",
+      city: endereco?.cidade || "",
+      state: endereco?.uf || "",
+      street: endereco?.logradouro || "",
+      neighborhood: endereco?.bairro || "",
+      number: numero || "",
+
+      orderitem: {
+        create: orderItemsData
+      }
+
+    }
+  });
 
       const payment = await tx.payment.create({
         data: {

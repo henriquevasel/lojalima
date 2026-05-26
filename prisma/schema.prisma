@@ -121,6 +121,10 @@ model product {
 
   highlight Boolean @default(false)
   priority  Int     @default(0)
+  isKit     Boolean @default(false)
+  kitItems KitItem[] @relation("KitProducts")
+
+usedInKits KitItem[] @relation("KitItemProduct")
 
   ean      String?
   supplier String?
@@ -256,4 +260,19 @@ enum payment_status {
 enum user_role {
   ADMIN
   CLIENT
+}
+
+
+model KitItem {
+
+  id String @id @default(cuid())
+
+  kitId Int
+  productId Int
+
+  quantity Int
+
+  kit product @relation("KitProducts", fields: [kitId], references: [id])
+
+  product product @relation("KitItemProduct", fields: [productId], references: [id])
 }
