@@ -9,7 +9,10 @@
 }
 
 .icon {
-  font-size: 18px;
+  width: 14px;
+  height: 14px;
+
+  opacity: .9;
 }
 
 .title{
@@ -22,23 +25,42 @@
 .methods{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .methodBtn{
   width: 100%;
-  min-height: 46px;
-  border-radius: 12px;
-  background: #fff;
-  font-weight: 700;
+
+  height: 52px;
+
+  border-radius: 14px;
+
+  background: #0b1016;
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  color: #dbe4ee;
+
   cursor: pointer;
-  border: 1px solid #ddd;
-  transition: .2s;
-  font-size: 12px;
-  padding: 8px;
-  text-align: center;
-  line-height: 1.2;
+
+  transition:
+    all .22s ease;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  padding: 0 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 .active{
@@ -234,12 +256,18 @@
 
 .methodContent {
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   gap: 8px;
 
   font-weight: 600;
-  font-size: 15px;
+
+  font-size: 14px;
+
+  line-height: 1;
 }
 
 
@@ -281,26 +309,33 @@
 }
 
 .methodBtn:hover {
+
   transform: translateY(-1px);
 
-  border-color: rgba(34,197,94,0.28);
+  border-color: rgba(255,255,255,0.12);
+
+  background: #101722;
+}
+
+.dark .methodBtn:not(.active) {
+  opacity: .88;
 }
 
 .dark .active {
+
   background:
     linear-gradient(
       180deg,
-      rgba(34,197,94,0.14),
-      rgba(34,197,94,0.06)
+      rgba(34,197,94,0.10),
+      rgba(34,197,94,0.04)
     );
 
-  border: 1px solid rgba(34,197,94,0.55);
+  border: 1px solid rgba(34,197,94,0.65);
 
   color: #4ade80;
 
   box-shadow:
-    0 0 0 1px rgba(34,197,94,0.15),
-    0 8px 25px rgba(34,197,94,0.08);
+    0 0 0 1px rgba(34,197,94,0.08);
 }
 
 .dark .input {

@@ -200,34 +200,27 @@ if (saveToCart) {
 
 <button
   onClick={() => {
+    setRetirada(false);
 
-   setRetirada(false);
+    sessionStorage.removeItem("retiradaLoja");
+    sessionStorage.removeItem("freteCents");
 
-sessionStorage.removeItem("retiradaLoja");
+    setFrete(null);
 
-sessionStorage.removeItem("freteCents");
-
-setFrete(null);
-
-window.dispatchEvent(
-  new Event("freteUpdated")
-);
-
+    window.dispatchEvent(
+      new Event("freteUpdated")
+    );
   }}
   className={`${s.methodBtn} ${!retirada ? s.active : ""}`}
 >
   <div className={s.methodContent}>
-   <div className={s.methodContent}>
-  <FaTruck className={s.icon} />
-
-  <span>Entrega</span>
-</div>
+    <FaTruck className={s.icon} />
+    <span>Entrega</span>
   </div>
 </button>
 
 <button
   onClick={() => {
-
     setRetirada(true);
 
     setFrete(0);
@@ -238,8 +231,8 @@ window.dispatchEvent(
     );
 
     window.dispatchEvent(
-  new Event("freteUpdated")
-);
+      new Event("freteUpdated")
+    );
 
     sessionStorage.setItem(
       "retiradaLoja",
@@ -250,16 +243,12 @@ window.dispatchEvent(
       "freteNome",
       "Retirada na loja"
     );
-
   }}
   className={`${s.methodBtn} ${retirada ? s.active : ""}`}
 >
   <div className={s.methodContent}>
-   <div className={s.methodContent}>
-  <FaStore className={s.icon} />
-
-  <span>Retirada na loja</span>
-</div>
+    <FaStore className={s.icon} />
+    <span>Retirada</span>
   </div>
 </button>
 
