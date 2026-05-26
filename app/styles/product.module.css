@@ -471,3 +471,16 @@
   text-decoration: line-through;
   font-size: 14px;
 }
+
+.imageWrap {
+  padding-bottom: 20px;
+}
+
+.trustBox {
+  margin: 0 20px;
+}
+
+.whatsappBtn {
+  margin: 20px;
+  margin-bottom: 16px;
+}

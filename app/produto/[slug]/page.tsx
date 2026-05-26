@@ -138,6 +138,37 @@ const precoPix =
   name={produto.name}
 />
 
+    {/* BOTÃO WHATSAPP */}
+
+         <a
+  href={WHATSAPP_LINK}
+  target="_blank"
+  rel="noreferrer"
+  className={s.whatsappBtn}
+>
+  Falar com especialista no WhatsApp
+</a>
+
+
+       
+
+
+          {/* BLOCO CONFIANÇA */}
+
+          <div
+            style={{
+              padding: 20,
+              borderRadius: 20,
+              background: "rgba(34,197,94,0.08)",
+              border: "1px solid rgba(34,197,94,0.3)",
+              fontSize: 14,
+            }}
+          >
+            🔒 Compra 100% segura <br />
+            🚚 Entrega rápida <br />
+            🛠 Instalação profissional disponível
+          </div>
+
         </div>
 
 
@@ -396,36 +427,7 @@ const precoPix =
             <FreteCalculator />
             
 
-          {/* BOTÃO WHATSAPP */}
-
-         <a
-  href={WHATSAPP_LINK}
-  target="_blank"
-  rel="noreferrer"
-  className={s.whatsappBtn}
->
-  Falar com especialista no WhatsApp
-</a>
-
-
-       
-
-
-          {/* BLOCO CONFIANÇA */}
-
-          <div
-            style={{
-              padding: 20,
-              borderRadius: 20,
-              background: "rgba(34,197,94,0.08)",
-              border: "1px solid rgba(34,197,94,0.3)",
-              fontSize: 14,
-            }}
-          >
-            🔒 Compra 100% segura <br />
-            🚚 Entrega rápida <br />
-            🛠 Instalação profissional disponível
-          </div>
+      
 
         </div>
 
