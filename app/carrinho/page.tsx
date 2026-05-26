@@ -41,6 +41,17 @@ const [frete, setFrete] = useState(0);
 
 useEffect(() => {
 
+  // limpa dados antigos
+  sessionStorage.removeItem("freteCents");
+  sessionStorage.removeItem("retiradaLoja");
+
+  localStorage.removeItem("cep");
+  localStorage.removeItem("numero");
+  localStorage.removeItem("cidade");
+  localStorage.removeItem("uf");
+  localStorage.removeItem("logradouro");
+  localStorage.removeItem("bairro");
+
   function updateFrete() {
 
     const saved =
@@ -218,6 +229,7 @@ const totalFinal = Math.max(
 );
 
   function handleCheckout() {
+
     if (!items || items.length === 0) {
       alert("Seu carrinho está vazio");
       return;
@@ -230,13 +242,38 @@ const frete =
     sessionStorage.getItem("freteCents") || 0
   );
 
+  const cep =
+  localStorage.getItem("cep");
+
+const numero =
+  localStorage.getItem("numero");
+
+if (!cep) {
+
+  alert("Informe o CEP");
+
+  return;
+
+}
+
 if (!retirada && frete <= 0) {
 
   alert(
-    "Calcule o frete ou selecione retirada"
+    "Calcule o frete"
   );
 
   return;
+
+}
+
+if (!retirada && !numero) {
+
+  alert(
+    "Informe o número da casa"
+  );
+
+  return;
+
 }
 
 
