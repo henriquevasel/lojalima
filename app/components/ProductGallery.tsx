@@ -37,8 +37,9 @@ export default function ProductGallery({ images, name }: any) {
   priority
   style={{
     objectFit: "contain",
-    transform: "scale(4.5)",
-    padding: "0px"
+    width: "100%",
+    height: "100%",
+    transform: "scaleX(1.8) scaleY(2.2)",
   }}
 />
 </div>
