@@ -12,7 +12,6 @@ export default function HomeKitBanner() {
       className={s.banner}
     >
 
-      {/* imagem */}
       <div className={s.imageArea}>
 
         <img
@@ -21,40 +20,38 @@ export default function HomeKitBanner() {
           className={s.image}
         />
 
-      </div>
+        <div className={s.content}>
 
-      {/* conteúdo */}
-      <div className={s.content}>
+          <span className={s.badge}>
+            PROMOÇÃO ATÉ 29/05
+          </span>
 
-        <span className={s.badge}>
-          PROMOÇÃO
-        </span>
+          <h2>
+            KIT 4 CÂMERAS IP COM IA
+          </h2>
 
-        <h2>
-          KIT 4 CÂMERAS IP COM IA
-        </h2>
+          <p>
+            Solução completa com gravador,
+            HD, integração e monitoramento.
+          </p>
 
-        <p>
-          Solução completa com câmeras,
-          gravador, HD e integração.
-        </p>
+          <div className={s.priceArea}>
 
-      </div>
+            <div className={s.oldPrice}>
+              R$ 5.890
+            </div>
 
-      {/* preço */}
-      <div className={s.priceArea}>
+            <div className={s.price}>
+              R$ 4.990
+            </div>
 
-        <div className={s.oldPrice}>
-          R$ 5.890
+            <button className={s.button}>
+              comprar
+            </button>
+
+          </div>
+
         </div>
-
-        <div className={s.price}>
-          R$ 4.990
-        </div>
-
-        <button className={s.button}>
-          Comprar agora
-        </button>
 
       </div>
 
