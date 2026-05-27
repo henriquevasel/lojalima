@@ -4,7 +4,6 @@ import Link from "next/link";
 import s from "@/app/styles/homeKits.module.css";
 
 const kits = [
-
   {
     href: "/produto/kit-4-cameras-ip-ia-fullhd",
     image: "/kits/kit1.jpg",
@@ -24,19 +23,18 @@ const kits = [
     href: "/produto/kit-antena",
     image: "/kits/kit4.jpg",
   },
-
 ];
 
 export default function HomeKitSection() {
 
   return (
 
-    <div className={s.grid}>
+    <section className={s.grid}>
 
-      {/* GRANDE */}
+      {/* ESQUERDA */}
       <Link
         href={kits[0].href}
-        className={s.card}
+        className={`${s.card} ${s.large}`}
       >
         <img
           src={kits[0].image}
@@ -46,18 +44,12 @@ export default function HomeKitSection() {
       </Link>
 
       {/* DIREITA */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateRows: "1fr 1fr",
-          gap: 18,
-        }}
-      >
+      <div className={s.right}>
 
-        {/* MÉDIO */}
+        {/* TOPO */}
         <Link
           href={kits[1].href}
-          className={s.card}
+          className={`${s.card} ${s.medium}`}
         >
           <img
             src={kits[1].image}
@@ -66,18 +58,12 @@ export default function HomeKitSection() {
           />
         </Link>
 
-        {/* PEQUENOS */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 18,
-          }}
-        >
+        {/* BAIXO */}
+        <div className={s.bottom}>
 
           <Link
             href={kits[2].href}
-            className={s.card}
+            className={`${s.card} ${s.small}`}
           >
             <img
               src={kits[2].image}
@@ -88,7 +74,7 @@ export default function HomeKitSection() {
 
           <Link
             href={kits[3].href}
-            className={s.card}
+            className={`${s.card} ${s.small}`}
           >
             <img
               src={kits[3].image}
@@ -101,6 +87,6 @@ export default function HomeKitSection() {
 
       </div>
 
-    </div>
+    </section>
   );
 }
