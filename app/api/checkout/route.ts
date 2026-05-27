@@ -178,16 +178,23 @@ freteCents = Math.round(
 
     for (const item of cartItems) {
 
-      const stockQty =
-  item.product.stock?.quantity || 0;
+    // 🔥 KIT IGNORA ESTOQUE
+if (!item.product.isKit) {
 
-if (stockQty < item.qty) {
-  return NextResponse.json(
-    {
-      error: `Produto ${item.product.name} sem estoque`
-    },
-    { status: 400 }
-  );
+  const stockQty =
+    item.product.stock?.quantity || 0;
+
+  if (stockQty < item.qty) {
+
+    return NextResponse.json(
+      {
+        error: `Produto ${item.product.name} sem estoque`
+      },
+      { status: 400 }
+    );
+
+  }
+
 }
 
    const basePrice =

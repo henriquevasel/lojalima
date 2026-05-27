@@ -230,19 +230,26 @@ export async function PUT(
       item.product.stock
         ?.quantity || 0;
 
-    if (
-      newQty > stockQty
-    ) {
-      return NextResponse.json(
-        {
-          error:
-            "Quantidade maior que estoque",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
+    // 🔥 KIT IGNORA ESTOQUE
+if (!item.product.isKit) { 
+
+  if (
+    newQty > stockQty
+  ) {
+
+    return NextResponse.json(
+      {
+        error:
+          "Quantidade maior que estoque",
+      },
+      {
+        status: 400,
+      }
+    );
+
+  }
+
+}
 
     /* ==========================
     REMOVE SE ZERO
