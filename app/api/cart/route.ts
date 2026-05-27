@@ -101,15 +101,19 @@ else {
                 .productimage,
 
             priceCents:
-              getFinalPrice({
-                ...item.product,
 
-                priceCents:
-                  calcularPrecoVenda(
-                    item.product
-                      .priceCents
-                  ),
-              }),
+  item.product.isKit
+
+    ? item.product.priceCents
+
+    : getFinalPrice({
+        ...item.product,
+
+        priceCents:
+          calcularPrecoVenda(
+            item.product.priceCents
+          ),
+      }),
           },
 
           // variante
