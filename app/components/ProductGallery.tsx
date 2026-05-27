@@ -30,16 +30,16 @@ export default function ProductGallery({ images, name }: any) {
 
   }}
 >
-  <Image
+<Image
   src={selected}
   alt={name}
-  fill
+  width={900}
+  height={900}
   priority
   style={{
     objectFit: "contain",
-    width: "100%",
-    height: "100%",
-    transform: "scaleX(3.5) scaleY(4)",
+    width: "85%",
+    height: "85%",
   }}
 />
 </div>
