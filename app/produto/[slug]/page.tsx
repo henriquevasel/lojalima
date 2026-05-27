@@ -121,29 +121,49 @@ const precoPix =
 
       <div className={s.grid}>
 
-        {/* IMAGEM */}
+      {/* COLUNA ESQUERDA */}
 
-        <div className={s.imageWrap}>
+<div className={s.leftColumn}>
 
-<ProductGallery
-  images={
-    produto.productimage.length > 0
-      ? produto.productimage
-      : [
-          {
-            url: "/produtos/placeholder.jpg",
-          },
-        ]
-  }
-  name={produto.name}
-/>
+  {/* IMAGEM */}
+  <div className={s.imageWrap}>
 
-        </div>
+    <ProductGallery
+      images={
+        produto.productimage.length > 0
+          ? produto.productimage
+          : [
+              {
+                url: "/produtos/placeholder.jpg",
+              },
+            ]
+      }
+      name={produto.name}
+    />
 
+  </div>
 
+  {/* WHATSAPP */}
+  <a
+    href={WHATSAPP_LINK}
+    target="_blank"
+    rel="noreferrer"
+    className={s.whatsappBtn}
+  >
+    Falar com especialista no WhatsApp
+  </a>
+
+  {/* BLOCO CONFIANÇA */}
+  <div className={s.securityCard}>
+    <div>🔒 Compra 100% segura</div>
+    <div>🚚 Entrega rápida</div>
+    <div>🛠 Instalação profissional disponível</div>
+  </div>
+
+</div>
         {/* INFORMAÇÕES */}
 
-        <div style={{ minWidth: 0 }}>
+        <div className={s.infoColumn}>
 
          <h1 className={s.title}>
             {produto.name}
@@ -152,7 +172,7 @@ const precoPix =
 
 {/* PREÇO + PAGAMENTO */}
 
-<div style={{ marginBottom: 20 }}>
+<div className={s.priceCard}>
 
  
 
@@ -354,78 +374,30 @@ const precoPix =
 
 </div>
 
-{/* BENEFÍCIOS MELHORADOS */}
 
-<div
-  style={{
-    margin: "20px 0",
-    padding: 16,
-    borderRadius: 12,
-    background: "var(--soft)",
-    border: "1px solid var(--border)",
-    display: "grid",
-    gap: 8,
-    fontSize: 13,
-  }}
->
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <BadgeCheck size={16} /> Produto original com nota fiscal
-  </div>
-
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <ShieldCheck size={16} /> Garantia de 12 meses
-  </div>
-
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <BadgeCheck size={16} /> Suporte especializado
-  </div>
-
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <Truck size={16} /> Envio rápido e seguro
-  </div>
-</div>
 
 
 
           {/* BOTÃO COMPRAR */}
 
-          <div style={{ marginBottom: 20 }}>
+          <div className={s.buyButtonWrap}>
             <AddToCartButton productId={produto.id} />
           </div>
 
-            <FreteCalculator />
+
+            <div className={s.freteCard}>
+              <FreteCalculator />
+            </div>
             
 
-          {/* BOTÃO WHATSAPP */}
-
-         <a
-  href={WHATSAPP_LINK}
-  target="_blank"
-  rel="noreferrer"
-  className={s.whatsappBtn}
->
-  Falar com especialista no WhatsApp
-</a>
-
+        
 
        
 
 
           {/* BLOCO CONFIANÇA */}
 
-          <div
-            style={{
-              padding: 20,
-              borderRadius: 20,
-              background: "rgba(34,197,94,0.08)",
-              border: "1px solid rgba(34,197,94,0.3)",
-              fontSize: 14,
-            }}
-          >
-            🔒 Compra 100% segura <br />
-            🚚 Entrega rápida <br />
-            🛠 Instalação profissional disponível
-          </div>
+         
 
         </div>
 

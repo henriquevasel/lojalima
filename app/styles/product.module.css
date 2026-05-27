@@ -7,7 +7,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: 60px;
   align-items: start;
 }
@@ -18,12 +18,14 @@
   border: 1px solid var(--border);
   background: var(--card);
   box-shadow: 0 6px 24px rgba(0,0,0,.05);
+   position:sticky;
+  top:20px;
 }
 
 .imageWrap img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  max-height:650px;
+object-fit:contain;
   display: block;
 }
 
@@ -506,4 +508,80 @@
 .whatsappBtn {
   margin: 20px;
   margin-bottom: 16px;
+}
+
+.infoColumn{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.priceCard{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+}
+
+.buyButtonWrap{
+  width:100%;
+}
+
+.buyButtonWrap button{
+  width:100%;
+  height:64px;
+  border-radius:18px;
+  font-size:22px;
+  font-weight:700;
+}
+
+.freteCard{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:20px;
+  padding:24px;
+}
+
+.securityCard{
+  background:#f0faf3;
+  border:1px solid #b7e4c7;
+  border-radius:18px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  font-size:15px;
+  color:#222;
+}
+
+.whatsappBtn{
+  width:100%;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  font-size:20px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.whatsappBtn:hover{
+  transform:translateY(-2px);
+}
+
+.title{
+  font-size:42px !important;
+  line-height:1.1;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.leftColumn{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
 }
