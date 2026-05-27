@@ -6,6 +6,7 @@ import ProductsCarousel from "@/app/components/ProductsCarousel";
 import StoreToolbar from "@/app/components/StoreToolbar";
 import WhatsAppSection from "@/app/components/WhatsAppSection";
 import WhatsappCTA from "@/app/components/WhatsappCTA";
+import HomeKitBanner from "@/app/components/HomeKitBanner";
 
 export default function HomeProducts() {
 
@@ -62,6 +63,8 @@ key={query}
             />
           </div>
 
+
+
           {/* FECHADURAS */}
           <div className="homeSection">
             <ProductsCarousel
@@ -69,6 +72,11 @@ key={query}
               endpoint="/api/products/store?category=fechaduras&limit=10"
             />
           </div>
+
+          {/* 🔥 KIT PROMOCIONAL */}
+<div className="homeSection">
+  <HomeKitBanner />
+</div>
 
           
       

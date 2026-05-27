@@ -6,7 +6,7 @@ import HomeProducts from "@/app/components/HomeProducts";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
 import { Suspense } from "react";
 import { FaWhatsapp } from "react-icons/fa";
-import HomeKitSection from "@/app/components/HomeKitSection";
+
 
 
 
@@ -85,7 +85,7 @@ export default function HomePage() {
       {/* Banner superior da página */}
       <HomeBannerCarousel />
 
-      <HomeKitSection />
+     
 
     
 
