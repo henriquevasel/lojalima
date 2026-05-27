@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import s from "@/app/styles/homeKitBanner.module.css";
+import s from "@/app/styles/homeKits.module.css";
 
 export default function HomeKitBanner() {
 
