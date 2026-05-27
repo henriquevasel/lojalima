@@ -143,24 +143,14 @@ const precoPix =
 
   </div>
 
-<a
-  href={WHATSAPP_LINK}
-  target="_blank"
-  rel="noreferrer"
-  className={s.whatsappBtn}
->
-  <div className={s.whatsappIcon}>
-    <img
-      src="/favicon-whatsapp.png"
-      alt="WhatsApp"
-    />
-  </div>
-
-  <div className={s.whatsappTexts}>
+<button className={s.whatsappBtn}>
+  <img src="/favicon-whatsapp.png" alt="WhatsApp" />
+  
+  <div>
     <span>Falar com especialista</span>
     <small>Atendimento rápido no WhatsApp</small>
   </div>
-</a>
+</button>
 
   {/* BLOCO CONFIANÇA */}
   <div className={s.securityCard}>
