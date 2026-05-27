@@ -15,88 +15,66 @@ const kits = [
   },
 
   {
-    href: "/produto/kit-cupom",
+    href: "/produto/kit-4-cameras-ip-fullhd",
     image: "/kits/kit3.jpg",
   },
 
-  {
-    href: "/produto/kit-antena",
-    image: "/kits/kit4.jpg",
-  },
+
 ];
 
 export default function HomeKitSection() {
 
-    <div className={s.header}>
-
-  <span className={s.badge}>
-    Promoções
-  </span>
-
-  <h2 className={s.title}>
-    Kits em destaque
-  </h2>
-
-  <p className={s.subtitle}>
-    Aproveite ofertas especiais em kits completos de segurança.
-  </p>
-
-</div>
-
   return (
 
-    
+    <>
 
-    <section className={s.grid}>
+      {/* HEADER */}
+     <section className={s.grid}>
 
-      {/* CARD GRANDE */}
-      <Link
-        href={kits[0].href}
-        className={`${s.card} ${s.large}`}
-      >
-        <img
-          src={kits[0].image}
-          alt=""
-          className={s.image}
-        />
-      </Link>
+  {/* CARD GRANDE */}
+  <Link
+    href={kits[0].href}
+    className={`${s.card} ${s.large}`}
+  >
+    <img
+      src={kits[0].image}
+      alt=""
+      className={s.image}
+    />
+  </Link>
 
-      {/* CARD 2 */}
-      <Link
-        href={kits[1].href}
-        className={s.card}
-      >
-        <img
-          src={kits[1].image}
-          alt=""
-          className={s.image}
-        />
-      </Link>
+  {/* DIREITA */}
+  <div className={s.rightGrid}>
 
-      {/* CARD 3 */}
-      <Link
-        href={kits[2].href}
-        className={s.card}
-      >
-        <img
-          src={kits[2].image}
-          alt=""
-          className={s.image}
-        />
-      </Link>
+    {/* CARD 2 */}
+    <Link
+      href={kits[1].href}
+      className={s.card}
+    >
+      <img
+        src={kits[1].image}
+        alt=""
+        className={s.image}
+      />
+    </Link>
 
-      {/* CARD 4 */}
-      <Link
-        href={kits[3].href}
-        className={s.card}
-      >
-        <img
-          src={kits[3].image}
-          alt=""
-          className={s.image}
-        />
-      </Link>
+    {/* CARD 3 */}
+    <Link
+      href={kits[2].href}
+      className={s.card}
+    >
+      <img
+        src={kits[2].image}
+        alt=""
+        className={s.image}
+      />
+    </Link>
 
-    </section>
+  </div>
+
+</section>
+
+    </>
+
   );
 }

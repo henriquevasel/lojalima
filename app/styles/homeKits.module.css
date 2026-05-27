@@ -137,3 +137,13 @@
 
   line-height: 1.6;
 }
+
+.rightGrid{
+  display: grid;
+
+  grid-template-rows:
+    1fr
+    1fr;
+
+  gap: 18px;
+}
