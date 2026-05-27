@@ -403,11 +403,7 @@ const precoPix =
         color: "#555",
       }}
     >
-      {(precoFinal / 3).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}{" "}
-      por mês
+      
     </div>
   </div>
 </div>

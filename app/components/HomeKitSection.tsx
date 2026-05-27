@@ -3,7 +3,7 @@
 import Link from "next/link";
 import s from "@/app/styles/homeKits.module.css";
 
-export default function HomeKitBanner() {
+export default function HomeKitSection() {
 
   return (
 
@@ -12,30 +12,24 @@ export default function HomeKitBanner() {
       className={s.banner}
     >
 
-      <div className={s.imageArea}>
+      <div className={s.content}>
 
-        <img
-          src="/kits/kit1.png"
-          alt="Kit câmeras"
-          className={s.image}
-        />
+        <span className={s.badge}>
+          PROMOÇÃO ATÉ 29/05
+        </span>
 
-        <div className={s.content}>
+        <h2>
+          KIT 4 CÂMERAS IP COM IA
+        </h2>
 
-          <span className={s.badge}>
-            PROMOÇÃO ATÉ 29/05
-          </span>
+        <p>
+          Solução completa com gravador,
+          HD e integração.
+        </p>
 
-          <h2>
-            KIT 4 CÂMERAS IP COM IA
-          </h2>
+        <div className={s.priceArea}>
 
-          <p>
-            Solução completa com gravador,
-            HD, integração e monitoramento.
-          </p>
-
-          <div className={s.priceArea}>
+          <div>
 
             <div className={s.oldPrice}>
               R$ 5.890
@@ -45,15 +39,21 @@ export default function HomeKitBanner() {
               R$ 4.990
             </div>
 
-            <button className={s.button}>
-              comprar
-            </button>
-
           </div>
+
+          <button className={s.button}>
+            comprar
+          </button>
 
         </div>
 
       </div>
+
+      <img
+        src="/kits/kit1.png"
+        alt="Kit câmeras"
+        className={s.image}
+      />
 
     </Link>
   );
