@@ -8,7 +8,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 0.75fr;
-  gap: 60px;
+  gap: 32px;
   align-items: start;
 }
 
@@ -23,18 +23,11 @@
 
 .imageWrap img {
   width: 100%;
-  max-height:540px;
+  max-height:420px;
 object-fit:contain;
   display: block;
 }
 
-.title {
-  font-size: 38px;
-  font-weight: 900;
-  margin-bottom: 20px;
-  line-height: 1.1;
-  color: var(--text);
-}
 
 .priceBox {
   margin-bottom: 15px;
@@ -63,42 +56,7 @@ object-fit:contain;
   color: var(--text-strong);
 }
 
-.whatsappBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  width: 100%;
-
-  padding: 22px;
-
-  border-radius: 22px;
-
-  background: #fff;
-
-  border: 1px solid #e5e7eb;
-
-  color: #111;
-
-  font-size: 18px;
-
-  font-weight: 800;
-
-  text-decoration: none;
-
-  margin-top: 20px;
-
-  margin-bottom: 20px;
-
-  box-shadow: 0 6px 22px rgba(0,0,0,.05);
-
-  transition: all .2s ease;
-}
-
-.whatsappBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0,0,0,.08);
-}
 
 .trustBox {
   padding: 24px;
@@ -504,10 +462,7 @@ object-fit:contain;
   margin: 0 20px;
 }
 
-.whatsappBtn {
-  margin: 20px;
-  margin-bottom: 16px;
-}
+
 
 .infoColumn{
   display:flex;
@@ -557,75 +512,77 @@ object-fit:contain;
 .whatsappBtn{
   width:100%;
   max-width:540px;
-  height:72px;
+  height:56px;
 
   display:flex;
   align-items:center;
-  gap:14px;
+  justify-content:center;
+  gap:12px;
 
-  padding:0 22px;
+  padding:0 18px;
 
-  border-radius:18px;
+  border-radius:16px;
 
-  background:linear-gradient(
-    135deg,
-    #25d366,
-    #1ebe5d
-  );
+  background:#25d366;
 
   color:#fff;
   text-decoration:none;
 
+  border:1px solid #1ebe5d;
+
+  transition:.2s ease;
+
   box-shadow:
-    0 8px 25px rgba(37,211,102,0.18);
-
-  transition:.25s;
-
-  border:1px solid rgba(255,255,255,0.15);
+    0 4px 14px rgba(37,211,102,.18);
 }
 
 .whatsappBtn:hover{
   transform:translateY(-2px);
+
   box-shadow:
-    0 12px 30px rgba(37,211,102,0.25);
+    0 8px 22px rgba(37,211,102,.25);
 }
 
 .whatsappIcon{
-  width:46px;
-  height:46px;
+  width:32px;
+  height:32px;
 
-  border-radius:14px;
+  border-radius:10px;
+
+  background:rgba(255,255,255,.15);
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  background:rgba(255,255,255,0.18);
-
-  font-size:22px;
-
   flex-shrink:0;
+}
+
+.whatsappIcon img{
+  width:18px;
+  height:18px;
+  object-fit:contain;
 }
 
 .whatsappTexts{
   display:flex;
   flex-direction:column;
-  line-height:1.1;
+  line-height:1;
 }
 
 .whatsappTexts span{
-  font-size:17px;
+  font-size:14px;
   font-weight:700;
 }
 
 .whatsappTexts small{
-  font-size:12px;
-  opacity:.9;
-  margin-top:4px;
+  font-size:10px;
+  margin-top:3px;
+  opacity:.92;
 }
 
 .title{
-  font-size:42px !important;
+  font-size:18px !important;
   line-height:1.1;
   font-weight:800;
   margin-bottom:10px;
