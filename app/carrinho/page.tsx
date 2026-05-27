@@ -20,6 +20,8 @@ product: {
 
 export default function CarrinhoPage() {
 
+  
+
   const [items, setItems] = useState<CartItem[]>([]);
   
   const [coupon,setCoupon] = useState("");
@@ -28,6 +30,11 @@ const [couponLoading,setCouponLoading] = useState(false);
 const [couponCode,setCouponCode] = useState("");
 const [isMobile, setIsMobile] = useState(false);
 const [frete, setFrete] = useState(0);
+
+const hasKit =
+    items.some(
+      item => (item.product as any).isKit
+    );
 
   const qtyBtnStyle = {
   width:32,
@@ -66,6 +73,8 @@ useEffect(() => {
     "freteUpdated",
     updateFrete
   );
+
+  
 
   return () => {
 
@@ -625,51 +634,65 @@ onMouseLeave={(e)=>(
   )}
 
   {/* PIX */}
+<div
+  style={{
+    marginTop:16,
+    padding:14,
+    borderRadius:14,
+    background:"rgba(34,197,94,0.08)",
+    border:"1px solid rgba(34,197,94,0.16)"
+  }}
+>
+
   <div
     style={{
-      marginTop:16,
-      padding:14,
-      borderRadius:14,
-      background:"rgba(34,197,94,0.08)",
-      border:"1px solid rgba(34,197,94,0.16)"
+      color:"#22c55e",
+      fontWeight:700,
+      fontSize:13,
+      marginBottom:6
     }}
   >
-
-    <div
-      style={{
-        color:"#22c55e",
-        fontWeight:700,
-        fontSize:13,
-        marginBottom:6
-      }}
-    >
-      À vista no PIX
-    </div>
-
-    <div
-      style={{
-        color:"#22c55e",
-        fontSize:28,
-        fontWeight:900,
-        lineHeight:1
-      }}
-    >
-      R$ {((total - discount) * 0.95 + (frete / 100)).toFixed(2)}
-    </div>
-
-    <div
-      style={{
-        color:"#888",
-        fontWeight:400,
-        fontSize:11,
-        marginTop:6
-      }}
-    >
-      Economia instantânea de 5%
-    </div>
-
+    {hasKit
+      ? "Pagamento à vista"
+      : "À vista no PIX"}
   </div>
 
+  <div
+    style={{
+      color:"#22c55e",
+      fontSize:28,
+      fontWeight:900,
+      lineHeight:1
+    }}
+  >
+    R$ {
+
+      (
+        hasKit
+
+          ? total + (frete / 100)
+
+          : ((total - discount) * 0.95 + (frete / 100))
+
+      ).toFixed(2)
+
+    }
+  </div>
+
+  <div
+    style={{
+      color:"#888",
+      fontWeight:400,
+      fontSize:11,
+      marginTop:6
+    }}
+  >
+    {hasKit
+      ? "Pagamento sem desconto adicional"
+      : "Economia instantânea de 5%"}
+  </div>
+
+</div>
   {/* BOTÃO */}
   <button
     onClick={handleCheckout}
