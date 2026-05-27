@@ -55,18 +55,32 @@ export async function GET() {
             ?.priceCents ??
           item.product.priceCents;
 
-        const originalPrice =
-          calcularPrecoVenda(
-            basePrice
-          );
+       let priceCents = 0;
 
-        const priceCents =
-          getFinalPrice({
-            ...item.product,
-            priceCents:
-              originalPrice,
-          });
+// 🔥 KIT USA PREÇO FIXO
+if (item.product.isKit) {
 
+  priceCents =
+    item.product.priceCents;
+
+}
+
+// 🔥 PRODUTO NORMAL
+else {
+
+  const originalPrice =
+    calcularPrecoVenda(
+      basePrice
+    );
+
+  priceCents =
+    getFinalPrice({
+      ...item.product,
+      priceCents:
+        originalPrice,
+    });
+
+}
         return {
           ...item,
 
@@ -256,23 +270,26 @@ export async function POST(
     /* ==========================
     ESTOQUE
     ========================== */
-    const stockQty =
-      product.stock?.quantity ||
-      0;
+const stockQty =
+  product.stock?.quantity || 0;
 
-    if (
-      quantity > stockQty
-    ) {
-      return NextResponse.json(
-        {
-          error:
-            "Estoque insuficiente",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
+// 🔥 KIT IGNORA ESTOQUE
+if (!product.isKit) {
+
+  if (quantity > stockQty) {
+
+    return NextResponse.json(
+      {
+        error:
+          "Estoque insuficiente",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+}
 
     /* ==========================
     ITEM EXISTENTE

@@ -194,16 +194,32 @@ if (stockQty < item.qty) {
   item.productvariant?.priceCents ??
   item.product.priceCents;
 
-const originalPrice =
-  calcularPrecoVenda(basePrice);
+// 🔥 KIT USA PREÇO FIXO
+if (item.product.isKit) {
 
-const finalPrice =
-  getFinalPrice({
-    ...item.product,
-    priceCents: originalPrice,
-  });
+  totalCents +=
+    item.product.priceCents *
+    item.qty;
 
-totalCents += finalPrice * item.qty;
+}
+
+// 🔥 PRODUTO NORMAL
+else {
+
+  const originalPrice =
+    calcularPrecoVenda(basePrice);
+
+  const finalPrice =
+    getFinalPrice({
+      ...item.product,
+      priceCents: originalPrice,
+    });
+
+  totalCents +=
+    finalPrice *
+    item.qty;
+
+}
 
     }
 
@@ -449,28 +465,34 @@ const preferenceData = await preference.create({
     quantity: item.qty,
 
 unit_price:
-  (
-    paymentMethod === "pix"
 
-      ? Math.round(
-          getFinalPrice({
-            ...item.product,
-            priceCents: calcularPrecoVenda(
-              item.productvariant?.priceCents ??
-              item.product.priceCents
-            ),
-          }) * 0.95
-        )
+  item.product.isKit
 
-      : getFinalPrice({
-          ...item.product,
-          priceCents: calcularPrecoVenda(
-            item.productvariant?.priceCents ??
-            item.product.priceCents
-          ),
-        })
+    ? item.product.priceCents / 100
 
-  ) / 100,
+    : (
+
+        paymentMethod === "pix"
+
+          ? Math.round(
+              getFinalPrice({
+                ...item.product,
+                priceCents: calcularPrecoVenda(
+                  item.productvariant?.priceCents ??
+                  item.product.priceCents
+                ),
+              }) * 0.95
+            )
+
+          : getFinalPrice({
+              ...item.product,
+              priceCents: calcularPrecoVenda(
+                item.productvariant?.priceCents ??
+                item.product.priceCents
+              ),
+            })
+
+      ) / 100,
 
     currency_id: "BRL"
   })),
