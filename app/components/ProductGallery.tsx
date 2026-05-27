@@ -14,30 +14,31 @@ export default function ProductGallery({ images, name }: any) {
 
       {/* IMAGEM PRINCIPAL */}
 
-      <div
-        style={{
-          width: "100%",
-          aspectRatio: "1 / 1", // 🔥 mantém padrão sempre
-          position: "relative",
-          borderRadius: 20,
-          overflow: "hidden",
-          marginBottom: 12,
-          background: "#fff", // 🔥 fundo padrão
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <Image
-          src={selected}
-          alt={name}
-          fill
-          style={{
-            objectFit: "contain", // 🔥 NÃO corta nem estoura
-            padding: "10px" // opcional, dá respiro
-          }}
-        />
-      </div>
+    <div
+  style={{
+    width: "100%",
+    height: 420,
+    position: "relative",
+    borderRadius: 20,
+    overflow: "hidden",
+    marginBottom: 12,
+    background: "#fff",
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }}
+>
+  <Image
+    src={selected}
+    alt={name}
+    fill
+    style={{
+      objectFit: "contain",
+      padding: "30px"
+    }}
+  />
+</div>
 
 
       {/* MINIATURAS */}

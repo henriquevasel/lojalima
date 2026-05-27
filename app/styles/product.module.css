@@ -26,15 +26,8 @@
   justify-content: center;
 }
 
-.imageWrap img {
-  width: 88% !important;
-  height: 88% !important;
 
-  object-fit: contain;
-  display: block;
 
-  transition: transform .3s ease;
-}
 
 .imageWrap:hover img {
   transform: scale(1.05);
