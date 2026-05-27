@@ -27,7 +27,25 @@ const kits = [
 
 export default function HomeKitSection() {
 
+    <div className={s.header}>
+
+  <span className={s.badge}>
+    Promoções
+  </span>
+
+  <h2 className={s.title}>
+    Kits em destaque
+  </h2>
+
+  <p className={s.subtitle}>
+    Aproveite ofertas especiais em kits completos de segurança.
+  </p>
+
+</div>
+
   return (
+
+    
 
     <section className={s.grid}>
 

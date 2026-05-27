@@ -12,7 +12,7 @@
 
   max-width: 860px;
 
-  margin: 60px auto;
+  margin: 24px auto 32px;
 
   padding: 0 20px;
 }
@@ -85,4 +85,56 @@
     aspect-ratio: 1.1;
   }
 
+}
+
+.header{
+  max-width: 920px;
+
+  margin:
+    0 auto
+    18px;
+
+  padding: 0 20px;
+}
+
+.badge{
+  display: inline-flex;
+
+  padding:
+    6px 14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(50,15,153,.08);
+
+  color: #320f99;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  margin-bottom: 12px;
+}
+
+.title{
+  font-size: 34px;
+
+  line-height: 1.1;
+
+  font-weight: 800;
+
+  color: #111;
+
+  margin-bottom: 10px;
+}
+
+.subtitle{
+  font-size: 15px;
+
+  color: #666;
+
+  max-width: 520px;
+
+  line-height: 1.6;
 }
