@@ -7,6 +7,7 @@ import FreteCalculator from "@/app/components/FreteCalculator";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
 import { getFinalPrice } from "@/app/lib/price";
+import { FaWhatsapp } from "react-icons/fa";
 
 
 
@@ -144,7 +145,7 @@ const precoPix =
   </div>
 
 <button className={s.whatsappBtn}>
-  <img src="/favicon-whatsapp.png" alt="WhatsApp" />
+   <FaWhatsapp className={s.whatsIcon} />
   
   <div>
     <span>Falar com especialista</span>
