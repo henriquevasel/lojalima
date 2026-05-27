@@ -113,9 +113,16 @@ const preco =
 const precoFinal =
   precoFinalCents / 100;
 
-// desconto PIX
+// 🔥 KIT NÃO TEM DESCONTO PIX
 const descontoPix =
-  Math.round(precoFinal * 0.05 * 100) / 100;
+
+  produto.isKit
+
+    ? 0
+
+    : Math.round(
+        precoFinal * 0.05 * 100
+      ) / 100;
 
 const precoPix =
   precoFinal - descontoPix;
@@ -232,25 +239,31 @@ const precoPix =
     marginBottom: 12,
   }}
 >
-  no PIX com 5% OFF
+  {produto.isKit
+  ? "Preço promocional à vista"
+  : "no PIX com 5% OFF"}
 </div>
 
+{!produto.isKit && (
+
   <div
-  style={{
-    fontSize: 14,
-    marginTop: 4,
-    color: "#444",
-  }}
->
-  ou{" "}
-  <strong>
-    {precoFinal.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}
-  </strong>{" "}
-  em até 3x sem juros
-</div>
+    style={{
+      fontSize: 14,
+      marginTop: 4,
+      color: "#444",
+    }}
+  >
+    ou{" "}
+    <strong>
+      {precoFinal.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </strong>{" "}
+    em até 3x sem juros
+  </div>
+
+)}
 
 
 {/* badge OFF */}
@@ -363,27 +376,34 @@ const precoPix =
             currency: "BRL",
           })}{" "}
           no pix
-          <span
-            style={{
-              marginLeft: 6,
-              background: "#22c55e",
-              color: "#fff",
-              fontSize: 10,
-              padding: "2px 6px",
-              borderRadius: 4,
-              fontWeight: 700,
-            }}
-          >
-            5% OFF
-          </span>
+         {!produto.isKit && (
+
+  <span
+    style={{
+      marginLeft: 6,
+      background: "#22c55e",
+      color: "#fff",
+      fontSize: 10,
+      padding: "2px 6px",
+      borderRadius: 4,
+      fontWeight: 700,
+    }}
+  >
+    5% OFF
+  </span>
+
+)}
         </div>
         <div style={{ fontSize: 12, color: "#555" }}>
-          5% OFF adicional no PIX
+          {produto.isKit
+  ? "Pagamento à vista"
+  : "5% OFF adicional no PIX"}
         </div>
       </div>
     </div>
 
-    {/* cartão */}
+{!produto.isKit && (
+
 <div
   style={{
     display: "flex",
@@ -417,10 +437,11 @@ const precoPix =
         color: "#555",
       }}
     >
-      
     </div>
   </div>
 </div>
+
+)}
 
 
   </div>
@@ -619,20 +640,21 @@ PRODUTOS RELACIONADOS
                   fontSize: 13,
                 }}
               >
-                3x de{" "}
-                {(
-                  p.isKit
-  ? p.priceCents
-  : calcularPrecoVenda(
-      p.priceCents
-    ) /
-                  100 /
-                  3
-                ).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}{" "}
-                sem juros
+{p.isKit
+
+  ? "Parcelamento disponível"
+
+  : `3x de ${(
+      calcularPrecoVenda(
+        p.priceCents
+      ) /
+      100 /
+      3
+    ).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })} sem juros`
+}
               </div>
 
             </div>

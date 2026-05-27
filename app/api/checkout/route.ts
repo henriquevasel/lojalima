@@ -298,8 +298,13 @@ else {
     0
   );
 
-  // 🔥 DESCONTO PIX
-if (paymentMethod === "pix") {
+// 🔥 KIT NÃO TEM DESCONTO PIX
+if (
+  paymentMethod === "pix" &&
+  !cartItems.some(
+    item => item.product.isKit
+  )
+) {
 
   const subtotalComDesconto =
     Math.round(
@@ -538,11 +543,30 @@ shipments: {
 },
 
 payment_methods:
-  paymentMethod === "pix"
+
+  cartItems.some(
+    item => item.product.isKit
+  )
+
     ? {
-        default_payment_method_id: "pix"
+
+        installments: 1,
+
+        default_installments: 1,
+
       }
-    : undefined,
+
+    : (
+
+        paymentMethod === "pix"
+
+          ? {
+              default_payment_method_id: "pix"
+            }
+
+          : undefined
+
+      ),
 
    
 
