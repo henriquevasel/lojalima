@@ -143,15 +143,19 @@ const precoPix =
 
   </div>
 
-  {/* WHATSAPP */}
-  <a
-    href={WHATSAPP_LINK}
-    target="_blank"
-    rel="noreferrer"
-    className={s.whatsappBtn}
-  >
-    Falar com especialista no WhatsApp
-  </a>
+ <a
+  href={WHATSAPP_LINK}
+  target="_blank"
+  rel="noreferrer"
+  className={s.whatsappBtn}
+>
+  <span className={s.whatsappIcon}>💬</span>
+
+  <div className={s.whatsappTexts}>
+    <span>Falar com especialista</span>
+    <small>Atendimento rápido no WhatsApp</small>
+  </div>
+</a>
 
   {/* BLOCO CONFIANÇA */}
   <div className={s.securityCard}>
@@ -368,6 +372,49 @@ const precoPix =
         </div>
       </div>
     </div>
+
+    {/* cartão */}
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    background: "#f4f4f5",
+    padding: "10px 12px",
+    borderRadius: 8,
+  }}
+>
+  <CreditCard size={18} color="#111" />
+
+  <div style={{ lineHeight: 1.2 }}>
+    <div
+      style={{
+        fontSize: 14,
+        fontWeight: 600,
+        color: "#111",
+      }}
+    >
+      {precoFinal.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}{" "}
+      em até 3x sem juros
+    </div>
+
+    <div
+      style={{
+        fontSize: 12,
+        color: "#555",
+      }}
+    >
+      {(precoFinal / 3).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}{" "}
+      por mês
+    </div>
+  </div>
+</div>
 
 
   </div>
