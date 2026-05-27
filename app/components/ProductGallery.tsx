@@ -14,28 +14,34 @@ export default function ProductGallery({ images, name }: any) {
 
       {/* IMAGEM PRINCIPAL */}
 
-    <div
+   <div
   style={{
     width: "100%",
-    height: 420,
+    height: 680,
     position: "relative",
-    borderRadius: 20,
+    borderRadius: 24,
     overflow: "hidden",
-    marginBottom: 12,
+    marginBottom: 20,
     background: "#fff",
 
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+
+    padding: 20,
   }}
 >
   <Image
     src={selected}
     alt={name}
     fill
+    priority
     style={{
       objectFit: "contain",
-      padding: "30px"
+
+      transform: "scale(1.15)",
+
+      padding: "10px"
     }}
   />
 </div>

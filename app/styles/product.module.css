@@ -19,7 +19,7 @@
   background: var(--card);
   box-shadow: 0 6px 24px rgba(0,0,0,.05);
 
-  height: 620px;
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -562,10 +562,14 @@
 }
 
 .title{
-  font-size:18px !important;
-  line-height:1.1;
+  font-size:32px !important;
+  line-height:1.2;
   font-weight:800;
-  margin-bottom:10px;
+  margin-bottom:18px;
+
+  color:#111;
+
+  max-width:700px;
 }
 
 .leftColumn{
