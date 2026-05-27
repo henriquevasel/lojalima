@@ -1,41 +1,20 @@
 .grid{
   display: grid;
 
-  grid-template-columns: 0.95fr 1.35fr;
+  grid-template-columns:
+    1.15fr
+    1fr
+    1fr;
 
-  gap: 18px;
+  gap: 22px;
 
   width: 100%;
 
-  max-width: 1150px;
+  max-width: 1180px;
 
   margin: 60px auto;
 
   padding: 0 20px;
-
-  align-items: stretch;
-}
-
-/* COLUNA DIREITA */
-.right{
-  display: grid;
-
-  grid-template-rows:
-    0.9fr
-    1fr;
-
-  gap: 18px;
-
-  height: 100%;
-}
-
-/* LINHA DOS PEQUENOS */
-.bottom{
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 18px;
 }
 
 /* CARD */
@@ -48,18 +27,20 @@
 
   background: #2b0a88;
 
+  aspect-ratio: 1.1;
+
   isolation: isolate;
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.10);
 
   transition:
     transform .25s ease,
     box-shadow .25s ease;
-
-  box-shadow:
-    0 10px 35px rgba(0,0,0,.10);
 }
 
 .card:hover{
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 
   box-shadow:
     0 18px 42px rgba(0,0,0,.15);
@@ -80,17 +61,11 @@
 
 /* CARD GRANDE */
 .large{
-  aspect-ratio: 0.82;
-}
+  grid-row: span 2;
 
-/* CARD TOPO */
-.medium{
-  aspect-ratio: 2.08;
-}
+  aspect-ratio: auto;
 
-/* CARDS PEQUENOS */
-.small{
-  aspect-ratio: 1.32;
+  height: 100%;
 }
 
 /* RESPONSIVO */
@@ -104,26 +79,10 @@
     margin: 40px auto;
   }
 
-  .right{
-    grid-template-rows: auto;
-  }
-
-  .bottom{
-    grid-template-columns: 1fr;
-
-    gap: 16px;
-  }
-
   .large{
-    aspect-ratio: 0.95;
-  }
+    grid-row: auto;
 
-  .medium{
-    aspect-ratio: 1.8;
-  }
-
-  .small{
-    aspect-ratio: 1.8;
+    aspect-ratio: 1.1;
   }
 
 }
