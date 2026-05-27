@@ -81,14 +81,28 @@ const relacionados = await prisma.product.findMany({
   take: 4,
 });
 
+// 🔥 KIT USA PREÇO FIXO
 const precoOriginalCents =
-  calcularPrecoVenda(produto.priceCents);
 
+  produto.isKit
+
+    ? produto.priceCents
+
+    : calcularPrecoVenda(
+        produto.priceCents
+      );
+
+// 🔥 KIT NÃO APLICA PROMO
 const precoFinalCents =
-  getFinalPrice({
-    ...produto,
-    priceCents: precoOriginalCents,
-  });
+
+  produto.isKit
+
+    ? produto.priceCents
+
+    : getFinalPrice({
+        ...produto,
+        priceCents: precoOriginalCents,
+      });
 
 const hasPromotion =
   precoFinalCents < precoOriginalCents;
@@ -584,8 +598,14 @@ PRODUTOS RELACIONADOS
                 }}
               >
                 {(
-                  calcularPrecoVenda(p.priceCents) / 100
-                ).toLocaleString("pt-BR", {
+  (
+    p.isKit
+      ? p.priceCents
+      : calcularPrecoVenda(
+          p.priceCents
+        )
+  ) / 100
+).toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
@@ -601,7 +621,11 @@ PRODUTOS RELACIONADOS
               >
                 3x de{" "}
                 {(
-                  calcularPrecoVenda(p.priceCents) /
+                  p.isKit
+  ? p.priceCents
+  : calcularPrecoVenda(
+      p.priceCents
+    ) /
                   100 /
                   3
                 ).toLocaleString("pt-BR", {
