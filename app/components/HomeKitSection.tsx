@@ -6,22 +6,22 @@ import s from "@/app/styles/homeKits.module.css";
 const kits = [
   {
     href: "/produto/kit-4-cameras-ip-ia-fullhd",
-    image: "/kits/kit1.jpg",
+    image: "/produtos/kit1.jpg",
   },
 
   {
     href: "/produto/kit-4-cameras-ip-fullhd",
-    image: "/kits/kit2.jpg",
+    image: "/produtos/kit2.jpg",
   },
 
   {
     href: "/produto/kit-cupom",
-    image: "/kits/kit3.jpg",
+    image: "/produtos/kit3.jpg",
   },
 
   {
     href: "/produto/kit-antena",
-    image: "/kits/kit4.jpg",
+    image: "/produtos/kit4.jpg",
   },
 ];
 
