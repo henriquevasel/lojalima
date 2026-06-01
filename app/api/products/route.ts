@@ -189,7 +189,11 @@ let products = await prisma.product.findMany({
   take: limit,
 });
 
-if (category === "cftv" && page === 1) {
+if (
+  category === "cftv" &&
+  page === 1 &&
+  !search
+) {
 
   const destaqueIds = [
 
