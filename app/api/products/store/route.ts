@@ -8,7 +8,11 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const category = searchParams.get("category");
-  const search = searchParams.get("search");
+  const search =
+  searchParams.get("q") ||
+  searchParams.get("search") ||
+  "";
+  console.log("BUSCA:", search);
   const sort = searchParams.get("sort");
   const page = Number(searchParams.get("page") || "1");
   const smartHome = search === "smart-home";
