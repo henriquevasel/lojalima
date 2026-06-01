@@ -182,6 +182,8 @@ export async function GET(req: Request) {
   /* =========================
   QUERY
   ========================= */
+  console.log("BUSCA:", search);
+console.log("WHERE:", JSON.stringify(where, null, 2));
 
   const products = await prisma.product.findMany({
     where,
@@ -203,6 +205,10 @@ export async function GET(req: Request) {
     skip,
   });
 
+  console.log(
+  "RESULTADOS:",
+  products.map((p) => p.name)
+);
   /* =========================
   PREÇOS
   ========================= */
