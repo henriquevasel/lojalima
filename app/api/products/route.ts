@@ -78,63 +78,42 @@ where.productimage = {
 
 if (search) {
 
-  const terms = expandTerms(
-    normalize(search)
-  );
+  const normalizedSearch = normalize(search);
 
-  where.OR = [
-    ...(where.AND || []),
+  const terms = expandTerms(normalizedSearch);
 
-    ...terms.map((term) => ({
+  where.AND = terms.map((term) => ({
 
-      OR: [
+    OR: [
 
-        {
-          name: {
-            contains: term,
-          },
+      {
+        name: {
+          contains: term,
         },
+      },
 
-        {
-          slug: {
-            contains: term,
-          },
+      {
+        slug: {
+          contains: term,
         },
+      },
 
-        {
-          brand: {
-            contains: term,
-          },
+      {
+        brand: {
+          contains: term,
         },
+      },
 
-        {
-          description: {
-            contains: term,
-          },
+      {
+        sku: {
+          contains: term,
         },
+      },
 
-        {
-          sku: {
-            contains: term,
-          },
-        },
+    ],
 
-        {
-          productcategory: {
-            some: {
-              category: {
-                name: {
-                  contains: term,
-                },
-              },
-            },
-          },
-        },
+  }));
 
-      ],
-
-    })),
-  ];
 }
 
 /* categoria */

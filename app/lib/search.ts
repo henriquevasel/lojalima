@@ -1,10 +1,11 @@
 const synonyms: Record<string, string[]> = {
   wifi: [
-  "wireless",
-  "wi fi",
-  "wi-fi",
-  "wifi",
-],
+    "wireless",
+    "wi fi",
+    "wi-fi",
+    "wifi",
+  ],
+
   camera: [
     "cameras",
     "camera ip",
@@ -34,8 +35,6 @@ const synonyms: Record<string, string[]> = {
     "hard drive",
     "harddisk",
   ],
-
-  
 
   tv: [
     "televisao",
@@ -71,8 +70,8 @@ export function normalize(text: string) {
 
 export function singularize(word: string) {
   if (word.endsWith("es") && word.length > 4) {
-  return word.slice(0, -1);
-}   
+    return word.slice(0, -1);
+  }
 
   if (word.endsWith("s") && word.length > 3) {
     return word.slice(0, -1);
@@ -87,7 +86,10 @@ export function tokenize(text: string) {
     .map(singularize)
     .filter(
       (word) =>
-        word.length > 1 &&
+        (
+          word.length > 2 ||
+          /\d/.test(word)
+        ) &&
         !stopWords.includes(word)
     );
 }
@@ -98,26 +100,26 @@ export function expandTerms(query: string) {
 
   const expanded = new Set<string>();
 
-  // termo completo
   const full = normalize(query);
 
   expanded.add(full);
 
-  // versão compacta
   expanded.add(
     full.replace(/\s|-/g, "")
   );
 
   for (const token of tokens) {
 
+    if (token.length < 2 && !/\d/.test(token)) {
+      continue;
+    }
+
     expanded.add(token);
 
-    // compacto individual
     expanded.add(
       token.replace(/\s|-/g, "")
     );
 
-    // sinônimos
     if (synonyms[token]) {
 
       for (const synonym of synonyms[token]) {

@@ -82,46 +82,40 @@ export async function GET(req: Request) {
 
   } else if (search) {
 
-    const terms = search
-      .split(" ")
-      .filter(t => t.length > 1);
+  const { normalize, expandTerms } = await import("@/app/lib/search");
 
-    where.AND = [
-      ...(where.AND || []),
+  const terms = expandTerms(
+    normalize(search)
+  ).filter(term =>
+    term.length > 2 || /\d/.test(term)
+  );
 
-      ...terms.map(term => ({
-        OR: [
-          {
-            name: {
-              contains: term,
-            },
-          },
-          {
-            slug: {
-              contains: term,
-            },
-          },
-          {
-            brand: {
-              contains: term,
-            },
-          },
-          {
-            productcategory: {
-              some: {
-                category: {
-                  name: {
-                    contains: term,
-                  },
-                },
-              },
-            },
-          },
-        ],
-      })),
-    ];
+  where.AND = terms.map(term => ({
+    OR: [
+      {
+        name: {
+          contains: term,
+        },
+      },
+      {
+        slug: {
+          contains: term,
+        },
+      },
+      {
+        brand: {
+          contains: term,
+        },
+      },
+      {
+        sku: {
+          contains: term,
+        },
+      },
+    ],
+  }));
 
-  }
+}
 
   /* =========================
   CATEGORIA

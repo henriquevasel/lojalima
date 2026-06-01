@@ -67,10 +67,25 @@ export async function GET(req: Request) {
 ]);
 
     const products = await prisma.product.findMany({
-      where: {
-        active: true,
-        OR: conditions,
+  where: {
+    active: true,
+
+    OR: [
+      {
+        name: {
+          contains: q,
+        },
       },
+
+      {
+        slug: {
+          contains: q,
+        },
+      },
+
+      ...conditions,
+    ],
+  },
 
       include: {
         productimage: {
@@ -89,41 +104,50 @@ export async function GET(req: Request) {
     const slug = normalize(product.slug || "");
     const description = normalize(product.description || "");
 
-    let score = 0;
+  let score = 0;
 
-    for (const term of terms) {
+// NOME EXATO
+if (name === q) {
+  score += 10000;
+}
 
-      // nome começa com pesquisa
-      if (name.startsWith(term)) {
-        score += 120;
-      }
+// FRASE COMPLETA
+if (name.includes(q)) {
+  score += 5000;
+}
 
-      // palavra exata
-      if (name.split(" ").includes(term)) {
-        score += 90;
-      }
+for (const term of terms) {
 
-      // nome contém
-      if (name.includes(term)) {
-        score += 50;
-      }
+  // começa com o termo
+  if (name.startsWith(term)) {
+    score += 120;
+  }
 
-      // marca
-      if (brand.includes(term)) {
-        score += 25;
-      }
+  // palavra exata
+  if (name.split(" ").includes(term)) {
+    score += 90;
+  }
 
-      // slug
-      if (slug.includes(term)) {
-        score += 15;
-      }
+  // contém o termo
+  if (name.includes(term)) {
+    score += 50;
+  }
 
-      // descrição
-      if (description.includes(term)) {
-        score += 5;
-      }
-    }
+  // marca
+  if (brand.includes(term)) {
+    score += 25;
+  }
 
+  // slug
+  if (slug.includes(term)) {
+    score += 15;
+  }
+
+  // descrição
+  if (description.includes(term)) {
+    score += 5;
+  }
+}
     return {
       ...product,
       score,
