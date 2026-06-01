@@ -167,12 +167,7 @@ if (min || max) {
 QUERY
 ========================= */
 
-const destaqueCFTV = [
-  "45678", // SKU da câmera 1
-  "12345", // SKU da câmera 2
-  "98765", // SKU da câmera 3
-  "65432", // SKU da câmera 4
-];
+
 
 let products = await prisma.product.findMany({
   where,
@@ -197,6 +192,8 @@ let products = await prisma.product.findMany({
 if (category === "cftv") {
 
   const destaqueIds = [
+
+    // VIP / IP
     6135,
     6264,
     6140,
@@ -206,9 +203,30 @@ if (category === "cftv") {
     7806,
     8369,
     8405,
+
+    // WIFI
+    5660,
+    6070,
+    7457,
+    6257,
+    6761,
+
+    // VHD de entrada
+    7358,
+    8427,
+    5712,
+    6691,
+    5693,
+    7459,
+    7447,
+    7705,
+    5819,
   ];
 
   const destaque = await prisma.product.findMany({
+    
+
+    
     where: {
       id: {
         in: destaqueIds,
@@ -218,6 +236,7 @@ if (category === "cftv") {
 
     include: {
       promotion: true,
+
       productimage: {
         orderBy: {
           sortOrder: "asc",
@@ -227,8 +246,14 @@ if (category === "cftv") {
     },
   });
 
+  destaque.sort(
+  (a, b) =>
+    destaqueIds.indexOf(a.id) -
+    destaqueIds.indexOf(b.id)
+);
+
   const restantes = products.filter(
-    p => !destaqueIds.includes(p.id)
+    (p) => !destaqueIds.includes(p.id)
   );
 
   products = [
@@ -238,9 +263,9 @@ if (category === "cftv") {
 }
 
 console.log(
-  products.map(p => ({
+  products.map((p) => ({
     id: p.id,
-    nome: p.name
+    nome: p.name,
   }))
 );
 
