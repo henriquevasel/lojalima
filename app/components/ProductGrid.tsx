@@ -40,6 +40,14 @@ export default function ProductGrid({
 
       const data = await res.json();
 
+      console.table(
+  data.map((p: any) => ({
+    id: p.id,
+    sku: p.sku,
+    nome: p.name,
+  }))
+);
+
       console.log(data);
 
       if (pageToLoad === 1) {

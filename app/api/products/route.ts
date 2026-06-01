@@ -167,7 +167,14 @@ if (min || max) {
 QUERY
 ========================= */
 
-const products = await prisma.product.findMany({
+const destaqueCFTV = [
+  "45678", // SKU da câmera 1
+  "12345", // SKU da câmera 2
+  "98765", // SKU da câmera 3
+  "65432", // SKU da câmera 4
+];
+
+let products = await prisma.product.findMany({
   where,
 
   include: {
@@ -187,6 +194,21 @@ const products = await prisma.product.findMany({
   take: limit,
 });
 
+if (category === "cftv") {
+
+  const destaque = products.filter((p) =>
+    destaqueCFTV.includes(p.sku || "")
+  );
+
+  const restantes = products.filter(
+    (p) => !destaqueCFTV.includes(p.sku || "")
+  );
+
+  products = [
+    ...destaque,
+    ...restantes,
+  ];
+}
 
 const productsWithPrice = products.map((p) => {
 
