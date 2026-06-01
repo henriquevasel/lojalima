@@ -74,9 +74,11 @@ key={query}
           </div>
 
           {/* 🔥 KIT PROMOCIONAL */}
+{/* 
 <div className="homeSection">
   <HomeKitBanner />
 </div>
+*/}
 
           
       
