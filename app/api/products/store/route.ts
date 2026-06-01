@@ -82,13 +82,11 @@ export async function GET(req: Request) {
 
   } else if (search) {
 
-  const { normalize, expandTerms } = await import("@/app/lib/search");
-
-  const terms = expandTerms(
-    normalize(search)
-  ).filter(term =>
-    term.length > 2 || /\d/.test(term)
-  );
+  const terms = search
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .filter(term => term.length > 0);
 
   where.AND = terms.map(term => ({
     OR: [
@@ -97,18 +95,21 @@ export async function GET(req: Request) {
           contains: term,
         },
       },
+
       {
         slug: {
           contains: term,
         },
       },
+
       {
-        brand: {
+        sku: {
           contains: term,
         },
       },
+
       {
-        sku: {
+        brand: {
           contains: term,
         },
       },
