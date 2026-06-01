@@ -196,6 +196,39 @@ let products = await prisma.product.findMany({
 
 if (category === "cftv") {
 
+  const destaqueCFTV = [
+    6135,
+    6264,
+    6140,
+    7577,
+    7005,
+    5764,
+    7806,
+    8369,
+    8405,
+    5660,
+    6070,
+    7457,
+    6257,
+    6761,
+  ];
+
+  const destaque = products.filter((p) =>
+    destaqueCFTV.includes(p.id)
+  );
+
+  const restantes = products.filter((p) =>
+    !destaqueCFTV.includes(p.id)
+  );
+
+  products = [
+    ...destaque,
+    ...restantes,
+  ];
+}
+
+if (category === "cftv") {
+
   const destaque = products.filter((p) =>
     destaqueCFTV.includes(p.sku || "")
   );
