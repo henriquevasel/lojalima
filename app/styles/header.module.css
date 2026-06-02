@@ -1,7 +1,7 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 999999;
 
   background: rgba(0, 0, 0, 0.897);
   backdrop-filter: blur(10px);
