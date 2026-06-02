@@ -1,8 +1,8 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
-import { expandTerms, normalize } from "@/app/lib/search";
 import { getFinalPrice } from "@/app/lib/price";
+import { expandTerms, normalize, tokenize } from "@/app/lib/search";
 
 
 export async function GET(req: Request) {
@@ -80,33 +80,37 @@ if (search) {
 
   const normalizedSearch = normalize(search);
 
-  const terms = expandTerms(normalizedSearch);
+  const tokens = tokenize(normalizedSearch);
 
-  where.AND = terms.map((term) => ({
+  where.AND = tokens.map((token) => ({
 
     OR: [
 
       {
         name: {
-          contains: term,
+          contains: token,
+          mode: "insensitive",
         },
       },
 
       {
         slug: {
-          contains: term,
+          contains: token,
+          mode: "insensitive",
         },
       },
 
       {
         brand: {
-          contains: term,
+          contains: token,
+          mode: "insensitive",
         },
       },
 
       {
         sku: {
-          contains: term,
+          contains: token,
+          mode: "insensitive",
         },
       },
 
@@ -115,7 +119,6 @@ if (search) {
   }));
 
 }
-
 /* categoria */
 
 if (category) {
