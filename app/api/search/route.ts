@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
-import { expandTerms, normalize } from "@/app/lib/search";
+import {
+  expandTerms,
+  normalize,
+  tokenize,
+} from "@/app/lib/search";
 
 export async function GET(req: Request) {
   try {
@@ -16,76 +20,78 @@ export async function GET(req: Request) {
 
     const terms = expandTerms(q).slice(0, 10);
 
-   const conditions = terms.flatMap((term) => [
-  {
-    name: {
-      contains: term,
-      
-    },
-  },
-
-  {
-    brand: {
-      contains: term,
-      
-    },
-  },
-
-  {
-    slug: {
-      contains: term,
-      
-    },
-  },
-
-  {
-    sku: {
-      contains: term,
-      
-    },
-  },
-
-  {
-    description: {
-      contains: term,
-      
-    },
-  },
-
-  {
-    productcategory: {
-      some: {
-        category: {
-          name: {
-            contains: term,
-            
-          },
-        },
-      },
-    },
-  },
-]);
-
-    const products = await prisma.product.findMany({
-  where: {
-    active: true,
-
-    OR: [
+    const conditions = terms.flatMap((term) => [
       {
         name: {
-          contains: q,
+          contains: term,
+          mode: "insensitive" as const,
+        },
+      },
+
+      {
+        brand: {
+          contains: term,
+          mode: "insensitive" as const,
         },
       },
 
       {
         slug: {
-          contains: q,
+          contains: term,
+          mode: "insensitive" as const,
         },
       },
 
-      ...conditions,
-    ],
-  },
+      {
+        sku: {
+          contains: term,
+          mode: "insensitive" as const,
+        },
+      },
+
+      {
+        description: {
+          contains: term,
+          mode: "insensitive" as const,
+        },
+      },
+
+      {
+        productcategory: {
+          some: {
+            category: {
+              name: {
+                contains: term,
+                mode: "insensitive" as const,
+              },
+            },
+          },
+        },
+      },
+    ]);
+
+    const products = await prisma.product.findMany({
+      where: {
+        active: true,
+
+        OR: [
+          {
+            name: {
+              contains: q,
+              mode: "insensitive",
+            },
+          },
+
+          {
+            slug: {
+              contains: q,
+              mode: "insensitive",
+            },
+          },
+
+          ...conditions,
+        ],
+      },
 
       include: {
         productimage: {
@@ -93,72 +99,88 @@ export async function GET(req: Request) {
         },
       },
 
-      take: 200,
+      take: 300,
     });
 
-   const scored = products
-  .map((product) => {
+    const queryTokens = tokenize(q);
 
-    const name = normalize(product.name || "");
-    const brand = normalize(product.brand || "");
-    const slug = normalize(product.slug || "");
-    const description = normalize(product.description || "");
+    const filtered = products.filter((product) => {
+      const text = normalize(`
+        ${product.name || ""}
+        ${product.brand || ""}
+        ${product.slug || ""}
+        ${product.description || ""}
+        ${product.sku || ""}
+      `);
 
-  let score = 0;
+      return queryTokens.every((token) =>
+        text.includes(token)
+      );
+    });
 
-// NOME EXATO
-if (name === q) {
-  score += 10000;
-}
+    const scored = filtered
+      .map((product) => {
+        const name = normalize(product.name || "");
+        const brand = normalize(product.brand || "");
+        const slug = normalize(product.slug || "");
+        const description = normalize(product.description || "");
 
-// FRASE COMPLETA
-if (name.includes(q)) {
-  score += 5000;
-}
+        const compactName = name.replace(/\s/g, "");
+        const compactQuery = q.replace(/\s/g, "");
 
-for (const term of terms) {
+        let score = 0;
 
-  // começa com o termo
-  if (name.startsWith(term)) {
-    score += 120;
-  }
+        // Nome exato
+        if (name === q) {
+          score += 10000;
+        }
 
-  // palavra exata
-  if (name.split(" ").includes(term)) {
-    score += 90;
-  }
+        // Busca compacta (VIP1220B)
+        if (compactName.includes(compactQuery)) {
+          score += 3000;
+        }
 
-  // contém o termo
-  if (name.includes(term)) {
-    score += 50;
-  }
+        // Frase completa
+        if (name.includes(q)) {
+          score += 5000;
+        }
 
-  // marca
-  if (brand.includes(term)) {
-    score += 25;
-  }
+        for (const term of terms) {
+          if (name.startsWith(term)) {
+            score += 120;
+          }
 
-  // slug
-  if (slug.includes(term)) {
-    score += 15;
-  }
+          if (name.split(" ").includes(term)) {
+            score += 90;
+          }
 
-  // descrição
-  if (description.includes(term)) {
-    score += 5;
-  }
-}
-    return {
-      ...product,
-      score,
-    };
-  })
-  .filter((product) => product.score > 0)
-  .sort((a, b) => b.score - a.score)
-  .slice(0, 8);
+          if (name.includes(term)) {
+            score += 50;
+          }
+
+          if (brand.includes(term)) {
+            score += 25;
+          }
+
+          if (slug.includes(term)) {
+            score += 15;
+          }
+
+          if (description.includes(term)) {
+            score += 5;
+          }
+        }
+
+        return {
+          ...product,
+          score,
+        };
+      })
+      .filter((product) => product.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 20);
 
     return NextResponse.json(scored);
-
   } catch (error) {
     console.error("Erro na busca:", error);
 
