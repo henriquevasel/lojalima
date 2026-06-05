@@ -115,6 +115,12 @@ export default function Footer() {
               Política de privacidade
             </Link>
 
+            {/* Se você tiver uma página real de políticas, troque o href */}
+            <Link className={s.link} href="/devolucao">
+              Política de devolução
+            </Link>
+
+
             <Link className={s.link} href="/termos">
               Termos de uso
             </Link>
