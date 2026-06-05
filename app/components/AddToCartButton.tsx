@@ -2,14 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { sendGAEvent } from "@next/third-parties/google";
 
 type Props = {
   productId: number;
+  productName: string;
+  productPrice: number;
   variantId?: number;
 };
 
 export default function AddToCartButton({
   productId,
+  productName,
+  productPrice,
   variantId,
 }: Props) {
 
@@ -17,8 +22,8 @@ export default function AddToCartButton({
 
   async function handleAdd() {
 
-   const retirada =
-  sessionStorage.getItem("retiradaLoja") === "true";
+    const retirada =
+      sessionStorage.getItem("retiradaLoja") === "true";
 
     try {
 
@@ -73,6 +78,30 @@ export default function AddToCartButton({
       window.dispatchEvent(
         new Event("cartUpdated")
       );
+
+      // Google Analytics
+      sendGAEvent("event", "add_to_cart", {
+        currency: "BRL",
+        value: productPrice,
+        items: [
+          {
+            item_id: String(productId),
+            item_name: productName,
+            price: productPrice,
+            quantity: 1,
+          },
+        ],
+      });
+
+      // Facebook Pixel
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "AddToCart", {
+          content_ids: [productId],
+          content_name: productName,
+          value: productPrice,
+          currency: "BRL",
+        });
+      }
 
       toast.success("Adicionado ao carrinho!");
 

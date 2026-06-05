@@ -455,7 +455,11 @@ const precoPix =
           {/* BOTÃO COMPRAR */}
 
           <div className={s.buyButtonWrap}>
-            <AddToCartButton productId={produto.id} />
+            <AddToCartButton
+  productId={produto.id}
+  productName={produto.name}
+  productPrice={precoFinal}
+/>
           </div>
 
 
