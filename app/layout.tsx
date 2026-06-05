@@ -26,7 +26,12 @@ export default function RootLayout({
 
         <Footer />
 
-        <Toaster />
+       <Toaster
+  position="top-center"
+  containerStyle={{
+    zIndex: 999999,
+  }}
+/>
 
         <GoogleAnalytics gaId="G-3CYH2XHY6X" />
 
