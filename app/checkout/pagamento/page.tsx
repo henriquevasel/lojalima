@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import s from "@/app/styles/form.module.css";
 import toast from "react-hot-toast";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function PagamentoPage(){
 
@@ -74,6 +75,15 @@ const retiradaLoja =
 if (!retiradaLoja && !customer.endereco) {
   toast.error("Endereço não informado");
   return;
+}
+
+sendGAEvent("event", "begin_checkout", {
+  currency: "BRL",
+  value: 0,
+});
+
+if (typeof window !== "undefined" && (window as any).fbq) {
+  (window as any).fbq("track", "InitiateCheckout");
 }
 
   setLoading(true);

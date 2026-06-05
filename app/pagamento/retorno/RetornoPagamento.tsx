@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function RetornoPagamento() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function RetornoPagamento() {
   const [seconds, setSeconds] = useState(0);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const purchaseSentRef = useRef(false);
 
   // 🔹 pega orderId
   useEffect(() => {
@@ -50,12 +52,27 @@ export default function RetornoPagamento() {
         const order = await res.json();
 
         if (order.status === "paid" || order.status === "approved") {
-          setStatus("paid");
 
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-          }
-        } else {
+  if (!purchaseSentRef.current) {
+
+    purchaseSentRef.current = true;
+
+    sendGAEvent("event", "purchase", {
+      transaction_id: String(orderId),
+      currency: "BRL",
+    });
+
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "Purchase");
+    }
+  }
+
+  setStatus("paid");
+
+  if (intervalRef.current) {
+    clearInterval(intervalRef.current);
+  }
+} else {
           setStatus("pending");
         }
       } catch (error) {
