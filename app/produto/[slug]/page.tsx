@@ -9,6 +9,7 @@ import Link from "next/link";
 import { getFinalPrice } from "@/app/lib/price";
 import { FaWhatsapp } from "react-icons/fa";
 import ProductAnalytics from "@/app/components/ProductAnalytics";
+import Script from "next/script";
 
 
 
@@ -676,6 +677,44 @@ PRODUTOS RELACIONADOS
     })}
    </div>
 </div>
+<Script
+  id="product-schema"
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+
+      name: produto.name,
+
+      image:
+        produto.productimage?.length > 0
+          ? produto.productimage.map((img) => img.url)
+          : [],
+
+      description:
+        (produto.description || "")
+          .replace(/<[^>]*>/g, "")
+          .slice(0, 500),
+
+      sku: String(produto.id),
+
+      brand: {
+        "@type": "Brand",
+        name: "Intelbras",
+      },
+
+      offers: {
+        "@type": "Offer",
+        url: `https://lojalimaelima.com.br/produto/${produto.slug}`,
+        priceCurrency: "BRL",
+        price: precoFinal,
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+      },
+    }),
+  }}
+/>
 
     </div>
   </div>
