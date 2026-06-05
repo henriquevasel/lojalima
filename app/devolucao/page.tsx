@@ -50,9 +50,9 @@ export default function PoliticaTrocasPage() {
       <h2>Contato</h2>
 
       <p>
-        WhatsApp: (47) 99725-0726
+        WhatsApp: (47) 3842-3235
         <br />
-        E-mail: contato@lojalimaelima.com.br
+        E-mail: contato@limaelima.com
       </p>
     </main>
   );
