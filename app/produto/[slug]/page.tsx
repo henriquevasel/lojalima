@@ -8,6 +8,7 @@ import { calcularPrecoVenda } from "@/app/lib/pricing";
 import Link from "next/link";
 import { getFinalPrice } from "@/app/lib/price";
 import { FaWhatsapp } from "react-icons/fa";
+import ProductAnalytics from "@/app/components/ProductAnalytics";
 
 
 
@@ -138,6 +139,13 @@ const precoPix =
 
   return (
     <div className="lightTheme">
+
+          <ProductAnalytics
+      id={produto.id}
+      name={produto.name}
+      price={precoFinal}
+    />
+
       
     <div className={s.page}>
 
