@@ -66,13 +66,11 @@ const description =
 
           {image ? (
 
-            <Image
+           <img
   src={image}
   alt={product?.name || "Produto"}
-  fill
   className={styles.image}
-  sizes="(max-width:768px) 50vw, 25vw"
-  quality={70}
+  loading="lazy"
 />
           ) : (
 
