@@ -38,28 +38,28 @@ const CATEGORY_CARDS: HomeCard[] = [
     desc: "Racks, energia, cabeamento e rede. Estrutura pronta para crescer.",
     href: "/categoria/data-center",
     tags: ["Infra", "Organização", "Escalável"],
-    image: "/produtos/datacenterHome.png",
+    image: "/produtos/datacenterHome.avif"
   },
   {
     title: "Sistema de Segurança",
     desc: "CFTV, alarmes e controle de acesso para empresas e residências.",
     href: "/categoria/sistema-de-seguranca",
     tags: ["CFTV", "Alarmes", "Acesso"],
-    image: "/produtos/sistema.png",
+    image: "/produtos/sistema.avif",
   },
   {
     title: "Instalação",
     desc: "Instalação profissional, organizada,  testada e sem gambiarras.",
     href: "/instalacao",
     tags: ["Profissional", "Teste", "Organizado"],
-    image: "/produtos/instalacaoHome.jpg",
+    image: "/produtos/instalacaoHome.avif",
   },
   {
     title: "Projetos",
     desc: "Projeto técnico completo: planejamento, lista de materiais e execução.",
     href: "/projetos",
     tags: ["Projeto", "Dimensionamento", "Documentação"],
-    image: "/produtos/projetosHome.png",
+    image: "/produtos/projetosHome.avif",
   },
 ];
 

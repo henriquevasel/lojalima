@@ -87,7 +87,7 @@ key={query}
           <div className="homeSection">
             <ProductsCarousel
               title="Controle de Acesso"
-              endpoint="/api/products/store?category=controle-de-acesso&limit=30"
+              endpoint="/api/products/store?category=controle-de-acesso&limit=10"
             />
           </div>
 
@@ -100,7 +100,7 @@ key={query}
 <div className="homeSection">
   <ProductsCarousel
     title="Casa Inteligente"
-    endpoint="/api/products/store?search=smart-home&limit=30"
+    endpoint="/api/products/store?search=smart-home&limit=10"
   />
 </div>
           {/* REDES */}

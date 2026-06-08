@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import styles from "@/app/styles/productCard.module.css";
+import Image from "next/image";
 
 export default function ProductCard({ product }: any) {
-  console.log(product);
+  
 
   // imagem principal
   const image =
@@ -65,13 +66,14 @@ const description =
 
           {image ? (
 
-            <img
-              src={image}
-              alt={product?.name || "Produto"}
-              className={styles.image}
-              loading="lazy"
-            />
-
+            <Image
+  src={image}
+  alt={product?.name || "Produto"}
+  fill
+  className={styles.image}
+  sizes="(max-width:768px) 50vw, 25vw"
+  quality={70}
+/>
           ) : (
 
             <div

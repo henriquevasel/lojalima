@@ -14,28 +14,28 @@ export default function ProductsCarousel({ title, endpoint }: any) {
   const [loading, setLoading] = useState(true);
 
   async function load() {
-    console.log("📡 chamando endpoint:", endpoint);
+  
 
     setLoading(true);
 
     try {
       const url = window.location.origin + endpoint;
 
-      console.log("🌍 URL FINAL:", url);
+      
 
       const res = await fetch(url);
 
-      console.log("📥 STATUS:", res.status);
+      
 
       if (!res.ok) throw new Error("Erro na API");
 
       const data = await res.json();
 
-      console.log("🔥 PRODUTOS RECEBIDOS:", data);
+      
 
       setProducts(Array.isArray(data) ? data : data.products || []);
     } catch (err) {
-      console.log("❌ Erro carregando produtos", err);
+      
       setProducts([]);
     }
 
@@ -43,7 +43,7 @@ export default function ProductsCarousel({ title, endpoint }: any) {
   }
 
   useEffect(() => {
-    console.log("🚀 useEffect rodou");
+    
     load();
   }, [endpoint]);
 

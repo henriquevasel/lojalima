@@ -3,16 +3,19 @@ import { NextResponse } from "next/server";
 import { calcularPrecoVenda } from "@/app/lib/pricing";
 import { getFinalPrice } from "@/app/lib/price";
 
+export const revalidate = 3600;
+
 export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
+  
 
   const category = searchParams.get("category");
   const search =
   searchParams.get("q") ||
   searchParams.get("search") ||
   "";
-  console.log("BUSCA:", search);
+ 
   const sort = searchParams.get("sort");
   const page = Number(searchParams.get("page") || "1");
   const smartHome = search === "smart-home";
@@ -182,8 +185,7 @@ export async function GET(req: Request) {
   /* =========================
   QUERY
   ========================= */
-  console.log("BUSCA:", search);
-console.log("WHERE:", JSON.stringify(where, null, 2));
+  
 
   const products = await prisma.product.findMany({
     where,
@@ -205,10 +207,7 @@ console.log("WHERE:", JSON.stringify(where, null, 2));
     skip,
   });
 
-  console.log(
-  "RESULTADOS:",
-  products.map((p) => p.name)
-);
+  
   /* =========================
   PREÇOS
   ========================= */

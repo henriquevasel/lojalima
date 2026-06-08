@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    unoptimized: true,
-  },
+  formats: ["image/avif", "image/webp"],
+},
 
   allowedDevOrigins: [
     "192.168.18.149",
