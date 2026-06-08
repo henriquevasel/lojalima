@@ -43,7 +43,7 @@ export default function CategoriesSection() {
             <div className={styles.categoryIcon}>
 
              <Image
-                src={`/produtos/${cat.slug}.png`}
+                src={`/produtos/${cat.slug}.avif`}
                 alt={cat.name}
                 width={85}
                 height={85}
