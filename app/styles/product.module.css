@@ -159,7 +159,7 @@
   }
 
   .title{
-    font-size:26px;
+    font-size:28px;
   }
 
   .price{
@@ -476,10 +476,10 @@
 
 .priceCard{
   background:#fff;
-  border:1px solid #e5e7eb;
+  border:2px solid #e5e7eb;
   border-radius:22px;
-  padding:28px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.03);
+  padding:32px;
+  box-shadow:0 2px 25px rgba(0,0,0,0.03);
 }
 
 .buyButtonWrap{
@@ -488,9 +488,9 @@
 
 .buyButtonWrap button{
   width:100%;
-  height:48px;
+  height:60px;
   border-radius:18px;
-  font-size:16px;
+  font-size:18px;
   font-weight:700;
 }
 
@@ -562,10 +562,10 @@
 }
 
 .title{
-  font-size:32px !important;
-  line-height:1.2;
+  font-size:42px !important;
+  line-height:1.1;
   font-weight:800;
-  margin-bottom:18px;
+  margin-bottom:10px;
 
   color:#111;
 
@@ -633,15 +633,30 @@
 }
 
 .trustRow div{
-  padding:14px;
+  padding:18px 12px;
+
 
   text-align:center;
 
-  font-size:13px;
+    font-size:12px;
+    line-height:1.4;
 
   border-right:1px solid #e5e7eb;
 }
 
 .trustRow div:last-child{
   border-right:none;
+}
+
+.metaLine{
+  color:#6b7280;
+  font-size:13px;
+  margin-top:6px;
+}
+
+.rating{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:nowrap;
 }

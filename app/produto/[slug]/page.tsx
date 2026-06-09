@@ -203,9 +203,9 @@ const precoPix =
   <a href="#avaliacoes">Ver avaliações</a>
 </div>
 
-  <span>Código: {produto.id}</span>
-  <span>|</span>
-  <span>Marca: Intelbras</span>
+  <div className={s.metaLine}>
+  Código: 7457 • Intelbras
+</div>
 </div>
 
 {/* PREÇO + PAGAMENTO */}
