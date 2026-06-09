@@ -174,31 +174,39 @@ const precoPix =
 
   </div>
 
-<button className={s.whatsappBtn}>
-   <FaWhatsapp className={s.whatsIcon} />
-  
-  <div>
-    <span>Falar com especialista</span>
-    <small>Atendimento rápido no WhatsApp</small>
-  </div>
-</button>
 
-  {/* BLOCO CONFIANÇA */}
-  <div className={s.securityCard}>
-    <div>🔒 Compra 100% segura</div>
-    <div>🚚 Entrega rápida</div>
-    <div>🛠 Instalação profissional disponível</div>
-  </div>
+
+ 
 
 </div>
         {/* INFORMAÇÕES */}
 
         <div className={s.infoColumn}>
 
-         <h1 className={s.title}>
-            {produto.name}
-          </h1>
+  <div className={s.breadcrumb}>
+    <Link href="/">Início</Link>
+    <span>›</span>
+    <span>Câmeras</span>
+    <span>›</span>
+    <span>{produto.name}</span>
+  </div>
 
+  <h1 className={s.title}>
+    {produto.name}
+  </h1>
+
+<div className={s.productMeta}>
+
+  <div className={s.rating}>
+  <span>⭐⭐⭐⭐⭐</span>
+  <span>4.9 (18 avaliações)</span>
+  <a href="#avaliacoes">Ver avaliações</a>
+</div>
+
+  <span>Código: {produto.id}</span>
+  <span>|</span>
+  <span>Marca: Intelbras</span>
+</div>
 
 {/* PREÇO + PAGAMENTO */}
 
@@ -469,6 +477,13 @@ const precoPix =
   productName={produto.name}
   productPrice={precoFinal}
 />
+
+<div className={s.trustRow}>
+  <div>🔒 Compra 100% segura</div>
+  <div>🚚 Entrega rápida para todo Brasil</div>
+  <div>🛠 Suporte técnico especializado</div>
+  <div>📱 Atendimento via WhatsApp</div>
+</div>
           </div>
 
 
