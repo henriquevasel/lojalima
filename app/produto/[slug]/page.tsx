@@ -11,9 +11,18 @@ import { FaWhatsapp } from "react-icons/fa";
 import ProductAnalytics from "@/app/components/ProductAnalytics";
 import Script from "next/script";
 
+import {
+  CreditCard,
+  QrCode,
+  ShieldCheck,
+  Truck,
+  MessageSquare,
+  BadgeCheck
+} from "lucide-react";
 
 
-import { CreditCard, QrCode, ShieldCheck, Truck, BadgeCheck } from "lucide-react";
+
+
 
 export default async function ProdutoPage({ params }: any) {
 
@@ -197,14 +206,10 @@ const precoPix =
 
 <div className={s.topInfo}>
   <span>⭐⭐⭐⭐⭐ 4.9 (18 avaliações)</span>
-
-  <a href="#">
-    Ver avaliações
-  </a>
-
+  <span>•</span>
   <span>Código: {produto.id}</span>
-
-  <span>Marca: Intelbras</span>
+  <span>•</span>
+  <span>Intelbras</span>
 </div>
 
 {/* PREÇO + PAGAMENTO */}
@@ -478,10 +483,27 @@ const precoPix =
 />
 
 <div className={s.trustRow}>
-  <div>🔒 Compra 100% segura</div>
-  <div>🚚 Entrega rápida para todo Brasil</div>
-  <div>🛠 Suporte técnico especializado</div>
-  <div>📱 Atendimento via WhatsApp</div>
+
+  <div className={s.trustItem}>
+    <ShieldCheck size={22} />
+    <small>Compra 100% segura</small>
+  </div>
+
+  <div className={s.trustItem}>
+    <Truck size={22} />
+    <small>Entrega rápida para todo Brasil</small>
+  </div>
+
+  <div className={s.trustItem}>
+    <Headset size={22} />
+    <small>Suporte técnico especializado</small>
+  </div>
+
+  <div className={s.trustItem}>
+    <MessageCircle size={22} />
+    <small>Atendimento via WhatsApp</small>
+  </div>
+
 </div>
           </div>
 
