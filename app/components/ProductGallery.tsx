@@ -68,18 +68,16 @@ export default function ProductGallery({ images, name }: any) {
           justifyContent: "center",
         }}
       >
-        <Image
-          src={selected}
-          alt={name}
-          width={1200}
-          height={1200}
-          priority
-          style={{
-            objectFit: "contain",
-  width: "100%",
-  height: "100%",
-          }}
-        />
+       <Image
+  src={selected}
+  alt={name}
+  fill
+  priority
+  style={{
+    objectFit: "contain",
+    transform: "scale(1.4)",
+  }}
+/>
       </div>
     </div>
   );
