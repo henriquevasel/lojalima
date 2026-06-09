@@ -494,15 +494,15 @@ const precoPix =
     <small>Entrega rápida para todo Brasil</small>
   </div>
 
-  <div className={s.trustItem}>
-    <Headset size={22} />
-    <small>Suporte técnico especializado</small>
-  </div>
+ <div className={s.trustItem}>
+  <BadgeCheck size={22} />
+  <small>Suporte técnico especializado</small>
+</div>
 
-  <div className={s.trustItem}>
-    <MessageCircle size={22} />
-    <small>Atendimento via WhatsApp</small>
-  </div>
+<div className={s.trustItem}>
+  <MessageSquare size={22} />
+  <small>Atendimento via WhatsApp</small>
+</div>
 
 </div>
           </div>
