@@ -239,7 +239,7 @@ const precoPix =
 {/* preço PIX destaque */}
 <div
   style={{
-    fontSize: 48,
+    fontSize: 56,
     fontWeight: 800,
     lineHeight: 1,
     marginBottom: 4,
