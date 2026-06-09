@@ -54,31 +54,32 @@ export default function ProductGallery({ images, name }: any) {
         ))}
       </div>
 
-      {/* IMAGEM PRINCIPAL */}
-      <div
-        style={{
-          flex: 1,
-          height: 650,
-          position: "relative",
-          borderRadius: 24,
-          overflow: "hidden",
-          background: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-       <Image
-  src={selected}
-  alt={name}
-  fill
-  priority
+     {/* IMAGEM PRINCIPAL */}
+<div
   style={{
-    objectFit: "contain",
-    transform: "scale(1.4)",
+    flex: 1,
+    height: 650,
+    borderRadius: 24,
+    overflow: "hidden",
+    background: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }}
-/>
-      </div>
+>
+  <Image
+    src={selected}
+    alt={name}
+    width={900}
+    height={900}
+    priority
+    style={{
+      objectFit: "contain",
+      width: "85%",
+      height: "85%",
+    }}
+  />
+</div>
     </div>
   );
 }
