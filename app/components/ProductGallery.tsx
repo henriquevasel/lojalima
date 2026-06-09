@@ -17,7 +17,7 @@ export default function ProductGallery({ images, name }: any) {
    <div
   style={{
     width: "100%",
-    height: 420,
+    height: 700,
     position: "relative",
     borderRadius: 24,
     overflow: "hidden",
@@ -33,13 +33,13 @@ export default function ProductGallery({ images, name }: any) {
 <Image
   src={selected}
   alt={name}
-  width={900}
-  height={900}
+  width={1200}
+  height={1200}
   priority
   style={{
     objectFit: "contain",
-    width: "85%",
-    height: "85%",
+    width: "100%",
+    height: "100%",
   }}
 />
 </div>

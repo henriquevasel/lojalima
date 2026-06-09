@@ -7,8 +7,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 55% 45%;
-  gap: 48px;
+  grid-template-columns: 58% 42%;
+  gap: 20px;
   align-items: start;
 }
 
@@ -26,6 +26,13 @@
   justify-content: center;
 }
 
+
+.imageWrap img {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 700px !important;
+  object-fit: contain;
+}
 
 
 
@@ -569,7 +576,7 @@
 
   color:#111;
 
-  max-width:700px;
+  max-width: 100%;
 }
 
 .leftColumn{
