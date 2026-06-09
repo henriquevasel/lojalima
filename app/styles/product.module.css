@@ -660,3 +660,45 @@
   gap:8px;
   flex-wrap:nowrap;
 }
+
+.buyNow{
+  width:100%;
+  height:56px;
+
+  background:white;
+
+  border:2px solid #16a34a;
+
+  color:#16a34a;
+
+  font-weight:700;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  margin-top:10px;
+}
+
+.topInfo{
+  display:flex;
+  align-items:center;
+
+  gap:18px;
+
+  flex-wrap:wrap;
+
+  font-size:13px;
+
+  color:#666;
+
+  margin-top:8px;
+
+  margin-bottom:20px;
+}
+
+.topInfo a{
+  color:#16a34a;
+  text-decoration:none;
+  font-weight:600;
+}

@@ -114,22 +114,32 @@ export default function AddToCartButton({
     }
   }
 
-  return (
-    <button
-      type="button"
-      onClick={handleAdd}
-      style={{
-        padding: "12px 14px",
-        borderRadius: 12,
-        color: "black",
-        fontWeight: 1000,
-        cursor: "pointer",
-        border: "2px solid black",
-        backgroundColor: "lightblue",
-        transition: "all 0.3s ease",
-      }}
-    >
-      Adicionar ao carrinho
-    </button>
-  );
+ return (
+  <button
+    type="button"
+    onClick={handleAdd}
+    style={{
+      width: "100%",
+      height: "56px",
+
+      background: "#16a34a",
+
+      color: "#fff",
+
+      border: "none",
+
+      borderRadius: "8px",
+
+      fontSize: "16px",
+
+      fontWeight: 700,
+
+      cursor: "pointer",
+
+      transition: ".2s",
+    }}
+  >
+    🛒 ADICIONAR AO CARRINHO
+  </button>
+);
 }

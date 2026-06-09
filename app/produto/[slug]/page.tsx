@@ -195,17 +195,16 @@ const precoPix =
     {produto.name}
   </h1>
 
-<div className={s.productMeta}>
+<div className={s.topInfo}>
+  <span>⭐⭐⭐⭐⭐ 4.9 (18 avaliações)</span>
 
-  <div className={s.rating}>
-  <span>⭐⭐⭐⭐⭐</span>
-  <span>4.9 (18 avaliações)</span>
-  <a href="#avaliacoes">Ver avaliações</a>
-</div>
+  <a href="#">
+    Ver avaliações
+  </a>
 
-  <div className={s.metaLine}>
-  Código: 7457 • Intelbras
-</div>
+  <span>Código: {produto.id}</span>
+
+  <span>Marca: Intelbras</span>
 </div>
 
 {/* PREÇO + PAGAMENTO */}
@@ -485,6 +484,10 @@ const precoPix =
   <div>📱 Atendimento via WhatsApp</div>
 </div>
           </div>
+
+          <button className={s.buyNow}>
+  COMPRAR AGORA
+</button>
 
 
             <div className={s.freteCard}>
