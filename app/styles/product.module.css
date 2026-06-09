@@ -1,8 +1,8 @@
 .page {
-  max-width: 1400px;
+  max-width: 1450px;
   width: 95%;
   margin: 0 auto;
-  padding: 60px 20px;
+   padding: 20px 20px 60px;
 }
 
 .grid {
@@ -569,8 +569,8 @@
 }
 
 .title{
-  font-size:42px !important;
-  line-height:1.1;
+  font-size:26px !important;
+  line-height:1.2;
   font-weight:800;
   margin-bottom:10px;
   color:#111;

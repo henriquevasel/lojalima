@@ -239,7 +239,7 @@ const precoPix =
 {/* preço PIX destaque */}
 <div
   style={{
-    fontSize: 56,
+    fontSize: 28,
     fontWeight: 800,
     lineHeight: 1,
     marginBottom: 4,
@@ -600,8 +600,8 @@ PRODUTOS RELACIONADOS
                 alt={p.name}
                 className={s.relatedImage}
                 style={{
-                  width: "100%",
-                  height: "100%",
+                  width: "120%",
+                  height: "120%",
                   objectFit: "contain",
                 }}
               />

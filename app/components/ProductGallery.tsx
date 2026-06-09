@@ -4,93 +4,83 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function ProductGallery({ images, name }: any) {
-
   const first = images?.[0]?.url || "/produtos/placeholder.jpg";
   const [selected, setSelected] = useState(first);
 
   return (
-
-    <div>
-
-      {/* IMAGEM PRINCIPAL */}
-
-   <div
-  style={{
-    width: "100%",
-    height: 700,
-    position: "relative",
-    borderRadius: 24,
-    overflow: "hidden",
-    marginBottom: 20,
-    background: "#fff",
-
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-
-  }}
->
-<Image
-  src={selected}
-  alt={name}
-  width={1200}
-  height={1200}
-  priority
-  style={{
-    objectFit: "contain",
-    width: "100%",
-    height: "100%",
-  }}
-/>
-</div>
-
-
+    <div
+      style={{
+        display: "flex",
+        gap: 20,
+        alignItems: "flex-start",
+      }}
+    >
       {/* MINIATURAS */}
-
       <div
         style={{
           display: "flex",
-          gap: 10,
-          flexWrap: "wrap"
+          flexDirection: "column",
+          gap: 12,
+          flexShrink: 0,
         }}
       >
-
         {images?.map((img: any) => (
-
           <div
             key={img.url}
             onClick={() => setSelected(img.url)}
             style={{
-              width: 70,
-              height: 70,
+              width: 80,
+              height: 80,
               position: "relative",
-              borderRadius: 10,
+              borderRadius: 12,
               overflow: "hidden",
               cursor: "pointer",
               background: "#fff",
-              border: selected === img.url
-                ? "2px solid #22c55e"
-                : "1px solid rgba(0,0,0,0.1)"
+              border:
+                selected === img.url
+                  ? "2px solid #22c55e"
+                  : "1px solid rgba(0,0,0,0.1)",
             }}
           >
-
             <Image
               src={img.url}
               alt={name}
               fill
               style={{
-                objectFit: "contain" // 🔥 padrão correto
+                objectFit: "contain",
               }}
             />
-
           </div>
-
         ))}
-
       </div>
 
+      {/* IMAGEM PRINCIPAL */}
+      <div
+        style={{
+          flex: 1,
+          height: 650,
+          position: "relative",
+          borderRadius: 24,
+          overflow: "hidden",
+          background: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image
+          src={selected}
+          alt={name}
+          width={1200}
+          height={1200}
+          priority
+          style={{
+            objectFit: "contain",
+            width: "95%",
+            height: "95%",
+          }}
+        />
+      </div>
     </div>
-
   );
-
 }
