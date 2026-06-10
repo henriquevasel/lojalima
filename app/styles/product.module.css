@@ -618,7 +618,7 @@
   flex-wrap:wrap;
 
   color:#666;
-  font-size:12px;
+  font-size:11px;
 
   margin-bottom:4px;
 }
@@ -853,7 +853,7 @@
 }
 
 .paymentBox{
-  margin-top:16px;
+  margin-top:10px;
   border:1px solid #e5e7eb;
   border-radius:12px;
   overflow:hidden;
