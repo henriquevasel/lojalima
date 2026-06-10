@@ -214,7 +214,12 @@ const precoPix =
 
 {/* PREÇO + PAGAMENTO */}
 
-<div className={s.priceCard}>
+<div
+  className={s.priceCard}
+  style={{
+    marginTop: 0,
+  }}
+>
 
  
 
