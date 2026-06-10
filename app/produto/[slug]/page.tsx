@@ -336,133 +336,66 @@ const precoPix =
 
   {/* parcelamento */}
 
-  {/* BOX PAGAMENTOS */}
-  <div
-    style={{
-      marginTop: 12,
-      display: "flex",
-      flexDirection: "column",
-      gap: 8,
-    }}
-  >
 
-    {/* boleto */}
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        background: "#eaf7ef",
-        padding: "10px 12px",
-        borderRadius: 8,
-      }}
-    >
-      <CreditCard size={18} color="#2e7d32" />
+<div className={s.paymentBox}>
 
-      <div style={{ lineHeight: 1.2 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#2e7d32" }}>
+  <div className={s.paymentTop}>
+
+    <div className={s.paymentItem}>
+      <CreditCard size={18} color="#22c55e" />
+
+      <div>
+        <div style={{fontWeight:600}}>
           {precoPix.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
-          })}{" "}
-          no boleto
+          })} no boleto
         </div>
-        <div style={{ fontSize: 12, color: "#555" }}>
-          Economize{" "}
-          {descontoPix.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
+
+        <div style={{fontSize:12,color:"#666"}}>
+          com 5% de desconto
         </div>
       </div>
     </div>
 
-    {/* pix */}
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        background: "#f4f6f8",
-        padding: "10px 12px",
-        borderRadius: 8,
-      }}
-    >
+    <div className={s.paymentItem}>
       <QrCode size={18} color="#22c55e" />
 
-      <div style={{ lineHeight: 1.2 }}>
-        <div style={{ fontSize: 14, fontWeight: 600 }}>
+      <div>
+        <div style={{fontWeight:600}}>
           {precoPix.toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
-          })}{" "}
-          no pix
-         {!produto.isKit && (
-
-  <span
-    style={{
-      marginLeft: 6,
-      background: "#22c55e",
-      color: "#fff",
-      fontSize: 10,
-      padding: "2px 6px",
-      borderRadius: 4,
-      fontWeight: 700,
-    }}
-  >
-    5% OFF
-  </span>
-
-)}
+          })} no pix
         </div>
-        <div style={{ fontSize: 12, color: "#555" }}>
-          {produto.isKit
-  ? "Pagamento à vista"
-  : "5% OFF adicional no PIX"}
+
+        <div style={{fontSize:12,color:"#666"}}>
+          com 5% de desconto
         </div>
       </div>
     </div>
 
-{!produto.isKit && (
+  </div>
 
-<div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    background: "#f4f4f5",
-    padding: "10px 12px",
-    borderRadius: 8,
-  }}
->
-  <CreditCard size={18} color="#111" />
+  <div className={s.paymentBottom}>
+    <CreditCard size={18} color="#22c55e" />
 
-  <div style={{ lineHeight: 1.2 }}>
-    <div
-      style={{
-        fontSize: 14,
-        fontWeight: 600,
-        color: "#111",
-      }}
-    >
-      {precoFinal.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}{" "}
-      em até 3x sem juros
-    </div>
+    <div>
+      <div style={{fontWeight:600}}>
+        {precoFinal.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })} em até 3x sem juros
+      </div>
 
-    <div
-      style={{
-        fontSize: 12,
-        color: "#555",
-      }}
-    >
+      <div style={{fontSize:12,color:"#666"}}>
+        no cartão de crédito
+      </div>
     </div>
   </div>
+
 </div>
 
-)}
 
 
   </div>
