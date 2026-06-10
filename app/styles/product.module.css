@@ -694,7 +694,7 @@
   background:white;
 
   border:2px solid #16a34a;
-
+   transition:all .25s ease;  
   color:#16a34a;
 
   font-weight:700;
@@ -706,6 +706,14 @@
   margin-top:14px;
 
   margin-bottom:20px;
+}
+
+
+.buyNow:hover{
+  background:#16a34a;
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(22,163,74,.15);
 }
 
 .topInfo{
