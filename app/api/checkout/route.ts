@@ -10,6 +10,7 @@ import { calcularPrecoVenda } from "@/app/lib/pricing";
 import { sendOrderEmail } from "@/app/lib/email";
 import { getFinalPrice } from "@/app/lib/price";
 
+
 export async function POST(req: Request) {
 
   try {

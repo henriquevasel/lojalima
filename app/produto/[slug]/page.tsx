@@ -10,6 +10,7 @@ import { getFinalPrice } from "@/app/lib/price";
 import { FaWhatsapp } from "react-icons/fa";
 import ProductAnalytics from "@/app/components/ProductAnalytics";
 import Script from "next/script";
+import BuyNowButton from "@/app/components/BuyNowButton";
 
 import {
   CreditCard,
@@ -418,6 +419,11 @@ const precoPix =
   productPrice={precoFinal}
 />
 
+<BuyNowButton
+  productId={produto.id}
+/>
+
+
 <div className={s.trustRow}>
 
   <div className={s.trustItem}>
@@ -443,10 +449,7 @@ const precoPix =
 </div>
           </div>
 
-          <button className={s.buyNow}>
-  COMPRAR AGORA
-</button>
-
+         
 
             <div className={s.freteCard}>
               <FreteCalculator />
