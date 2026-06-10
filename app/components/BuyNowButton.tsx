@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import s from "@/app/styles/product.module.css";
 
 type Props = {
   productId: number;
@@ -75,22 +76,11 @@ export default function BuyNowButton({
   }
 
   return (
-    <button
-      onClick={handleBuyNow}
-      style={{
-        width: "100%",
-        height: "56px",
-        background: "#fff",
-        color: "#16a34a",
-        border: "2px solid #16a34a",
-        borderRadius: "8px",
-        fontSize: "16px",
-        fontWeight: 700,
-        cursor: "pointer",
-        marginTop: "12px",
-      }}
-    >
-      COMPRAR AGORA
-    </button>
-  );
+  <button
+    onClick={handleBuyNow}
+    className={s.buyNow}
+  >
+    COMPRAR AGORA
+  </button>
+);
 }
