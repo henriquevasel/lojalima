@@ -400,8 +400,6 @@ const precoPix =
 
   </div>
 
-</div>
-
 
 
 
