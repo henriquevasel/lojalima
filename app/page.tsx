@@ -6,6 +6,7 @@ import HomeProducts from "@/app/components/HomeProducts";
 import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
 import { Suspense } from "react";
 import { FaWhatsapp } from "react-icons/fa";
+import TrustBar from "@/app/components/TrustBar";
 
 
 
@@ -84,6 +85,8 @@ export default function HomePage() {
 
       {/* Banner superior da página */}
       <HomeBannerCarousel />
+
+      <TrustBar />
 
      
 
