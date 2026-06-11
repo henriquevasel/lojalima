@@ -131,8 +131,13 @@ export default function HomePage() {
 
           {/* Título da seção */}
           <header className={s.sectionHead}>
-            <h2 className="h2">Principais soluções</h2>
-            <p className="p">Áreas de atuação da Lima e Lima. Clique em cada uma para conhecer os detalhes.</p>
+           <h2 className="h2">
+  Soluções completas para segurança e infraestrutura
+</h2>
+
+<p className="p">
+  Projetamos, instalamos e fornecemos equipamentos profissionais para residências, empresas e indústrias.
+</p>
           </header>
 
           {/* Grid de cards */}
