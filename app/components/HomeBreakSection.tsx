@@ -12,9 +12,9 @@ export default function HomeBreakSection() {
             Segurança Profissional
           </span>
 
-          <h2>
-            Equipamentos, instalação e suporte em um só lugar.
-          </h2>
+        <h2>
+  Soluções completas em segurança eletrônica.
+</h2>
 
           <p>
             Trabalhamos com soluções completas para residências,
