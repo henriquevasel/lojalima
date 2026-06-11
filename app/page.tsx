@@ -102,6 +102,7 @@ export default function HomePage() {
 
           <CategoriesSection />
 
+        <TrustBar />
           
 
           
