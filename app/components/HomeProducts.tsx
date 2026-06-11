@@ -107,13 +107,7 @@ key={query}
     endpoint="/api/products/store?search=smart-home&limit=10"
   />
 </div>
-          {/* REDES */}
-          <div className="homeSection">
-            <ProductsCarousel
-              title="Redes e Wi-Fi"
-              endpoint="/api/products/store?category=redes&limit=10"
-            />
-          </div>
+          
 
           {/* ALARMES */}
           <div className="homeSection">
