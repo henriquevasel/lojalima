@@ -924,3 +924,76 @@ border: 1px solid #e5e7eb;
   }
 
 }
+/* =========================
+   AVALIAÇÕES
+========================= */
+
+.reviewSection{
+  width: 92%;
+  max-width: 1200px;
+  margin: 60px auto;
+}
+
+.reviewHeader{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.reviewHeader h2{
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.reviewHeader p{
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.reviewGrid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.reviewCard{
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 24px;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+
+  transition: .2s;
+}
+
+.reviewCard:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.reviewStars{
+  display: flex;
+  gap: 4px;
+  color: #fbbf24;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.reviewCard p{
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.reviewCard strong{
+  color: #111827;
+}
+
+@media(max-width:900px){
+
+  .reviewGrid{
+    grid-template-columns: 1fr;
+  }
+
+}

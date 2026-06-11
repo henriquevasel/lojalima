@@ -8,6 +8,8 @@ import { Suspense } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import TrustBar from "@/app/components/TrustBar";
 import CompanyStats from "@/app/components/CompanyStats";
+import CustomerReviews from "@/app/components/CustomerReviews";
+
 
 
 
@@ -113,6 +115,8 @@ export default function HomePage() {
       </section>
 
       <CompanyStats />
+
+<CustomerReviews />
 
 <section className={s.section}></section>
 
