@@ -86,7 +86,7 @@ export default function HomePage() {
       {/* Banner superior da página */}
       <HomeBannerCarousel />
 
-      <TrustBar />
+      
 
      
 
@@ -98,6 +98,8 @@ export default function HomePage() {
         <div className={s.productsWrapper}>
 
           <CategoriesSection />
+
+          <TrustBar />
 
           
           <Suspense>
