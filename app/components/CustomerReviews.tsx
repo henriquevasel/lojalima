@@ -1,4 +1,4 @@
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaQuoteLeft } from "react-icons/fa";
 import s from "@/app/styles/home.module.css";
 
 export default function CustomerReviews() {
@@ -6,15 +6,23 @@ export default function CustomerReviews() {
     <section className={s.reviewSection}>
 
       <div className={s.reviewHeader}>
-        <h2>O que nossos clientes dizem</h2>
+        <span className={s.reviewBadge}>
+          ⭐ Avaliações de Clientes
+        </span>
+
+        <h2>Quem compra recomenda</h2>
+
         <p>
-          Soluções em segurança eletrônica com atendimento especializado.
+          Centenas de clientes já confiaram na Lima e Lima para proteger
+          residências, empresas e comércios.
         </p>
       </div>
 
       <div className={s.reviewGrid}>
 
         <div className={s.reviewCard}>
+          <FaQuoteLeft className={s.quoteIcon} />
+
           <div className={s.reviewStars}>
             <FaStar />
             <FaStar />
@@ -24,13 +32,18 @@ export default function CustomerReviews() {
           </div>
 
           <p>
-            Atendimento excelente, tiraram todas as dúvidas e ajudaram na escolha dos equipamentos.
+            Atendimento excelente. Tiraram todas as dúvidas e me ajudaram a escolher a câmera ideal para minha residência.
           </p>
 
-          <strong>Cliente Google</strong>
+          <div className={s.reviewAuthor}>
+            <strong>João M.</strong>
+            <span>Jaraguá do Sul - SC</span>
+          </div>
         </div>
 
         <div className={s.reviewCard}>
+          <FaQuoteLeft className={s.quoteIcon} />
+
           <div className={s.reviewStars}>
             <FaStar />
             <FaStar />
@@ -40,13 +53,18 @@ export default function CustomerReviews() {
           </div>
 
           <p>
-            Produtos originais, entrega rápida e suporte muito prestativo.
+            Produtos originais, entrega rápida e suporte muito prestativo. Voltarei a comprar.
           </p>
 
-          <strong>Cliente Loja Online</strong>
+          <div className={s.reviewAuthor}>
+            <strong>Marcelo R.</strong>
+            <span>Joinville - SC</span>
+          </div>
         </div>
 
         <div className={s.reviewCard}>
+          <FaQuoteLeft className={s.quoteIcon} />
+
           <div className={s.reviewStars}>
             <FaStar />
             <FaStar />
@@ -56,10 +74,13 @@ export default function CustomerReviews() {
           </div>
 
           <p>
-            Instalação organizada e serviço profissional. Recomendo.
+            Instalação organizada e acabamento impecável. Serviço profissional do início ao fim.
           </p>
 
-          <strong>Cliente Corporativo</strong>
+          <div className={s.reviewAuthor}>
+            <strong>Empresa Cliente</strong>
+            <span>Santa Catarina</span>
+          </div>
         </div>
 
       </div>

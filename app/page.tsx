@@ -102,12 +102,14 @@ export default function HomePage() {
 
           <CategoriesSection />
 
-          <TrustBar />
+          
 
           
           <Suspense>
             <HomeProducts />
           </Suspense>
+
+          <TrustBar />
 
           {/* QUEBRA VISUAL */}
 
@@ -118,7 +120,7 @@ export default function HomePage() {
 
 <CustomerReviews />
 
-<section className={s.section}></section>
+
 
   
 
