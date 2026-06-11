@@ -7,6 +7,7 @@ import HomeBannerCarousel from "@/app/components/HomeBannerCarousel";
 import { Suspense } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import TrustBar from "@/app/components/TrustBar";
+import CompanyStats from "@/app/components/CompanyStats";
 
 
 
@@ -110,6 +111,10 @@ export default function HomePage() {
 
         </div>
       </section>
+
+      <CompanyStats />
+
+<section className={s.section}></section>
 
   
 
