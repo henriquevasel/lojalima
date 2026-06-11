@@ -87,8 +87,8 @@
   border: 1px solid rgba(255,255,255,.18);
   outline: none;
 
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.92);
+background: #ffffff;
+color: #111827;
 
   padding: 0 65px 0 20px; /* 🔥 espaço maior pra lupa */
   font-weight: 700;
@@ -164,8 +164,8 @@
 }
 
 .searchInput::placeholder {
-  color: rgba(255,255,255,.75);
-  font-weight: 700;
+  color: #6b7280;
+  font-weight: 600;
 }
 
 .searchInput:focus {
@@ -197,7 +197,7 @@
   text-decoration: none;
 
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid #d1d5db;
 
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
   transition: 160ms ease;
