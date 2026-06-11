@@ -195,32 +195,7 @@ export default function HomePage() {
 
     
 
-      {/* ===== CTA FINAL ===== */}
-      <section className={s.section}>
-        <div className={s.container}>
-          <div className={s.cta}>
-
-            <div>
-              <h2 className="h2">Quer um orçamento rápido?</h2>
-
-              <p className="p">
-               Mande sua cidade, o tipo de ambiente e o objetivo (monitorar, controle de acesso, alarme ou rede).
-              </p>
-            </div>
-
-            <div className={s.ctaActions}>
-              <Link className="btn btn-primary-light" href="https://wa.me/554738423235">
-                Chamar no WhatsApp
-              </Link>
-
-              <Link className="btn btn-outline-light" href="/quem-somos">
-                Quem somos
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      
 
 <a
   href="https://wa.me/554738423235"

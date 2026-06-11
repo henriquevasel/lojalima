@@ -6,6 +6,7 @@ import ProductsCarousel from "@/app/components/ProductsCarousel";
 import StoreToolbar from "@/app/components/StoreToolbar";
 import WhatsAppSection from "@/app/components/WhatsAppSection";
 import HomeKitBanner from "@/app/components/HomeKitSection";
+import HomeBreakSection from "@/app/components/HomeBreakSection";
 
 export default function HomeProducts() {
 
@@ -61,6 +62,10 @@ key={query}
               endpoint="/api/products/store?category=cftv&limit=10"
             />
           </div>
+
+          <div className="homeSection">
+  <HomeBreakSection />
+</div>
 
 
 
