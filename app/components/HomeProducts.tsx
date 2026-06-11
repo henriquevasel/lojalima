@@ -5,7 +5,6 @@ import ProductGrid from "@/app/components/ProductGrid";
 import ProductsCarousel from "@/app/components/ProductsCarousel";
 import StoreToolbar from "@/app/components/StoreToolbar";
 import WhatsAppSection from "@/app/components/WhatsAppSection";
-
 import HomeKitBanner from "@/app/components/HomeKitSection";
 
 export default function HomeProducts() {
