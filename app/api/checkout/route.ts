@@ -592,26 +592,26 @@ unit_price:
 
     : (
 
-        paymentMethod === "pix"
+     paymentMethod === "pix" &&
+couponCode !== "WIFI25"
 
-          ? Math.round(
-              getFinalPrice({
-                ...item.product,
-                priceCents: calcularPrecoVenda(
-                  item.productvariant?.priceCents ??
-                  item.product.priceCents
-                ),
-              }) * 0.95
-            )
+  ? Math.round(
+      getFinalPrice({
+        ...item.product,
+        priceCents: calcularPrecoVenda(
+          item.productvariant?.priceCents ??
+          item.product.priceCents
+        ),
+      }) * 0.95
+    )
 
-          : getFinalPrice({
-              ...item.product,
-              priceCents: calcularPrecoVenda(
-                item.productvariant?.priceCents ??
-                item.product.priceCents
-              ),
-            })
-
+  : getFinalPrice({
+      ...item.product,
+      priceCents: calcularPrecoVenda(
+        item.productvariant?.priceCents ??
+        item.product.priceCents
+      ),
+    })
       ) / 100,
 
     currency_id: "BRL"
