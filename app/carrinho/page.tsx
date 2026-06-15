@@ -189,10 +189,15 @@ if(savedCoupon){
       headers:{
         "Content-Type":"application/json"
       },
-      body: JSON.stringify({
+     body: JSON.stringify({
   code: coupon,
   subtotal: total,
-  productIds: items.map(item => item.product.id)
+
+  items: items.map(item => ({
+    id: item.product.id,
+    price: item.product.priceCents / 100,
+    qty: item.qty
+  }))
 })
     });
 

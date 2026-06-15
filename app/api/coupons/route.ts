@@ -9,7 +9,11 @@ export async function POST(req: Request) {
     const code = body.code?.trim().toUpperCase();
     const subtotal = Number(body.subtotal || 0);
 
-    const productIds = body.productIds || [];
+    const items = body.items || [];
+
+const productIds = items.map(
+  (item: any) => item.id
+);
 
     if (!code) {
       return NextResponse.json(
@@ -104,15 +108,86 @@ if (coupon.coupon_group) {
 
 }
 
-    let discount = 0;
+let discount = 0;
 
-    if (coupon.type === "percent") {
-      discount = subtotal * (Number(coupon.value) / 100);
+if (coupon.type === "percent") {
+
+  // CUPOM DE PRODUTO ESPECÍFICO
+  if (coupon.product_id) {
+
+    const item = items.find(
+      (i: any) =>
+        i.id === Number(coupon.product_id)
+    );
+
+    if (item) {
+
+      discount =
+        (item.price * item.qty) *
+        (Number(coupon.value) / 100);
+
     }
 
-    if (coupon.type === "fixed") {
-      discount = Number(coupon.value);
+  }
+
+  // CUPOM DE GRUPO
+  else if (coupon.coupon_group) {
+
+    const products =
+      await prisma.product.findMany({
+        where: {
+          id: {
+            in: productIds
+          },
+          coupon_group:
+            coupon.coupon_group
+        },
+        select: {
+          id: true
+        }
+      });
+
+    const idsGrupo =
+      products.map(p => p.id);
+
+    let totalGrupo = 0;
+
+    for (const item of items) {
+
+      if (
+        idsGrupo.includes(item.id)
+      ) {
+
+        totalGrupo +=
+          item.price * item.qty;
+
+      }
+
     }
+
+    discount =
+      totalGrupo *
+      (Number(coupon.value) / 100);
+
+  }
+
+  // CUPOM NORMAL
+  else {
+
+    discount =
+      subtotal *
+      (Number(coupon.value) / 100);
+
+  }
+
+}
+
+if (coupon.type === "fixed") {
+
+  discount =
+    Number(coupon.value);
+
+}
 
     return NextResponse.json({
       valid: true,
