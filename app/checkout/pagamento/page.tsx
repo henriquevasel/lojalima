@@ -238,11 +238,22 @@ Pagamento
     <b>Cupom:</b> {coupon.code}
     {" "}
     {coupon?.discount !== undefined && (
-  <>
-    {" "}
-    (-R$ {Number(coupon.discount).toFixed(2)})
-  </>
+      <>
+        (-R$ {Number(coupon.discount).toFixed(2)})
+      </>
+    )}
+  </p>
 )}
+
+{coupon?.code === "WIFI25" && (
+  <p
+    style={{
+      color: "#facc15",
+      fontSize: "13px",
+      marginTop: "6px"
+    }}
+  >
+    🎉 O cupom WIFI25 já concede o desconto máximo desta promoção.
   </p>
 )}
 
