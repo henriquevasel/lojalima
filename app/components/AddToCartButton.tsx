@@ -82,18 +82,19 @@ export default function AddToCartButton({
       console.log("ADD_TO_CART DISPARADO");
 
       // Google Analytics
-      sendGAEvent("event", "add_to_cart", {
-        currency: "BRL",
-        value: productPrice,
-        items: [
-          {
-            item_id: String(productId),
-            item_name: productName,
-            price: productPrice,
-            quantity: 1,
-          },
-        ],
-      });
+      window.gtag?.("event", "add_to_cart", {
+  debug_mode: true,
+  currency: "BRL",
+  value: productPrice,
+  items: [
+    {
+      item_id: String(productId),
+      item_name: productName,
+      price: productPrice,
+      quantity: 1,
+    },
+  ],
+});
 
       // Facebook Pixel
       if (typeof window !== "undefined" && (window as any).fbq) {
