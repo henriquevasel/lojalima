@@ -243,6 +243,23 @@ else {
     }
   });
 
+ if (
+  coupon &&
+  coupon.code === "WIFI25" &&
+  paymentMethod !== "pix"
+) {
+  return NextResponse.json(
+    {
+      error: "Cupom WIFI25 válido apenas para PIX"
+    },
+    {
+      status: 400
+    }
+  );
+}
+
+
+
   if (
     coupon &&
     coupon.active
