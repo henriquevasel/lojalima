@@ -120,6 +120,7 @@ model product {
   updatedAt DateTime @updatedAt
 
   highlight Boolean @default(false)
+  coupon_group String? @db.VarChar(50)
   priority  Int     @default(0)
   isKit     Boolean @default(false)
   kitItems KitItem[] @relation("KitProducts")
