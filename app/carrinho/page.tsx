@@ -563,7 +563,7 @@ onMouseLeave={(e)=>(
       </div>
     )}
 
-    {couponCode === "WIFI25" && (
+ {couponCode === "WIFI25" && discount > 0 && (
   <div
     style={{
       marginTop:8,
