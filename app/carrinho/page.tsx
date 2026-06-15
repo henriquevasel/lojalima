@@ -220,7 +220,17 @@ sessionStorage.setItem(
   })
 );
 
-    alert("Cupom aplicado!");
+if (data.code === "WIFI25") {
+
+  alert(
+    "🎉 Cupom WIFI25 aplicado!\n\nEste cupom já possui desconto especial e não acumula com os 5% adicionais do PIX."
+  );
+
+} else {
+
+  alert("Cupom aplicado!");
+
+}
 
   } catch (error){
 
