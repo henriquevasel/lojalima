@@ -57,6 +57,12 @@ export default function FreteCalculator({
 
       setFrete(0);
 
+      localStorage.setItem("cep", cepLimpo);
+localStorage.setItem("cidade", data.localidade);
+localStorage.setItem("uf", data.uf);
+localStorage.setItem("logradouro", data.logradouro || "");
+localStorage.setItem("bairro", data.bairro || "");
+
       localStorage.setItem(
         "freteNome",
         "Retirada na loja"
