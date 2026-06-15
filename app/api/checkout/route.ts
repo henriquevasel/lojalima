@@ -265,13 +265,47 @@ else {
 
       if (coupon.type === "percent") {
 
-        discountCents =
-          Math.round(
-            subtotal *
-            (Number(coupon.value) / 100)
-          );
+  // Cupom para produto específico
+  if (coupon.product_id) {
 
-      }
+    const itemCupom = cartItems.find(
+      item => item.productId === coupon.product_id
+    );
+
+    if (itemCupom) {
+
+      const basePrice =
+        itemCupom.productvariant?.priceCents ??
+        itemCupom.product.priceCents;
+
+      const finalPrice =
+        itemCupom.product.isKit
+          ? itemCupom.product.priceCents
+          : getFinalPrice({
+              ...itemCupom.product,
+              priceCents: calcularPrecoVenda(basePrice),
+            });
+
+      discountCents =
+        Math.round(
+          finalPrice *
+          itemCupom.qty *
+          (Number(coupon.value) / 100)
+        );
+
+    }
+
+  } else {
+
+    discountCents =
+      Math.round(
+        subtotal *
+        (Number(coupon.value) / 100)
+      );
+
+  }
+
+}
 
       if (coupon.type === "fixed") {
 
