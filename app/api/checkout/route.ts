@@ -378,18 +378,15 @@ if (
 
 }
 
-    if (totalCents <= 0) {
-      return NextResponse.json(
-        { error: "Total inválido" },
-        { status: 400 }
-      );
-    }
+   
 
     totalCents =
   Math.max(
     totalCents - discountCents,
     0
   );
+
+  const isFreeOrder = totalCents === 0;
 
 // 🔥 KIT NÃO TEM DESCONTO PIX
 if (
@@ -552,7 +549,24 @@ if (
 });
 
 
+if (isFreeOrder) {
 
+  await prisma.order.update({
+    where: {
+      id: result.order.id
+    },
+    data: {
+      status: "paid"
+    }
+  });
+
+  return NextResponse.json({
+    success: true,
+    freeOrder: true,
+    orderId: result.order.id
+  });
+
+}
 
     // ================= MERCADO PAGO =================
 

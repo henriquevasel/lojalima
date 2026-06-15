@@ -30,6 +30,11 @@ async function init(){
     credentials: "include"
   });
 
+
+  
+
+  
+
   const data = await res.json();
 
   if(!Array.isArray(data) || data.length === 0){
@@ -112,7 +117,26 @@ if (typeof window !== "undefined" && (window as any).fbq) {
 })
     });
 
+    
+
     const data = await res.json();
+
+
+if (data.freeOrder) {
+
+  sessionStorage.setItem(
+    "lastOrder",
+    JSON.stringify(data)
+  );
+
+  router.push(
+    `/pagamento/retorno?orderId=${data.orderId}`
+  );
+
+  return;
+}
+
+
 
     // 🔴 NÃO LOGADO
     if (res.status === 401) {
