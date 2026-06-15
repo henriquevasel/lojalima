@@ -48,7 +48,7 @@ export default function AguardandoPagamento() {
           setStatus("pending");
         }
       } catch (err) {
-        console.log("erro ao verificar pagamento");
+        console.log("ERRO ao verificar pagamento");
         setStatus("pending");
       }
     }
