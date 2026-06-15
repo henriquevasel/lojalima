@@ -79,6 +79,8 @@ export default function AddToCartButton({
         new Event("cartUpdated")
       );
 
+      console.log("ADD_TO_CART DISPARADO");
+
       // Google Analytics
       sendGAEvent("event", "add_to_cart", {
         currency: "BRL",
