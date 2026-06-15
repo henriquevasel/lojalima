@@ -9,6 +9,8 @@ export async function POST(req: Request) {
     const code = body.code?.trim().toUpperCase();
     const subtotal = Number(body.subtotal || 0);
 
+    const productIds = body.productIds || [];
+
     if (!code) {
       return NextResponse.json(
         { valid: false, message: "Cupom inválido" },
@@ -54,6 +56,25 @@ export async function POST(req: Request) {
         ).toFixed(2)}`,
       });
     }
+
+    if (coupon.product_id) {
+
+  const hasProduct =
+    productIds.includes(
+      Number(coupon.product_id)
+    );
+
+  if (!hasProduct) {
+
+    return NextResponse.json({
+      valid: false,
+      message:
+        "Cupom não válido para este produto",
+    });
+
+  }
+
+}
 
     let discount = 0;
 

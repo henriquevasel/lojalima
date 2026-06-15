@@ -10,6 +10,7 @@ type CartItem = {
   id: number;
   qty: number;
 product: {
+  id: number;
   name: string;
   slug: string;
   priceCents: number;
@@ -189,9 +190,10 @@ if(savedCoupon){
         "Content-Type":"application/json"
       },
       body: JSON.stringify({
-        code: coupon,
-        subtotal: total
-      })
+  code: coupon,
+  subtotal: total,
+  productIds: items.map(item => item.product.id)
+})
     });
 
   
