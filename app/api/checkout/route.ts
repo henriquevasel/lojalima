@@ -391,10 +391,11 @@ if (
 // 🔥 KIT NÃO TEM DESCONTO PIX
 if (
   paymentMethod === "pix" &&
+  couponCode !== "WIFI25" &&
   !cartItems.some(
     item => item.product.isKit
   )
-) {
+) { {
 
   const subtotalComDesconto =
     Math.round(
