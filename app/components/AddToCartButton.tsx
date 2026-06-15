@@ -80,6 +80,7 @@ export default function AddToCartButton({
       );
 
       console.log("ADD_TO_CART DISPARADO");
+      console.log("GTAG EXISTE?", typeof window.gtag);
 
       // Google Analytics
       window.gtag?.("event", "add_to_cart", {
