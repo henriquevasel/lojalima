@@ -263,9 +263,9 @@ else {
       subtotal >= Number(coupon.min_purchase)
     ) {
 
-      if (coupon.type === "percent") {
+   if (coupon.type === "percent") {
 
-  // Cupom para produto específico
+  // CUPOM DE PRODUTO ESPECÍFICO
   if (coupon.product_id) {
 
     const itemCupom = cartItems.find(
@@ -295,7 +295,49 @@ else {
 
     }
 
-  } else {
+  }
+
+  // CUPOM DE GRUPO
+  else if (coupon.coupon_group) {
+
+    let groupTotal = 0;
+
+    for (const item of cartItems) {
+
+      if (
+        item.product.coupon_group ===
+        coupon.coupon_group
+      ) {
+
+        const basePrice =
+          item.productvariant?.priceCents ??
+          item.product.priceCents;
+
+        const finalPrice =
+          item.product.isKit
+            ? item.product.priceCents
+            : getFinalPrice({
+                ...item.product,
+                priceCents:
+                  calcularPrecoVenda(basePrice),
+              });
+
+        groupTotal +=
+          finalPrice * item.qty;
+
+      }
+
+    }
+
+    discountCents =
+      Math.round(
+        groupTotal *
+        (Number(coupon.value) / 100)
+      );
+
+  }
+
+  else {
 
     discountCents =
       Math.round(
