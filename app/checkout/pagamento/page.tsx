@@ -213,7 +213,12 @@ Pagamento
   <p style={{ color:"#16a34a" }}>
     <b>Cupom:</b> {coupon.code}
     {" "}
-    (-R$ {coupon.discount.toFixed(2)})
+    {coupon?.discount !== undefined && (
+  <>
+    {" "}
+    (-R$ {Number(coupon.discount).toFixed(2)})
+  </>
+)}
   </p>
 )}
 
