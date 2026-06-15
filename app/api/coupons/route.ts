@@ -57,7 +57,8 @@ export async function POST(req: Request) {
       });
     }
 
-    if (coupon.product_id) {
+   // Produto específico
+if (coupon.product_id) {
 
   const hasProduct =
     productIds.includes(
@@ -70,6 +71,33 @@ export async function POST(req: Request) {
       valid: false,
       message:
         "Cupom não válido para este produto",
+    });
+
+  }
+
+}
+
+// Grupo de produtos
+if (coupon.coupon_group) {
+
+  const products = await prisma.product.findMany({
+    where: {
+      id: {
+        in: productIds
+      },
+      coupon_group: coupon.coupon_group
+    },
+    select: {
+      id: true
+    }
+  });
+
+  if (products.length === 0) {
+
+    return NextResponse.json({
+      valid: false,
+      message:
+        "Cupom não válido para estes produtos",
     });
 
   }
