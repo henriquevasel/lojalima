@@ -242,8 +242,7 @@ else {
       code: couponCode
     }
   });
-
- if (
+if (
   coupon &&
   coupon.code === "WIFI25" &&
   paymentMethod !== "pix"
