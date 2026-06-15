@@ -395,7 +395,7 @@ if (
   !cartItems.some(
     item => item.product.isKit
   )
-) { {
+) {
 
   const subtotalComDesconto =
     Math.round(
