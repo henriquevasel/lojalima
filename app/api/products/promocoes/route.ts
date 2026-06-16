@@ -1,39 +1,80 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
+import { calcularPrecoVenda } from "@/app/lib/pricing";
+import { getFinalPrice } from "@/app/lib/price";
+
+export const revalidate = 3600;
 
 export async function GET() {
 
-  const products =
-    await prisma.product.findMany({
+  const products = await prisma.product.findMany({
 
-      where: {
-        active: true,
-        promoMonth: true,
+    where: {
+      active: true,
 
-        stock: {
-          quantity: {
-            gt: 0
-          }
-        }
-      },
+      highlight: true,
 
-      include: {
-        productimage: {
-          orderBy: {
-            sortOrder: "asc"
-          },
-          take: 1
+      stock: {
+        quantity: {
+          gt: 0,
         },
-
-        promotion: true
       },
 
-      orderBy: {
-        updatedAt: "desc"
+      productimage: {
+        some: {
+          url: {
+            notIn: ["", "null"],
+          },
+        },
       },
+    },
 
-      take: 20
-    });
+    include: {
 
-  return NextResponse.json(products);
+      promotion: true,
+
+      productimage: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+        take: 1,
+      },
+    },
+
+    orderBy: {
+      updatedAt: "desc",
+    },
+
+    take: 20,
+  });
+
+  const adjustedProducts = products.map((product) => {
+
+    const originalPrice =
+      calcularPrecoVenda(product.priceCents);
+
+    const promotionalPrice =
+      getFinalPrice({
+        ...product,
+        priceCents: originalPrice,
+      });
+
+    return {
+      ...product,
+
+      priceCentsOriginal:
+        originalPrice,
+
+      priceCents:
+        promotionalPrice,
+
+      hasPromotion:
+        promotionalPrice <
+        originalPrice,
+    };
+  });
+
+  return NextResponse.json(
+    adjustedProducts
+  );
 }
