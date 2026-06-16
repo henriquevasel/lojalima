@@ -112,7 +112,7 @@ model product {
 
   active   Boolean @default(true)
   featured Boolean @default(false)
-
+  promoMonth  Boolean @default(false)
   brand String?
   sku   String? @unique(map: "Product_sku_key")
 
@@ -124,6 +124,7 @@ model product {
   priority  Int     @default(0)
   isKit     Boolean @default(false)
   kitItems KitItem[] @relation("KitProducts")
+  
 
 usedInKits KitItem[] @relation("KitItemProduct")
 
