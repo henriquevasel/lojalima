@@ -44,13 +44,7 @@ key={query}
       {!isResults && (
         <>
 
-        {/* PROMOÇÕES DO MÊS */}
-<div className="homeSection">
-  <ProductsCarousel
-    title="🔥 Promoções do Mês"
-    endpoint="/api/products/promocoes"
-  />
-</div>
+      
 
 
         {/* CAMERAS WIFI */}
