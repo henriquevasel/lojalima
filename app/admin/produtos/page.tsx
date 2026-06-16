@@ -112,43 +112,7 @@ R$ {(p.priceCents/100).toFixed(2)}
 
 <div style={{display:"flex",gap:10}}>
 
-    <button
-onClick={async()=>{
-
-  const token =
-    localStorage.getItem("token");
-
-  await fetch(
-    `/api/admin/products/${p.id}/promo`,
-    {
-      method:"PATCH",
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    }
-  );
-
-  load();
-
-}}
-style={{
-  padding:"8px 14px",
-  background:
-    p.promoMonth
-      ? "#ff9800"
-      : "#444",
-  border:"none",
-  borderRadius:8,
-  cursor:"pointer"
-}}
->
-
-{p.promoMonth
- ? "🔥 Promoção"
- : "Adicionar Promo"}
-
-</button>
-
+  
 <button
 onClick={()=>router.push("/admin/produtos/"+p.id)}
 style={{
