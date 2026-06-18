@@ -68,14 +68,17 @@ const [selected, setSelected] =
 
       {/* IMAGEM PRINCIPAL */}
      <div className={s.mainImage}>
-  <Image
-    src={selected}
-    alt={name}
-    width={1200}
-    height={1200}
-    priority
-    className={s.productMainImage}
-  />
+ <Image
+  src={selected}
+  alt={name}
+  width={1200}
+  height={1200}
+  priority
+  style={{
+    width: "350px",
+    height: "auto",
+  }}
+/>
 </div>
     </div>
   );
