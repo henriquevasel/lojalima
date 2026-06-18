@@ -840,7 +840,7 @@
 
 .productMainImage{
   width:100%;
-  max-width:650px;
+  max-width:430px;
   height:auto;
   object-fit:contain;
 }
