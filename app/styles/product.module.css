@@ -776,7 +776,7 @@
   align-items:center;
   justify-content:center;
 
-  min-height:600px;
+   min-height:520px;
 }
 
 
@@ -835,7 +835,7 @@
 
 .productMainImage{
   width:100%;
-  max-width:430px;
+  max-width:420px;
   height:auto;
   object-fit:contain;
 }
