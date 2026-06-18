@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import s from "@/app/styles/product.module.css";
 
@@ -9,28 +9,49 @@ export default function ProductGallery({
   name,
   sku,
 }: any) {
-  const extras = sku
-  ? [
-      { url: `/produtos/${sku}-1.jpg` },
-      { url: `/produtos/${sku}-2.jpg` },
-      { url: `/produtos/${sku}-3.jpg` },
-      { url: `/produtos/${sku}-4.jpg` },
-      { url: `/produtos/${sku}-5.jpg` },
-      { url: `/produtos/${sku}-6.jpg` },
-    ]
+ const extras = sku
+  ? Array.from({ length: 10 }, (_, i) => ({
+      url: `/produtos/${sku}-${i + 1}.jpg`,
+    }))
   : [];
 
-const allImages = [
-  ...(images || []),
-  ...extras,
-];
+const [allImages, setAllImages] = useState(images || []);
 
-const first =
-  allImages?.[0]?.url ||
-  "/produtos/placeholder.jpg";
+useEffect(() => {
+  async function loadImages() {
+    const validExtras = [];
 
-const [selected, setSelected] =
-  useState(first);
+    for (const img of extras) {
+      try {
+        const res = await fetch(img.url, {
+          method: "HEAD",
+        });
+
+        if (res.ok) {
+          validExtras.push(img);
+        }
+      } catch {}
+    }
+
+    setAllImages([
+      ...(images || []),
+      ...validExtras,
+    ]);
+  }
+
+  loadImages();
+}, [sku, images]);
+
+const [selected, setSelected] = useState(
+  images?.[0]?.url ||
+  "/produtos/placeholder.jpg"
+);
+
+useEffect(() => {
+  if (allImages.length > 0) {
+    setSelected(allImages[0].url);
+  }
+}, [allImages]);
 
   return (
     <div className={s.galleryWrapper}>
