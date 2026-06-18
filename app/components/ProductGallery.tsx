@@ -4,15 +4,39 @@ import { useState } from "react";
 import Image from "next/image";
 import s from "@/app/styles/product.module.css";
 
-export default function ProductGallery({ images, name }: any) {
-  const first = images?.[0]?.url || "/produtos/placeholder.jpg";
-  const [selected, setSelected] = useState(first);
+export default function ProductGallery({
+  images,
+  name,
+  sku,
+}: any) {
+  const extras = sku
+  ? [
+      { url: `/produtos/${sku}-1.jpg` },
+      { url: `/produtos/${sku}-2.jpg` },
+      { url: `/produtos/${sku}-3.jpg` },
+      { url: `/produtos/${sku}-4.jpg` },
+      { url: `/produtos/${sku}-5.jpg` },
+      { url: `/produtos/${sku}-6.jpg` },
+    ]
+  : [];
+
+const allImages = [
+  ...(images || []),
+  ...extras,
+];
+
+const first =
+  allImages?.[0]?.url ||
+  "/produtos/placeholder.jpg";
+
+const [selected, setSelected] =
+  useState(first);
 
   return (
     <div className={s.galleryWrapper}>
       {/* MINIATURAS */}
       <div className={s.galleryThumbs}>
-        {images?.map((img: any) => (
+       {allImages?.map((img: any) => (
           <div
             key={img.url}
             onClick={() => setSelected(img.url)}

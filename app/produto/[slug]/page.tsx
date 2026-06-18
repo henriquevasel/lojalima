@@ -170,17 +170,18 @@ const precoPix =
   <div className={s.imageWrap}>
 
     <ProductGallery
-      images={
-        produto.productimage.length > 0
-          ? produto.productimage
-          : [
-              {
-                url: "/produtos/placeholder.jpg",
-              },
-            ]
-      }
-      name={produto.name}
-    />
+  images={
+    produto.productimage.length > 0
+      ? produto.productimage
+      : [
+          {
+            url: "/produtos/placeholder.jpg",
+          },
+        ]
+  }
+  name={produto.name}
+  sku={produto.sku}
+/>
 
   </div>
 
