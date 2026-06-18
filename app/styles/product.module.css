@@ -34,12 +34,7 @@
   }
 }
 
-.imageWrap img {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 700px !important;
-  object-fit: contain;
-}
+
 
 
 
