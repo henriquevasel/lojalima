@@ -78,7 +78,7 @@ export default function QuemSomosPage() {
                   <div className={s.statLbl}>Fundação</div>
                 </div>
                 <div className={s.stat}>
-                  <div className={s.statNum}>+450</div>
+                  <div className={s.statNum}>+500</div>
                   <div className={s.statLbl}>Clientes ativos</div>
                 </div>
               </div>
