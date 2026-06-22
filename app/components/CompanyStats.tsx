@@ -32,7 +32,7 @@ export default function CompanyStats() {
         <FaCalendarAlt className={s.statIcon} />
 
         <div>
-          <strong>+8 anos</strong>
+          <strong>+11 anos</strong>
           <span>de experiência</span>
         </div>
       </div>
