@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { createEmailLayout } from "./emailTemplate";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -6,43 +7,65 @@ const FROM_EMAIL = "Loja Lima e Lima <contato@lojalimaelima.com.br>";
 const ADMIN_EMAIL = "marketinglimaelima@gmail.com";
 
 // ================= EMAIL DE VERIFICAÇÃO =================
+// ================= EMAIL DE VERIFICAÇÃO =================
 export async function sendVerificationEmail(
   email: string,
   link: string
 ) {
   try {
-    const response = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: email,
-      subject: "Confirme seu email",
-      html: `
-        <div style="font-family:Arial,sans-serif;text-align:center;padding:20px">
-          <h2>Confirme sua conta</h2>
-          <p>Clique no botão abaixo para ativar sua conta:</p>
+    const html = createEmailLayout({
+      title: "Confirme seu e-mail",
+      subtitle:
+        "Obrigado por criar sua conta na Loja Lima e Lima. Para ativar seu cadastro e garantir a segurança da sua conta, confirme seu endereço de e-mail clicando no botão abaixo.",
 
-          <a href="${link}" 
-            style="
-              display:inline-block;
-              padding:12px 20px;
-              background:#000;
-              color:#fff;
-              border-radius:8px;
-              text-decoration:none;
-            ">
-            Confirmar email
-          </a>
+      buttonText: "CONFIRMAR E-MAIL",
 
-          <p style="margin-top:20px;font-size:12px;color:#666;">
-            Se não funcionar:<br/> ${link}
-          </p>
+      buttonLink: link,
+
+      content: `
+        <div
+          style="
+            margin-top:30px;
+            background:#f8f8f8;
+            padding:20px;
+            border-radius:10px;
+            color:#444;
+            line-height:1.8;
+            font-size:15px;
+          "
+        >
+
+          <strong>Após a confirmação você poderá:</strong>
+
+          <br><br>
+
+          ✔ Acompanhar seus pedidos
+
+          <br>
+
+          ✔ Recuperar sua senha com segurança
+
+          <br>
+
+          ✔ Comprar mais rapidamente
+
+          <br>
+
+          ✔ Receber novidades e promoções
+
         </div>
       `,
     });
 
+    const response = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject: "Confirme seu e-mail",
+      html,
+    });
+
     console.log("📧 EMAIL VERIFICAÇÃO ENVIADO");
     console.log("✅ RESEND:", response);
-    console.log("📧 RESPOSTA COMPLETA RESEND:");
-    console.dir(response, { depth: null });
 
     return {
       success: true,

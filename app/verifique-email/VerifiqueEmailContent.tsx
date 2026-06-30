@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import s from "@/app/styles/form.module.css";
 
-export default function Page() {
+export default function VerifiqueEmailContent() {
   const params = useSearchParams();
 
   const email = params.get("email") || "";
