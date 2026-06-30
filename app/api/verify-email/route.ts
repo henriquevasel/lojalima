@@ -41,13 +41,15 @@ export async function GET(req: Request) {
       );
     }
 
-  await prisma.user.update({
+ await prisma.user.update({
   where: { id: user.id },
   data: {
     emailVerified: true,
-    emailVerifiedAt: new Date(), // <-- NOVO
+    emailVerifiedAt: new Date(),
+    emailStatus: "verified",
     emailVerifyToken: null,
     emailVerifyExpires: null,
+    emailLastError: null,
   },
 });
 
