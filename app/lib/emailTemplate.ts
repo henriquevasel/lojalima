@@ -68,7 +68,7 @@ padding:35px;
 src="https://lojalimaelima.com.br/produtos/logo.png"
 alt="Loja Lima e Lima"
 style="
-max-height:70px;
+max-height:110px;
 "
 />
 
