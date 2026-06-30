@@ -38,12 +38,12 @@ export default function LoginClient() {
     const data = await res.json();
 
     if (!res.ok) {
-      if (data.code === "EMAIL_NOT_VERIFIED") {
-        toast.error("Confirme seu email 📧");
-      } else {
-        toast.error(data.error || "Erro ao fazer login");
-      }
-      return;
+    if (data.code === "EMAIL_NOT_VERIFIED") {
+    toast.error("Confirme seu email 📧");
+} else {
+    toast.error(data.error || "Erro ao fazer login");
+}
+return;
     }
 
     // 🔥 RECUPERA ITEM PENDENTE
