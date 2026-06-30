@@ -41,14 +41,15 @@ export async function GET(req: Request) {
       );
     }
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        emailVerified: true,
-        emailVerifyToken: null,
-        emailVerifyExpires: null,
-      },
-    });
+  await prisma.user.update({
+  where: { id: user.id },
+  data: {
+    emailVerified: true,
+    emailVerifiedAt: new Date(), // <-- NOVO
+    emailVerifyToken: null,
+    emailVerifyExpires: null,
+  },
+});
 
     return NextResponse.redirect(
       `${BASE_URL}/login?verified=true`

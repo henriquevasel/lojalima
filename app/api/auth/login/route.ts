@@ -58,6 +58,13 @@ export async function POST(req: Request) {
       );
     }
 
+    await prisma.user.update({
+  where: { id: user.id },
+  data: {
+    lastLoginAt: new Date(),
+  },
+});
+
     // ================= TOKEN =================
     const token = jwt.sign(
       {

@@ -86,7 +86,7 @@ async function registrar() {
   }
 
   toast.success("Conta criada! Verifique seu email 📧");
-router.push("/verifique-email");
+router.push(`/verifique-email?email=${encodeURIComponent(email)}`);
 }
 
 return(

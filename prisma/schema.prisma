@@ -204,7 +204,13 @@ model user {
   emailVerified        Boolean    @default(false)
   emailVerifyToken     String?
   emailVerifyExpires   DateTime?
+  emailStatus          String?   @default("pending")
+  emailLastSent        DateTime?
+  emailLastError       String?
   passwordResetToken   String?
+  resendEmailId        String?
+  emailVerifiedAt      DateTime?
+  lastLoginAt          DateTime?
   passwordResetExpires DateTime?
   cartitem             cartitem[]
   order                order[]

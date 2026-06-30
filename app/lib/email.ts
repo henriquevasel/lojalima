@@ -42,13 +42,21 @@ export async function sendVerificationEmail(
     console.log("📧 EMAIL VERIFICAÇÃO ENVIADO");
     console.log("✅ RESEND:", response);
 
-    return response;
+    return {
+      success: true,
+      response,
+      error: null,
+    };
 
   } catch (error: any) {
     console.error("❌ ERRO AO ENVIAR EMAIL VERIFICAÇÃO:");
     console.error(error);
 
-    return null;
+    return {
+      success: false,
+      response: null,
+      error: error?.message || "Erro desconhecido",
+    };
   }
 }
 

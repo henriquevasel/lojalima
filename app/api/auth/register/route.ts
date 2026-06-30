@@ -53,12 +53,24 @@ export async function POST(req: Request) {
    const verifyLink = `https://lojalimaelima.com.br/api/verify-email?token=${emailToken}`;
     console.log("🔥 BASE URL:", process.env.NEXT_PUBLIC_SITE_URL);
 
-    await sendVerificationEmail(email, verifyLink);
+   const emailResult = await sendVerificationEmail(email, verifyLink);
 
-    return NextResponse.json({
-      success: true,
-      message: "Conta criada! Verifique seu email antes de entrar.",
-    });
+await prisma.user.update({
+  where: { email },
+  data: {
+    emailStatus: emailResult.success ? "sent" : "failed",
+    emailLastSent: new Date(),
+    emailLastError: emailResult.error,
+    resendEmailId: emailResult.response?.data?.id ?? null,
+  },
+});
+
+return NextResponse.json({
+  success: true,
+  message: emailResult.success
+    ? "Conta criada! Verifique seu email antes de entrar."
+    : "Conta criada, mas houve um problema ao enviar o e-mail de confirmação.",
+});
 
   } catch (error) {
     console.error(error);
