@@ -41,6 +41,8 @@ export async function sendVerificationEmail(
 
     console.log("📧 EMAIL VERIFICAÇÃO ENVIADO");
     console.log("✅ RESEND:", response);
+    console.log("📧 RESPOSTA COMPLETA RESEND:");
+    console.dir(response, { depth: null });
 
     return {
       success: true,
