@@ -11,8 +11,8 @@ export async function GET(req: Request) {
 
     if (!token) {
       return NextResponse.redirect(
-        `${BASE_URL}/login?error=missing_token`
-      );
+  `${BASE_URL}/verifique-email?error=missing_token`
+);
     }
 
     const hashedToken = crypto
@@ -31,8 +31,8 @@ export async function GET(req: Request) {
 
     if (!user) {
       return NextResponse.redirect(
-        `${BASE_URL}/login?error=invalid_token`
-      );
+  `${BASE_URL}/verifique-email?error=invalid_token`
+);  
     }
 
     if (user.emailVerified) {
@@ -54,8 +54,8 @@ export async function GET(req: Request) {
 });
 
     return NextResponse.redirect(
-      `${BASE_URL}/login?verified=true`
-    );
+  `${BASE_URL}/email-confirmado`
+);
 
   } catch (error) {
     console.error("💥 ERRO NO VERIFY:", error);
