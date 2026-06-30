@@ -20,11 +20,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const user = await prisma.user.findFirst({
-      where: {
-        resendEmailId,
-      },
-    });
+   console.log("📧 Evento:", type);
+console.log("📧 Email ID recebido:", resendEmailId);
+
+const user = await prisma.user.findFirst({
+  where: {
+    resendEmailId,
+  },
+});
+
+console.log("👤 Usuário encontrado:", user?.email);
 
     if (!user) {
       console.log("⚠ Usuário não encontrado:", resendEmailId);
